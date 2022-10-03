@@ -1,0 +1,2 @@
+com/github/dachhack/sprout/test/BuildConfig.java
+ com.github.dachhack.sprout.test.BuildConfig
