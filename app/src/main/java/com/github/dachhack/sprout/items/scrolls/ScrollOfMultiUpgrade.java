@@ -34,7 +34,7 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 		inventoryTitle = "Select an item to upgrade";
 		mode = WndBag.Mode.UPGRADEABLE;
 		consumedValue = 10;
-
+		mp_cost = 10 * Dungeon.hero.magicLevel + 3;
 		bones = true;
 	}
 
@@ -55,13 +55,17 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 	public static void upgrade(Hero hero) {
 		hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 10 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public String desc() {
+		updateCost();
 		return "This scroll will upgrade a single item five times, improving its quality. A wand will "
 				+ "increase in power and in number of charges; a weapon will inflict more damage "
 				+ "or find its mark more frequently; a suit of armor will deflect additional blows; "
 				+ "the effect of a ring on its wearer will intensify. Weapons and armor will also "
-				+ "require less strength to use, and any curses on the item will be lifted. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "require less strength to use, and any curses on the item will be lifted. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
 }

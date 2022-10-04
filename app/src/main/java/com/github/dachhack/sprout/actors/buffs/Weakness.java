@@ -34,7 +34,7 @@ public class Weakness extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Weakened";
+		return "Weakened (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	@Override

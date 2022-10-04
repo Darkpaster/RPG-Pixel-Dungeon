@@ -101,7 +101,7 @@ public class WandOfLightning extends Wand {
 		if (ch != null) {
 
 			affected.clear();
-			int lvl = level() + Dungeon.hero.magicLevel / 10;
+			int lvl = level();
 			hit(ch, Random.Int(5 + lvl / 2, 10 + lvl));
 
 		} else {

@@ -39,7 +39,7 @@ public class WandOfSlowness extends Wand {
 		Char ch = Actor.findChar(cell);
 		if (ch != null) {
 
-			Buff.affect(ch, Slow.class, Slow.duration(ch) / 3 + level() + Dungeon.hero.magicLevel / 10);
+			Buff.affect(ch, Slow.class, Slow.duration(ch) / 3 + level());
 
 		} else {
 

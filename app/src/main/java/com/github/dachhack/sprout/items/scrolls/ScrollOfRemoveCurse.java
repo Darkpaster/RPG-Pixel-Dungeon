@@ -18,6 +18,7 @@
 package com.github.dachhack.sprout.items.scrolls;
 
 import com.github.dachhack.sprout.Assets;
+import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.actors.buffs.Buff;
 import com.github.dachhack.sprout.actors.buffs.Invisibility;
 import com.github.dachhack.sprout.actors.buffs.Weakness;
@@ -37,7 +38,7 @@ public class ScrollOfRemoveCurse extends Scroll {
 	{
 		name = "Scroll of Remove Curse";
 		consumedValue = 15;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -69,10 +70,11 @@ public class ScrollOfRemoveCurse extends Scroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "The incantation on this scroll will instantly strip from "
 				+ "the reader's weapon, armor, rings and carried items any evil "
 				+ "enchantments that might prevent the wearer from removing them."
-				+ "The powerful magic in this scroll also upgrades cursed items. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "The powerful magic in this scroll also upgrades cursed items. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
 
 	public static boolean uncurse(Hero hero, Item... items) {
@@ -102,7 +104,10 @@ public class ScrollOfRemoveCurse extends Scroll {
 
 		return procced;
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public int price() {
 		return isKnown() ? 30 * quantity : super.price();

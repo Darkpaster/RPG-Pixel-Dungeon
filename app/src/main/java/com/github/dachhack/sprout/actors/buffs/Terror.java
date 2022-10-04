@@ -48,7 +48,7 @@ public class Terror extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Terror";
+		return "Terror (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static void recover(Char target) {

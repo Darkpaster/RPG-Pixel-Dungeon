@@ -48,7 +48,7 @@ public class Paralysis extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Paralysed";
+		return "Paralysed (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static float duration(Char ch) {

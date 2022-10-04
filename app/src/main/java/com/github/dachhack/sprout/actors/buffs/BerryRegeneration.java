@@ -55,7 +55,7 @@ public class BerryRegeneration extends Buff {
 
 	@Override
 	public String toString() {
-		return "Regenerating";
+		return "Regenerating (" + dispTurns(regenleft) + ")";
 	}
 	@Override
 	public boolean act() {

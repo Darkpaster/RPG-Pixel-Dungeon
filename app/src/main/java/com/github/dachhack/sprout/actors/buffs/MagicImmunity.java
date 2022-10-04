@@ -42,7 +42,7 @@ public class MagicImmunity extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Dispel Magic";
+		return "Dispel Magic (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	{

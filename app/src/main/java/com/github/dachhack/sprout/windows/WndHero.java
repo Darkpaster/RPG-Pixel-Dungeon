@@ -25,6 +25,7 @@ import com.github.dachhack.sprout.actors.buffs.Buff;
 import com.github.dachhack.sprout.actors.buffs.Dewcharge;
 import com.github.dachhack.sprout.actors.buffs.Hunger;
 import com.github.dachhack.sprout.actors.hero.Hero;
+import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.actors.mobs.Mob;
 import com.github.dachhack.sprout.actors.mobs.pets.PET;
 import com.github.dachhack.sprout.effects.Speck;
@@ -64,6 +65,8 @@ import com.watabou.noosa.Image;
 import com.watabou.noosa.TextureFilm;
 
 import java.util.Locale;
+
+import static com.github.dachhack.sprout.ui.DangerIndicator.COLOR;
 
 public class WndHero extends WndTabbed {
 
@@ -110,8 +113,10 @@ public class WndHero extends WndTabbed {
 	private static final String TXT_RAGE = "Rage";
 	private static final String TXT_ENERGY = "Energy";
 	private static final String TXT_AMBUSH = "Ambush damage";
-	private static final String TXT_PHYSIC = "Physic level";
+	private static final String TXT_PHYSIC = "Physical level";
 	private static final String TXT_MASTERY = "Mastery level";
+
+	private static final String TXT_DEWDROP_COUNT = "Dewdrop picked up";
 	private static final int WIDTH = 100;
 	private static final int TAB_WIDTH = 40;
 
@@ -268,25 +273,43 @@ public class WndHero extends WndTabbed {
 			pos = btnCatalogus.bottom() + GAP;
 			//startPos = pos;
 
+
 			statSlot(TXT_ACCURACY, hero.getAttackSkill());
 			statSlot(TXT_EVASION, hero.getDefenseSkill());
 			statSlot(TXT_STR, hero.STR());
 			statSlot(TXT_DR, hero.dr());
 			statSlot(TXT_HEALTH, hero.HP + "/" + hero.HT);
 			statSlot(TXT_REGENERATION, hero.regeneration_power + "/" + hero.regeneration_delay);
-			statSlot(TXT_CRITICAL, (int) hero.critStrikeChance * 100 + "%/" + (int) hero.critDamage * 100 + "%");
-			statSlot(TXT_ATTACK_SPEED, Float.toString(hero.attackDelay()));
-			statSlot(TXT_SPEED, Float.toString(hero.speed()));
-			statSlot(TXT_AMBUSH, (int) hero.ambushDamage * 100 + "%");
+			statSlot(TXT_CRITICAL, decimalFormat(hero.critStrikeChance * 100) + "%/" + decimalFormat(hero.critDamage * 100) + "%");
+			statSlot(TXT_ATTACK_SPEED, decimalFormat2(hero.attackDelay()));
+			statSlot(TXT_SPEED, decimalFormat2(hero.speed()));
+			statSlot(TXT_AMBUSH,  decimalFormat(hero.ambushDamage * 100) + "%");
 
 			pos += GAP;
 
-			statSlot(TXT_MAGICLVL, hero.magicLevel);
-			statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
-			statSlot(TXT_PHYSIC, hero.physicLevel);
-			statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
-			statSlot(TXT_MASTERY, hero.masteryLevel);
-			statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
+			if(hero.heroClass == HeroClass.WARRIOR){
+				statSlot(TXT_MAGICLVL, hero.magicLevel, Window.SHPX_COLOR);
+				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
+				statSlot(TXT_PHYSIC, hero.physicLevel, Window.MAIN_STAT_COLOR);
+				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
+				statSlot(TXT_MASTERY, hero.masteryLevel, Window.SHPX_COLOR);
+				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
+			}else if(hero.heroClass == HeroClass.MAGE){
+				statSlot(TXT_MAGICLVL, hero.magicLevel, Window.MAIN_STAT_COLOR);
+				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
+				statSlot(TXT_PHYSIC, hero.physicLevel, Window.SHPX_COLOR);
+				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
+				statSlot(TXT_MASTERY, hero.masteryLevel, Window.SHPX_COLOR);
+				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
+			}else{
+				statSlot(TXT_MAGICLVL, hero.magicLevel, Window.SHPX_COLOR);
+				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
+				statSlot(TXT_PHYSIC, hero.physicLevel, Window.SHPX_COLOR);
+				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
+				statSlot(TXT_MASTERY, hero.masteryLevel, Window.MAIN_STAT_COLOR);
+				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
+			}
+
 
 			//pos += GAP;
 
@@ -305,9 +328,36 @@ public class WndHero extends WndTabbed {
 			//pos += GAP;
 		}
 
+		private String decimalFormat(float f){
+			return String.format("%.1f", f);
+		}
+
+		private String decimalFormat2(float f){
+			return String.format("%.02f", f);
+		}
+
 		private void statSlot(String label, String value) {
 
 			BitmapText txt = PixelScene.createText(label, 8);
+			//txt.color(0, 240, 0);
+			txt.y = pos;
+			add(txt);
+
+			txt = PixelScene.createText(value, 8);
+			txt.measure();
+			txt.x = PixelScene.align(WIDTH * 0.65f);
+			txt.y = pos;
+			add(txt);
+
+			pos += GAP + txt.baseLine();
+		}
+
+		private void statSlot(String label, String value, int clr) {
+
+			BitmapText txt = PixelScene.createText(label, 8);
+			//txt.color(0, 240, 0);
+			//txt.color(clr);
+			txt.hardlight(clr);
 			txt.y = pos;
 			add(txt);
 
@@ -322,6 +372,10 @@ public class WndHero extends WndTabbed {
 
 		private void statSlot(String label, int value) {
 			statSlot(label, Integer.toString(value));
+		}
+
+		private void statSlot(String label, int value, int clr) {
+			statSlot(label, Integer.toString(value), clr);
 		}
 
 		public float height() {
@@ -490,6 +544,8 @@ public class WndHero extends WndTabbed {
 			statSlot("Food eaten", Integer.toString((int) Statistics.foodEaten));
 			statSlot("Balls cooked", Integer.toString(Statistics.ballsCooked));
 			statSlot("Potions cooked", Integer.toString(Statistics.potionsCooked));
+			statSlot("Prison kills", Integer.toString(Statistics.prisonKills));
+			statSlot(TXT_DEWDROP_COUNT, Integer.toString(Statistics.dewPickedUp));
 		}
 
 		private void statSlot(String label, String value) {

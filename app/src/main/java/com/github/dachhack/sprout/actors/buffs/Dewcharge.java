@@ -30,7 +30,7 @@ public class Dewcharge extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Dew Charge";
+		return "Dew Charge (" + dispTurns(dispTurnsInt()) + ")";
 	}
 	
 }

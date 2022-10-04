@@ -41,6 +41,7 @@ import com.github.dachhack.sprout.items.journalpages.Sokoban3;
 import com.github.dachhack.sprout.items.journalpages.Sokoban4;
 import com.github.dachhack.sprout.items.journalpages.Vault;
 import com.github.dachhack.sprout.items.misc.Spectacles;
+import com.github.dachhack.sprout.items.potions.PotionOfInvisibility;
 import com.github.dachhack.sprout.items.potions.PotionOfMindVision;
 import com.github.dachhack.sprout.items.potions.PotionOfStrength;
 import com.github.dachhack.sprout.items.scrolls.Scroll;
@@ -168,6 +169,7 @@ public enum HeroClass {
 		hero.STR = hero.STR + 1;
 		hero.rage = 0;
 		hero.rageTotal = 100;
+		hero.setMP(5);
 		
 
 		(hero.belongings.weapon = new ShortSword()).identify();
@@ -202,6 +204,7 @@ public enum HeroClass {
 
 	private static void initRogue(Hero hero) {
 		hero.energy = hero.energyTotal = 100;
+		hero.setMP(10);
 		(hero.belongings.weapon = new Dagger()).identify();
 
 		CloakOfShadows cloak = new CloakOfShadows();
@@ -210,6 +213,9 @@ public enum HeroClass {
 
 		Dart darts = new Dart(10);
 		darts.identify().collect();
+
+		PotionOfInvisibility potion = new PotionOfInvisibility();
+		potion.identify().collect();
 		
 		KeyRing keyring = new KeyRing(); keyring.collect();
 
@@ -223,7 +229,7 @@ public enum HeroClass {
 
 	private static void initHuntress(Hero hero) {
 		hero.energy = hero.energyTotal = 100;
-
+		hero.setMP(10);
 		//hero.HP = (hero.HT -= 5);
 
 		(hero.belongings.weapon = new Dagger()).identify();
@@ -242,8 +248,8 @@ public enum HeroClass {
 		//Playtest
 		//TomeOfMastery tome = new TomeOfMastery(); tome.collect();
 				
-				hero.HT=hero.HP=999;
-				hero.STR = hero.STR + 20;
+//				hero.HT=hero.HP=999;
+//				hero.STR = hero.STR + 20;
 			PlateArmor armor1 = new PlateArmor();
 		   armor1.reinforce().upgrade(140).identify().collect();
 		   // PlateArmor armor2 = new PlateArmor();
@@ -266,7 +272,7 @@ public enum HeroClass {
 			    //WarHammer hammer = new WarHammer();
 			    //hammer.identify().collect();
 			   // Wand wand = new WandOfDisintegration(); wand.upgrade(50); wand.collect();
-				  Wand wand3 = new WandOfFlock(); wand3.upgrade(15); wand3.collect();
+//				  Wand wand3 = new WandOfFlock(); wand3.upgrade(15); wand3.collect();
 				 // Wand wand2 = new WandOfTelekinesis(); wand2.upgrade(15); wand2.collect();
 				  //Wand wand3 = new WandOfTeleportation(); wand3.upgrade(15); wand3.collect();
 			  // Wand wand4 = new WandOfBlink(); wand4.upgrade(15); wand4.collect();
@@ -311,9 +317,9 @@ public enum HeroClass {
 			    //RingOfHaste ha = new RingOfHaste(); ha.upgrade(5); ha.collect();
 				//PotionOfFrost pot = new PotionOfFrost(); pot.collect();
 				//SteelHoneypot hpot = new SteelHoneypot(); hpot.collect();
-				Egg egg = new Egg(); egg.collect();
-				EasterEgg egg2 = new EasterEgg(); egg2.collect();
-				ShadowDragonEgg egg3 = new ShadowDragonEgg(); egg3.collect();
+//				Egg egg = new Egg(); egg.collect();
+//				EasterEgg egg2 = new EasterEgg(); egg2.collect();
+//				ShadowDragonEgg egg3 = new ShadowDragonEgg(); egg3.collect();
 				//GoldenSkeletonKey key = new GoldenSkeletonKey(0); key.collect(); 
 				//Flytrap.Seed seed1 = new Flytrap.Seed(); seed1.collect();
 				//Phaseshift.Seed seed2 = new Phaseshift.Seed(); seed2.collect();
@@ -352,7 +358,7 @@ public enum HeroClass {
 			        Scroll scroll5 = new ScrollOfPsionicBlast();
 			        scroll5.identify().collect(); 
 
-					if(i % 10 == 0) {
+					if(i % 5 == 0) {
 						hero.earnExp(hero.maxExp() - hero.exp);
 					}
 					}

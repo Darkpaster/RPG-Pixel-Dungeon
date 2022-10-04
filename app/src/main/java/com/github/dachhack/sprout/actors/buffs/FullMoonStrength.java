@@ -45,7 +45,7 @@ public class FullMoonStrength extends Buff {
 	//private int hits = Math.max(2, Math.round(Statistics.deepestFloor/5)+3);
 	@Override
 	public String toString() {
-		return "Full Moon Fury";
+		return "Full Moon Fury (" + hits + "hits left)";
 	}
 	
 	@Override

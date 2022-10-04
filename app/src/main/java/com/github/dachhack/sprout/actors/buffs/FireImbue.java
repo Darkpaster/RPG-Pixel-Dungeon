@@ -67,7 +67,7 @@ public class FireImbue extends Buff {
 
 	@Override
 	public String toString() {
-		return "Imbued with Fire";
+		return "Imbued with Fire (" + dispTurns(left) + ")";
 	}
 
 	{

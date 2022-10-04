@@ -47,7 +47,10 @@ public class Statistics {
 	public static int prevfloormoves;
 	public static int moves;
 	public static float prevfloorduration;
-	
+	public static int dewPickedUp;
+	public static int maxDealedDamage;
+	public static int maxTakenDamage;
+
 	
 	public static boolean qualifiedForNoKilling = false;
 	public static boolean completedWithNoKilling = false;
@@ -84,6 +87,10 @@ public class Statistics {
 		floormoves = 0;
 		prevfloormoves = 0;
 
+		dewPickedUp = 0;
+		maxDealedDamage = 0;
+		maxTakenDamage = 0;
+
 		qualifiedForNoKilling = false;
 
 		amuletObtained = false;
@@ -92,6 +99,9 @@ public class Statistics {
 	}
 
 	private static final String GOLD = "score";
+	private static final String DEW = "score";
+	private static final String TAKEN_DMG = "score";
+	private static final String DEALED_DMG = "score";
 	private static final String DEEPEST = "maxDepth";
 	private static final String REALDEEPEST = "maxDepthReal";
 	private static final String SLAIN = "enemiesSlain";
@@ -143,6 +153,9 @@ public class Statistics {
 		bundle.put(WATERS, waters);
 		bundle.put(SEWERKILLS, sewerKills);
 		bundle.put(PRISONKILLS, prisonKills);
+		bundle.put(DEALED_DMG, maxDealedDamage);
+		bundle.put(TAKEN_DMG, maxTakenDamage);
+		bundle.put(DEW, dewPickedUp);
 	}
 
 	public static void restoreFromBundle(Bundle bundle) {
@@ -172,8 +185,13 @@ public class Statistics {
 		prevfloormoves = bundle.getInt(PREVFLOORMOVES);
 		moves = bundle.getInt(MOVES);
 		amuletObtained = bundle.getBoolean(AMULET);
-		orbObtained = bundle.getBoolean(ORB);	
-		
+		orbObtained = bundle.getBoolean(ORB);
+
+		dewPickedUp = bundle.getInt(DEW);
+		maxDealedDamage = bundle.getInt(DEALED_DMG);
+		maxTakenDamage = bundle.getInt(TAKEN_DMG);
+
+
 	}
 
 }

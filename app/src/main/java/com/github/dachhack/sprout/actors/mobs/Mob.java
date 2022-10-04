@@ -24,12 +24,9 @@ import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.Statistics;
 import com.github.dachhack.sprout.actors.Actor;
 import com.github.dachhack.sprout.actors.Char;
-import com.github.dachhack.sprout.actors.buffs.Amok;
-import com.github.dachhack.sprout.actors.buffs.Buff;
-import com.github.dachhack.sprout.actors.buffs.Dewcharge;
-import com.github.dachhack.sprout.actors.buffs.Sleep;
-import com.github.dachhack.sprout.actors.buffs.Terror;
+import com.github.dachhack.sprout.actors.buffs.*;
 import com.github.dachhack.sprout.actors.hero.Hero;
+import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.actors.hero.HeroSubClass;
 import com.github.dachhack.sprout.effects.Surprise;
 import com.github.dachhack.sprout.effects.Wound;
@@ -38,6 +35,7 @@ import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.RedDewdrop;
 import com.github.dachhack.sprout.items.VioletDewdrop;
 import com.github.dachhack.sprout.items.YellowDewdrop;
+import com.github.dachhack.sprout.items.artifacts.CloakOfShadows;
 import com.github.dachhack.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.dachhack.sprout.items.rings.RingOfAccuracy;
 import com.github.dachhack.sprout.items.rings.RingOfWealth;
@@ -382,12 +380,23 @@ public abstract class Mob extends Char {
 	@Override
 	public int defenseProc(Char enemy, int damage) {
 		if (!enemySeen && enemy == Dungeon.hero) {
+			float mulDmg = Dungeon.hero.ambushDamage;
+			if((Dungeon.hero.buff(Invisibility.class) != null || Dungeon.hero.buff(CloakOfShadows.cloakStealth.class) != null) && Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.energy == 100){
+				mulDmg += 20.0f; //it doesn't work
+			}
+			mulDmg += Dungeon.hero.energy * 0.01f;
+
 			if (((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
 				damage *= 1.34f;
+				damage *= mulDmg;
+				damage += mulDmg;
 				Wound.hit(this);
 			} else {
+				damage *= mulDmg;
+				damage += mulDmg;
 				Surprise.hit(this);
 			}
+			GLog.h("Sneak attack!");
 		}
 			return damage;
 	}
@@ -427,7 +436,7 @@ public abstract class Mob extends Char {
 		}
 		alerted = true;
 
-		super.damage(dmg, src);
+		super.damage(dmg, src, Dungeon.hero.critDmg);
 	}
 
 	@Override

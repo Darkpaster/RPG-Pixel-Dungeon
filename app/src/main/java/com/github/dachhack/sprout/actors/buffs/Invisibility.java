@@ -19,6 +19,7 @@ package com.github.dachhack.sprout.actors.buffs;
 
 import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.actors.Char;
+import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.items.artifacts.CloakOfShadows;
 import com.github.dachhack.sprout.items.artifacts.TimekeepersHourglass;
 import com.github.dachhack.sprout.ui.BuffIndicator;
@@ -51,7 +52,7 @@ public class Invisibility extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Invisible";
+		return "Invisible (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static void dispel() {
@@ -72,5 +73,7 @@ public class Invisibility extends FlavourBuff {
 		if (timeFreeze != null) {
 			timeFreeze.detach();
 		}
+
+
 	}
 }

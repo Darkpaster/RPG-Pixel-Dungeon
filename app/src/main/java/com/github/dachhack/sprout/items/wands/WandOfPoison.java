@@ -40,7 +40,7 @@ public class WandOfPoison extends Wand {
 		Char ch = Actor.findChar(cell);
 		if (ch != null) {
             
-			int poisonbase=5 + Dungeon.hero.magicLevel / 10;
+			int poisonbase=5;
 			
 			if (Dungeon.hero.buff(Strength.class) != null){ poisonbase *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
 			

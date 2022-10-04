@@ -89,7 +89,7 @@ public class Frost extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Frozen";
+		return "Frozen (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static float duration(Char ch) {

@@ -47,7 +47,7 @@ public class ScrollOfTeleportation extends Scroll {
 	{
 		name = "Scroll of Teleportation";
 		consumedValue = 10;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -147,12 +147,16 @@ public class ScrollOfTeleportation extends Scroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "The spell on this parchment instantly transports the reader "
 				+ "to a random location on the dungeon level. It can be used "
 				+ "to escape a dangerous situation, but the unlucky reader might "
-				+ "find himself in an even more dangerous place. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "find himself in an even more dangerous place. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public int price() {
 		return isKnown() ? 40 * quantity : super.price();

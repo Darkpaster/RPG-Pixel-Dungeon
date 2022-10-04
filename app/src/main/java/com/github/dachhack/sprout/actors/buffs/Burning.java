@@ -136,7 +136,7 @@ public class Burning extends Buff implements Hero.Doom {
 
 	@Override
 	public String toString() {
-		return "Burning";
+		return "Burning (" + dispTurns(left) + ")";
 	}
 
 	public static float duration(Char ch) {

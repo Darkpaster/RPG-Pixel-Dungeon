@@ -34,7 +34,7 @@ public class GasesImmunity extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Immune to gases";
+		return "Immune to gases (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	{

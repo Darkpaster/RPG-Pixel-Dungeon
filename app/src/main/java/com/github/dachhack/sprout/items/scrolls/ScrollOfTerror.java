@@ -33,7 +33,7 @@ public class ScrollOfTerror extends Scroll {
 	{
 		name = "Scroll of Terror";
 		consumedValue = 5;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -73,10 +73,14 @@ public class ScrollOfTerror extends Scroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "A flash of red light will overwhelm all creatures in your field of view with terror, "
-				+ "and they will turn and flee. Attacking a fleeing enemy will dispel the effect. \n\n" + TXT_MAGIC_INFO;
+				+ "and they will turn and flee. Attacking a fleeing enemy will dispel the effect. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public int price() {
 		return isKnown() ? 50 * quantity : super.price();

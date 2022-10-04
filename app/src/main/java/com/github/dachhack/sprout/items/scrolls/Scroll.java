@@ -40,7 +40,10 @@ public abstract class Scroll extends Item {
 
 	protected static final String TXT_MAGIC_INFO = "You can increase the magical power of this scroll by leveling up your magic.";
 
-	private static final String TXT_LESSMP = "You don't have enough magic power for that";
+	protected static final String TXT_LESSMP = "You don't have enough magic level for using full power of that scroll.";
+	protected static final String TXT_FAILED = "Casting upgraded spell failed.";
+
+	private static final String TXT_UNKNOWN = "You tried to read an unknown scroll but failed and was attacked by magic light. Maybe you had no enough mana for that.";
 
 	private static final String TXT_CURSED = "Your cursed spellbook prevents you from invoking this scroll's magic! "
 			+ "A scroll of remove curse might be strong enough to still work though...";
@@ -127,7 +130,9 @@ public abstract class Scroll extends Item {
 					&& !(this instanceof ScrollOfRemoveCurse)) {
 				GLog.n(TXT_CURSED);
 			} else if (hero.MP< mp_cost && isKnown()) {
-				GLog.n(TXT_LESSMP);
+				curUser = hero;
+				curItem = detach(hero.belongings.backpack);
+				doRead();
 			} else if (hero.MP< mp_cost && !isKnown()) {
 
 				curUser = hero;
@@ -138,8 +143,10 @@ public abstract class Scroll extends Item {
 				Dungeon.observe();
 
 				setKnown();
+				GLog.n(TXT_UNKNOWN);
 
-				curUser.spendAndNext(TIME_TO_READ);
+				//curUser.spendAndNext(TIME_TO_READ);
+				//doRead();
 
 			} else {
 				curUser = hero;
@@ -156,6 +163,7 @@ public abstract class Scroll extends Item {
 	}
 
 	public boolean useMP(Hero hero){
+		updateCost();
 		boolean read = false;
 
 		if (hero.MP>= mp_cost){
@@ -166,6 +174,12 @@ public abstract class Scroll extends Item {
 
 		return read;
 	}
+
+	public String currentCost(){
+		return " Currently it requires " + Integer.toString(mp_cost) + " mana.";
+	}
+
+	protected abstract void updateCost();
 
 
 	abstract protected void doRead();

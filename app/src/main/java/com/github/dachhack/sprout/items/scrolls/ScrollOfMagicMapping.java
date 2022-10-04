@@ -38,7 +38,7 @@ public class ScrollOfMagicMapping extends Scroll {
 	{
 		name = "Scroll of Magic Mapping";
 		consumedValue = 10;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -102,9 +102,14 @@ public class ScrollOfMagicMapping extends Scroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "When this scroll is read, an image of crystal clarity will be etched into your memory, "
 				+ "alerting you to the precise layout of the level and revealing all hidden secrets. "
-				+ "The locations of items and creatures will remain unknown.";
+				+ "The locations of items and creatures will remain unknown.\n\n" + TXT_MAGIC_INFO + currentCost();
+	}
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override

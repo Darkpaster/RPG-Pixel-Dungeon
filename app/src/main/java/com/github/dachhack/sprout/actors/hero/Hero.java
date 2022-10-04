@@ -47,10 +47,7 @@ import com.github.dachhack.sprout.items.KindOfWeapon;
 import com.github.dachhack.sprout.items.OtilukesJournal;
 import com.github.dachhack.sprout.items.ShadowDragonEgg;
 import com.github.dachhack.sprout.items.armor.glyphs.Viscosity;
-import com.github.dachhack.sprout.items.artifacts.CapeOfThorns;
-import com.github.dachhack.sprout.items.artifacts.DriedRose;
-import com.github.dachhack.sprout.items.artifacts.TalismanOfForesight;
-import com.github.dachhack.sprout.items.artifacts.TimekeepersHourglass;
+import com.github.dachhack.sprout.items.artifacts.*;
 import com.github.dachhack.sprout.items.keys.GoldenKey;
 import com.github.dachhack.sprout.items.keys.GoldenSkeletonKey;
 import com.github.dachhack.sprout.items.keys.IronKey;
@@ -160,6 +157,7 @@ public class Hero extends Char {
 
 	
 	private boolean damageInterrupt = true;
+	public boolean critDmg = false;
 	public HeroAction curAction = null;
 	public HeroAction lastAction = null;
 
@@ -188,6 +186,7 @@ public class Hero extends Char {
 
 	private int basePhysic;
 	private int baseMastery;
+	private int baseMagic;
 
 	public float critStrikeChance;
 	public float critDamage;
@@ -204,6 +203,8 @@ public class Hero extends Char {
 	public float ambushDamage;
 
 	public float additAS;
+
+	public int missingEnergy = 0;
 
 
 
@@ -230,6 +231,7 @@ public class Hero extends Char {
 		physicLevel = 1;
 		baseMastery = masteryLevel;
 		basePhysic = physicLevel;
+		baseMagic = magicLevel;
 		regeneration_delay = 10;
 		regeneration_power = 1;
 
@@ -378,7 +380,6 @@ public class Hero extends Char {
 		Buff.affect(this, EnergyRegen.class);
 		Buff.affect(this, RageRegen.class);
 
-
 	}
 
 	public void adjustStats(){
@@ -386,8 +387,8 @@ public class Hero extends Char {
 			int diff = physicLevel - basePhysic;
 			int i = physicLevel / 5 - basePhysic / 5;
 			int i2 = physicLevel / 2 - basePhysic / 2;
-			int i3 = physicLevel / 3 - basePhysic / 3;
 			int i4 = physicLevel / 10 - basePhysic / 10;
+			int i3 = physicLevel / 20 - basePhysic / 20;
 			if(i > 0){
 				STR += i;
 				regeneration_delay -= i * 0.50f;
@@ -396,10 +397,21 @@ public class Hero extends Char {
 				regeneration_power += i4;
 			}
 			if(i2 > 0){
-				DR += i2;
+				if(i3 == 0){
+					DR += i2 * Math.max(physicLevel / 20 + 1, 1);
+				}else{
+					DR += i2 * Math.max(Random.NormalIntRange(basePhysic / 20 + 1, physicLevel / 20 + 1), 1);
+				}
+
 			}
 			if(diff > 0){
-				bonusDamage += diff;
+				if(i4 == 0){
+					bonusDamage += diff * Math.max(physicLevel / 10 + 1, 1);
+					HT += diff * Math.max(physicLevel / 10 + 1, 1);
+				}else{
+					bonusDamage += diff * Math.max(Random.NormalIntRange(basePhysic / 10 + 1, physicLevel / 10 + 1), 1);
+					HT += diff * Math.max(Random.NormalIntRange(basePhysic / 10 + 1, physicLevel / 10 + 1), 1);
+				}
 			}
 			basePhysic = physicLevel;
 		}
@@ -412,19 +424,31 @@ public class Hero extends Char {
 				float ad = attackDelay();
 				float part = 1.0f - critStrikeChance;
 				for (int j = 0; j < diff; j++) {
-					additAS += ad * 0.05f;
-					critStrikeChance += part * 0.05f;
 					ambushDamage += 0.05f;
+					speed += 0.02f;
+					critDamage += 0.02f;
+					additAS += ad * 0.03f;
+					critStrikeChance += part * 0.03f;
+
 					ad = attackDelay();
 					part = 1.0f - critStrikeChance;
 				}
 			}
-			if(i > 0){
-				critDamage += 0.1f * i;
-			}
+//			if(i > 0){
+//				critDamage += 0.1f * i;
+//			}
 			baseMastery = masteryLevel;
 
 		}
+		if(magicLevel != baseMagic){
+			int diff = magicLevel - baseMagic;
+			if(diff > 0){
+				MT += diff * Random.NormalIntRange(10, 15);
+				MP = MT;
+			}
+			baseMagic = magicLevel;
+		}
+
 	}
 
 	public int tier() {
@@ -493,7 +517,7 @@ public class Hero extends Char {
 		if (barkskin != null) {
 			dr += barkskin.level();
 		}
-		return DR + dr;
+		return DR + dr + (rage / 10 * Math.max(lvl / 2, 1));
 	}
 
 	@Override
@@ -534,12 +558,17 @@ public class Hero extends Char {
 	}
 
 	public float criticalStrike(float dmg){
-		if(Random.Float(1.0f - critStrikeChance) == 0) {
-			GLog.p("Critical Strike!");
-			return dmg * critDamage;
+		if(Random.Float() - critStrikeChance <= 0) {
+			GLog.h("Critical Strike!");
+			critDmg = true;
+			return dmg * critDamage + critDamage;
+		}else{
+			critDmg = false;
+			return dmg;
 		}
-		return dmg;
 	}
+
+	public float getSpeed(){return speed;}
 	
 
 	@Override
@@ -599,7 +628,14 @@ public class Hero extends Char {
 			for (Buff buff : buffs(RingOfFuror.Furor.class)) {
 				bonus += ((RingOfFuror.Furor) buff).level;
 			}
-			return (float) Math.max ((0.25 + (1 - 0.25) * Math.pow(0.8, bonus)) - Dungeon.hero.additAS, 0.05f);
+			float f;
+			if(missingEnergy != 0){
+				f = missingEnergy * 5;
+			}else{
+				f = energy * 0.5f;
+			}
+
+			return (float) Math.max ((0.25 + (1 - 0.25) * Math.pow(0.8, bonus)) - (Dungeon.hero.additAS + f * 0.01f), 0.05f);
 		}
 	}
 
@@ -1300,8 +1336,8 @@ public class Hero extends Char {
 	}
 
 	private void rageAttack(){
-		int lvl = Math.max(physicLevel / 5, 2);
-		rage += Random.NormalIntRange(lvl - lvl / 2, lvl);
+		//int lvl = Math.max(physicLevel / 5, 2);
+		rage += Random.NormalIntRange(3, 5);
 		if(rage > rageTotal){
 			rage = rageTotal;
 		}
@@ -1309,9 +1345,16 @@ public class Hero extends Char {
 
 	private void energyAttack(){
 		//int lvl = Math.min(500 / masteryLevel, 14);
-		energy -= Random.NormalIntRange(6, 9);
+		if(energy == 100 && this.buff(Invisibility.class) != null || this.buff(CloakOfShadows.cloakStealth.class) != null && energy == 100){
+			energy -= Random.NormalIntRange(40, 60);
+		}else{
+			energy -= Random.NormalIntRange(8, 12);
+		}
 		if(energy < 0){
+			missingEnergy = energy;
 			energy = 0;
+		}else{
+			missingEnergy = 0;
 		}
 	}
 
@@ -1320,15 +1363,8 @@ public class Hero extends Char {
 
 		enemy = action.target;
 
-		if(this.heroClass == HeroClass.WARRIOR){
-			rageAttack();
-		}else{
-			if(this.heroClass != HeroClass.MAGE){
-				energyAttack();
-			}
-		}
 
-		rage += 3;
+		//rage += 3;
 
 		if (Level.adjacent(pos, enemy.pos) && enemy.isAlive()
 				&& !isCharmedBy(enemy)) {
@@ -1426,9 +1462,12 @@ public class Hero extends Char {
 
 		if(this.heroClass == HeroClass.WARRIOR){
 			if(damage > HT / 3){
-				rage += Random.NormalIntRange(8, 12);
+				rage += Random.NormalIntRange(13, 17);
+				this.sprite.centerEmitter().start(Speck.factory(Speck.SCREAM), 0.3f,
+						3);
+				Sample.INSTANCE.play(Assets.SND_CHALLENGE);
 			}else{
-				rage += Random.NormalIntRange(4, 6);
+				rage += Random.NormalIntRange(4, 7);
 			}
 		}
 
@@ -1705,10 +1744,12 @@ public class Hero extends Char {
 			levelup = true;
 
 			if(lvl % 5 == 0){
-				GameScene.show(new WndLevelUp(this));
+				//GameScene.show(new WndLevelUp(this));
 			}
 
 			adjustStats();
+			HP = HT;
+			MP = MT;
 
 		}
 
@@ -1955,6 +1996,14 @@ public class Hero extends Char {
 
 	@Override
 	public void onAttackComplete() {
+
+		if(this.heroClass == HeroClass.WARRIOR){
+			rageAttack();
+		}else{
+			if(this.heroClass != HeroClass.MAGE){
+				energyAttack();
+			}
+		}
 
 		AttackIndicator.target(enemy);
 

@@ -33,7 +33,7 @@ public class ManaRegen extends Buff {
 			}
 
 			int mLevel = Dungeon.hero.magicLevel;
-			spend(REGENERATION_DELAY/mLevel);
+			spend(Math.max(REGENERATION_DELAY/mLevel, 1));
 
 		} else {
 

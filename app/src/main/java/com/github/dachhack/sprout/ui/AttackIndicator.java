@@ -44,6 +44,7 @@ public class AttackIndicator extends Tag {
 
 	public AttackIndicator() {
 		super(DangerIndicator.COLOR);
+		//super(Window.MAIN_STAT_COLOR);
 
 		instance = this;
 

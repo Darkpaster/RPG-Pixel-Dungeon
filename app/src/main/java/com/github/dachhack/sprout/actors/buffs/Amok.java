@@ -36,6 +36,6 @@ public class Amok extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Amok";
+		return "Amok (" + dispTurns(dispTurnsInt()) + ")";
 	}
 }

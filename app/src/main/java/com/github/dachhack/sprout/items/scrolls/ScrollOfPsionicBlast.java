@@ -38,7 +38,7 @@ public class ScrollOfPsionicBlast extends Scroll {
 	{
 		name = "Scroll of Psionic Blast";
 		consumedValue = 10;
-        mp_cost = 10;
+        mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 		bones = true;
 	}
 
@@ -96,11 +96,15 @@ public class ScrollOfPsionicBlast extends Scroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "This scroll contains destructive energy that can be psionically channeled to tear apart "
 				+ "the minds of all visible creatures. The power unleashed by the scroll will also temporarily "
-				+ "blind, stun, and seriously harm the reader. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "blind, stun, and seriously harm the reader. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public int price() {
 		return isKnown() ? 80 * quantity : super.price();

@@ -73,6 +73,6 @@ public class Barkskin extends Buff {
 
 	@Override
 	public String toString() {
-		return "Barkskin";
+		return "Barkskin (" + dispTurns(barkleft) + ")";
 	}
 }

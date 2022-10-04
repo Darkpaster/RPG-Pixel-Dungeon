@@ -24,7 +24,7 @@ public class EarthImbue extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Imbued with Earth";
+		return "Imbued with Earth (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	{

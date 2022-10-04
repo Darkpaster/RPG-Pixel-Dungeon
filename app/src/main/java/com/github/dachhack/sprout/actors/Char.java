@@ -333,6 +333,52 @@ public abstract class Char extends Actor {
 		}
 	}
 
+	public void damage(int dmg, Object src, boolean crit) {
+
+		if (HP <= 0) {
+			return;
+		}
+		if (this.buff(Frost.class) != null) {
+			Buff.detach(this, Frost.class);
+			if (Level.water[this.pos]) {
+				Buff.prolong(this, Paralysis.class, 1f);
+			}
+		}
+		if (this.buff(MagicalSleep.class) != null) {
+			Buff.detach(this, MagicalSleep.class);
+		}
+
+		Class<?> srcClass = src.getClass();
+		if (immunities().contains(srcClass)) {
+			dmg = 0;
+		} else if (resistances().contains(srcClass)) {
+			dmg = Random.IntRange(0, dmg);
+		}
+
+		if (buff(Paralysis.class) != null) {
+			if (Random.Int(dmg) >= Random.Int(HP)) {
+				Buff.detach(this, Paralysis.class);
+				if (Dungeon.visible[pos]) {
+					GLog.i(TXT_OUT_OF_PARALYSIS, name);
+				}
+			}
+		}
+
+		HP -= dmg;
+		if (dmg > 0 || src instanceof Char) {
+			if(crit){
+				sprite.showStatus(CharSprite.CRITICAL, Integer.toString(dmg));
+			}else{
+				sprite.showStatus(HP > HT / 2 ? CharSprite.WARNING
+						: CharSprite.NEGATIVE, Integer.toString(dmg));
+			}
+
+		}
+		if (HP <= 0) {
+			die(src);
+		}
+	}
+
 	public void destroy() {
 		HP = 0;
 		Actor.remove(this);

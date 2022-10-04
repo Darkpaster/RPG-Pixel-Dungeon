@@ -53,7 +53,7 @@ public class ToxicImbue extends Buff {
 
 	@Override
 	public String toString() {
-		return "Imbued with Toxicity";
+		return "Imbued with Toxicity (" + dispTurns(left) + ")";
 	}
 
 	{

@@ -31,7 +31,7 @@ public class Strength extends Buff {
 
 	@Override
 	public String toString() {
-		return "Moon Fury";
+		return "Moon Fury (1 hit left)";
 	}
 	
 	@Override

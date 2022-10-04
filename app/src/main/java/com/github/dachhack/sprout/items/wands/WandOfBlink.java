@@ -46,7 +46,7 @@ public class WandOfBlink extends Wand {
 			return;
 		}
 
-		int level = level() + Dungeon.hero.magicLevel / 10;
+		int level = level();
 
 		if (Ballistica.distance > level + 4) {
 			cell = Ballistica.trace[level + 3];

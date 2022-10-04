@@ -19,6 +19,7 @@ package com.github.dachhack.sprout.items;
 
 import com.github.dachhack.sprout.Assets;
 import com.github.dachhack.sprout.Dungeon;
+import com.github.dachhack.sprout.Statistics;
 import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.effects.Speck;
@@ -61,6 +62,7 @@ public class RedDewdrop extends Item {
 			vial.collectDew(this);
 
 		}
+		Statistics.dewPickedUp++;
 
 		Sample.INSTANCE.play(Assets.SND_DEWDROP);
 		hero.spendAndNext(TIME_TO_PICK_UP);

@@ -31,7 +31,7 @@ public class Vertigo extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Vertigo";
+		return "Vertigo (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static float duration(Char ch) {

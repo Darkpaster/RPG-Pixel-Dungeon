@@ -42,7 +42,7 @@ public class ScrollOfRegrowth extends Scroll {
 	{
 		name = "Scroll of Regrowth";
 		consumedValue = 15;
-		mp_cost = 10;
+		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -102,10 +102,14 @@ public class ScrollOfRegrowth extends Scroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "The magic in the scroll feels powerful and inviting."
-				+ "The dungeon cries out for you to read it. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "The dungeon cries out for you to read it. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public int price() {
 		return isKnown() ? 25 * quantity : super.price();

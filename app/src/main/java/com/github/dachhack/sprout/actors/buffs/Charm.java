@@ -47,7 +47,7 @@ public class Charm extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Charmed";
+		return "Charmed (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static float durationFactor(Char ch) {

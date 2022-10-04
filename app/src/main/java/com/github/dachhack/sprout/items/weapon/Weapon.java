@@ -150,7 +150,13 @@ public class Weapon extends KindOfWeapon {
 			encumrance -= 2;
 		}
 
-		float DLY = Math.max(this.DLY - hero.additAS, 0.5f);
+		float DLY;
+
+		if(hero.missingEnergy != 0){
+			DLY = Math.max(this.DLY - (hero.additAS + (hero.missingEnergy * 5) * 0.01f), 0.05f);
+		}else{
+			DLY = Math.max(this.DLY - (hero.additAS + (hero.energy * 0.5f) * 0.01f), 0.05f);
+		}
 
 		DLY *= (imbue == Imbue.LIGHT ? 0.667f
 						: (imbue == Imbue.HEAVY ? 1.667f : 1.0f));
@@ -161,6 +167,10 @@ public class Weapon extends KindOfWeapon {
 		}
 
 		DLY = (float) (0.25 + (DLY - 0.25) * Math.pow(0.8, bonus));
+
+		if(DLY < 0.05f){
+			DLY = 0.05f;
+		}
 
 		return (encumrance > 0 ? (float) (DLY * Math.pow(1.2, encumrance))
 				: DLY);

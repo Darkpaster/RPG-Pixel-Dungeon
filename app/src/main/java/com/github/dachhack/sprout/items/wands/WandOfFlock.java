@@ -46,7 +46,7 @@ public class WandOfFlock extends Wand {
 	@Override
 	protected void onZap(int cell) {
 
-		int level = level() + Dungeon.hero.magicLevel / 10;
+		int level = level();
 
 		int n = level + 2;
 

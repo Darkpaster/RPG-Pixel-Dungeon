@@ -35,7 +35,7 @@ public class ScrollOfRage extends Scroll {
 	{
 		name = "Scroll of Rage";
 		consumedValue = 5;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -68,10 +68,14 @@ public class ScrollOfRage extends Scroll {
 
 		curUser.spendAndNext(TIME_TO_READ);
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+	}
 	@Override
 	public String desc() {
+		updateCost();
 		return "When read aloud, this scroll will unleash a great roar "
-				+ "that draws all enemies to the reader, and enrages nearby ones. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "that draws all enemies to the reader, and enrages nearby ones. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
 }

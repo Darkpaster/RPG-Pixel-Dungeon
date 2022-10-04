@@ -1,4 +1,4 @@
-#Mon Oct 03 19:35:38 EEST 2022
+#Wed Oct 05 00:14:52 EEST 2022
 base.0=E\:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

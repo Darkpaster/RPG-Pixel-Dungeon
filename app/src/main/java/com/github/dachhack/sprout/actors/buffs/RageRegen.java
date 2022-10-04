@@ -13,7 +13,7 @@ public class RageRegen extends Buff{
         Hero hero = Dungeon.hero;
         if (target.isAlive()) {
 
-            if (hero.rage > 0 && hero.HP > hero.HT / 5) {
+            if (hero.rage > 0 && hero.HP > hero.HT / 10) {
                 if(hero.rage > hero.rageTotal - hero.rageTotal / 3){
                     hero.rage -= 3;
                 }else if(hero.rage > hero.rageTotal / 2){
@@ -21,10 +21,16 @@ public class RageRegen extends Buff{
                 }else{
                     hero.rage -= 1;
                 }
+                if(hero.isStarving()){
+                    hero.rage -= 1;
+                }
+                if(hero.rage < 0){
+                    hero.rage = 0;
+                }
             }
 
             //int mLevel = hero.physicLevel;
-            spend(1.0f);
+            spend(Math.max(1.0f, hero.getSpeed() * 0.5f));
 
         } else {
 
@@ -35,29 +41,29 @@ public class RageRegen extends Buff{
         return true;
     }
 
-    @Override
-    public int icon() {
-        Hero hero = Dungeon.hero;
-        if(hero.HP < hero.HT / 5){
-            return BuffIndicator.FURY;
-        }
-        return super.icon();
-    }
-    @Override
-    public String toString() {
-        Hero hero = Dungeon.hero;
-        if(hero.HP < hero.HT / 5){
-            return "Furious";
-        }
-        return "";
-    }
-
-    @Override
-    public String desc() {
-        Hero hero = Dungeon.hero;
-        if(hero.HP < hero.HT / 5){
-            return "123213123";
-        }
-        return super.desc();
-    }
+//    @Override
+//    public int icon() {
+//        Hero hero = Dungeon.hero;
+//        if(hero.HP < hero.HT / 5){
+//            return BuffIndicator.FURY;
+//        }
+//        return super.icon();
+//    }
+//    @Override
+//    public String toString() {
+//        Hero hero = Dungeon.hero;
+//        if(hero.HP < hero.HT / 5){
+//            return "Furious";
+//        }
+//        return "";
+//    }
+//
+//    @Override
+//    public String desc() {
+//        Hero hero = Dungeon.hero;
+//        if(hero.HP < hero.HT / 5){
+//            return "123213123";
+//        }
+//        return super.desc();
+//    }
 }

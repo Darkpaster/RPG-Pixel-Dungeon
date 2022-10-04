@@ -33,7 +33,7 @@ public class ScrollOfLullaby extends Scroll {
 	{
 		name = "Scroll of Lullaby";
 		consumedValue = 5;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -63,7 +63,12 @@ public class ScrollOfLullaby extends Scroll {
 
 	@Override
 	public String desc() {
-		return "A soothing melody will lull all who hear it into a deep magical sleep. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+		updateCost();
+		return "A soothing melody will lull all who hear it into a deep magical sleep. \n\n" + TXT_MAGIC_INFO + currentCost();
+	}
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override

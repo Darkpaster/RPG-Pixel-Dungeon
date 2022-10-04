@@ -38,7 +38,7 @@ public class ScrollOfMirrorImage extends Scroll {
 	{
 		name = "Scroll of Mirror Image";
 		consumedValue = 5;
-		mp_cost = 10;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 	
 	private static final String TXT_PREVENTING = "Something scrambles the illusion magic! ";
@@ -89,9 +89,14 @@ public class ScrollOfMirrorImage extends Scroll {
 
 		curUser.spendAndNext(TIME_TO_READ);
 	}
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+	}
 
 	@Override
 	public String desc() {
-		return "The incantation on this scroll will create illusionary twins of the reader, which will chase his enemies. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+		updateCost();
+		return "The incantation on this scroll will create illusionary twins of the reader, which will chase his enemies. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
 }

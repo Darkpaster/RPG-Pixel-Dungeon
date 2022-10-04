@@ -57,7 +57,7 @@ public class Poison extends Buff implements Hero.Doom {
 
 	@Override
 	public String toString() {
-		return "Poisoned";
+		return "Poisoned (" + dispTurns(left) + ")";
 	}
 
 	@Override

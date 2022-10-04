@@ -31,7 +31,7 @@ public class Haste extends FlavourBuff {
 
 	@Override
 	public String toString() {
-		return "Haste";
+		return "Haste (" + dispTurns(dispTurnsInt()) + ")";
 	}
 
 	public static float duration(Char ch) {

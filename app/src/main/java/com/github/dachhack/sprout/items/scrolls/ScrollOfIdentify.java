@@ -24,6 +24,7 @@ import com.github.dachhack.sprout.effects.particles.ShadowParticle;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.utils.GLog;
 import com.github.dachhack.sprout.windows.WndBag;
+import com.watabou.utils.Random;
 
 public class ScrollOfIdentify extends InventoryScroll {
 
@@ -32,7 +33,7 @@ public class ScrollOfIdentify extends InventoryScroll {
 		inventoryTitle = "Select an item to identify";
 		mode = WndBag.Mode.UNIDENTIFED;
 		consumedValue = 10;
-		mp_cost = 5;
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 		bones = true;
 	}
 
@@ -44,10 +45,10 @@ public class ScrollOfIdentify extends InventoryScroll {
 
 		item.identify();
 		GLog.i("It is " + item);
-		if(item.cursed && Dungeon.hero.magicLevel > 30){
+		if(item.cursed && Random.Int(100) < Dungeon.hero.magicLevel){
 			item.uncurse();
 			Dungeon.hero.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
-			GLog.p("Because of your high magic level that scroll was powered.");
+			GLog.p("Your understanding of magic allowed you to read this scroll with additional effect.");
 		}
 
 		Badges.validateItemLevelAquired(item);
@@ -55,7 +56,13 @@ public class ScrollOfIdentify extends InventoryScroll {
 
 	@Override
 	public String desc() {
-		return "Permanently reveals all of the secrets of a single item. \n\n" + TXT_MAGIC_INFO;
+		updateCost();
+		return "Permanently reveals all of the secrets of a single item. \n\n" + TXT_MAGIC_INFO + currentCost();
+	}
+
+	@Override
+	protected void updateCost() {
+		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override

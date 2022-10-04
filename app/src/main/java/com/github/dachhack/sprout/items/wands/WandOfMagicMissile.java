@@ -71,12 +71,11 @@ public class WandOfMagicMissile extends Wand {
 
 	@Override
 	protected void onZap(int cell) {
-
 		Char ch = Actor.findChar(cell);
+		int level = level();
 		if (ch != null) {
 
-			int level = level() + Dungeon.hero.magicLevel / 10;
-            int damage= Random.Int(level+2, 6 + level * 2);
+            int damage = Random.Int(level+2, 6 + level * 2);
             if (Dungeon.hero.buff(Strength.class) != null){ damage *= (int) 4f; Buff.detach(Dungeon.hero, Strength.class);}
 			ch.damage(damage, this);
 

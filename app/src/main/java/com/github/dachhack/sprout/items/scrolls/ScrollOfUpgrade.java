@@ -24,6 +24,7 @@ import com.github.dachhack.sprout.effects.Speck;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.utils.GLog;
 import com.github.dachhack.sprout.windows.WndBag;
+import com.watabou.utils.Random;
 
 public class ScrollOfUpgrade extends InventoryScroll {
 
@@ -34,7 +35,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		inventoryTitle = "Select an item to upgrade";
 		mode = WndBag.Mode.UPGRADEABLE;
 		consumedValue = 15;
-		mp_cost = 5;
+		mp_cost = 3 * Dungeon.hero.magicLevel + 3;
 
 		bones = true;
 	}
@@ -42,21 +43,27 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	@Override
 	protected void onItemSelected(Item item) {
 
-		int powered = Dungeon.hero.magicLevel / 20;
-
 		ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
 
-		if(powered > 0){
-			for(int i = 0; i <= powered; i++){
+		if(useMP(Dungeon.hero)){
+			if(Random.Int(100) < Dungeon.hero.magicLevel){
 				item.upgrade();
+				item.upgrade();
+				GLog.p(TXT_LOOKS_BETTER, item.name());
+				GLog.p("Lucky us! With your magic power " + item.name() + " has been upgraded twice.");
+			}else{
+				item.upgrade();
+				GLog.p(TXT_LOOKS_BETTER, item.name());
+				GLog.w(TXT_FAILED);
 			}
 		}else{
 			item.upgrade();
+			GLog.p(TXT_LOOKS_BETTER, item.name());
+			GLog.n(TXT_LESSMP);
 		}
 
 
 		upgrade(curUser);
-		GLog.p(TXT_LOOKS_BETTER, item.name());
 
 		Badges.validateItemLevelAquired(item);
 	}
@@ -67,14 +74,17 @@ public class ScrollOfUpgrade extends InventoryScroll {
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "This scroll will upgrade a single item, improving its quality. A wand will "
 				+ "increase in power and in number of charges; a weapon will inflict more damage "
 				+ "or find its mark more frequently; a suit of armor will deflect additional blows; "
 				+ "the effect of a ring on its wearer will intensify. Weapons and armor will also "
-				+ "require less strength to use, and any curses on the item will be lifted. \n\nYou can increase the " +
-				"magical power of this scroll by leveling up your magic.";
+				+ "require less strength to use, and any curses on the item will be lifted. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 3 * Dungeon.hero.magicLevel + 3;
+	}
 
 	@Override
 	public int price() {

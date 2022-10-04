@@ -47,7 +47,7 @@ public class WandOfDisintegration extends Wand {
 
 		boolean terrainAffected = false;
 
-		int level = level() + Dungeon.hero.magicLevel / 10;
+		int level = level();
 
 		int maxDistance = distance();
 		Ballistica.distance = Math.min(Ballistica.distance, maxDistance);

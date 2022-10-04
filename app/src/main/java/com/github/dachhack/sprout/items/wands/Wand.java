@@ -51,6 +51,8 @@ public abstract class Wand extends KindOfWeapon {
 
 	public static final String AC_ZAP = "ZAP";
 
+	private static final String TXT_MAGIC_INFO = "You can increase the magical power of this wand by leveling up your magic.";
+
 	private static final String TXT_WOOD = "This thin %s wand is warm to the touch. Who knows what it will do when used?";
 	private static final String TXT_DAMAGE = "When this wand is used as a melee weapon, its average damage is %d points per hit.";
 	private static final String TXT_WEAPON = "You can use this wand as a melee weapon.";
@@ -74,6 +76,8 @@ public abstract class Wand extends KindOfWeapon {
 	private int usagesToKnow = USAGES_TO_KNOW;
 
 	protected boolean hitChars = true;
+
+	protected int mpCost = 1;
 
 	private static final Class<?>[] wands = { WandOfTeleportation.class,
 			WandOfSlowness.class, WandOfFirebolt.class, WandOfPoison.class,
@@ -104,6 +108,25 @@ public abstract class Wand extends KindOfWeapon {
 		handler = new ItemStatusHandler<Wand>((Class<? extends Wand>[]) wands,
 				woods, images);
 	}
+
+	public boolean updatedMPCost(){
+		mpCost = Dungeon.hero.magicLevel;
+		return Dungeon.hero.MP - mpCost > 0;
+	}
+	public boolean poweredZap(){
+		mpCost = Dungeon.hero.magicLevel;
+		boolean z = Dungeon.hero.MP - mpCost > 0;
+		if(z){
+			Dungeon.hero.MP -= mpCost;
+		}
+		return z;
+	}
+
+	protected String mpCostInfo(){
+		return updatedMPCost() ? "Powered magic is ready to zap. Currently it requires " + Integer.toString(mpCost) + " mana."
+				: "Now you have no enough mana for using enhanced magic. Currently it requires " + Integer.toString(mpCost) + " mana.";
+	}
+
 
 	public static void save(Bundle bundle) {
 		handler.save(bundle);
@@ -159,6 +182,7 @@ public abstract class Wand extends KindOfWeapon {
 
 	@Override
 	public void execute(Hero hero, String action) {
+
 		if (action.equals(AC_ZAP)) {
 
 			curUser = hero;
@@ -204,16 +228,22 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	public int level() {
-		
+		if(usagesToKnow != 50 - Dungeon.hero.magicLevel && usagesToKnow != 1){
+			usagesToKnow = Math.max(50 - Dungeon.hero.magicLevel, 1);
+		}
+			int m = poweredZap() ? Math.max(Dungeon.hero.magicLevel / 2, 0) : 0;
+		//System.out.println("m = " + m);
+		//System.out.println("poweredZap = " + poweredZap());
+
 		int magicLevel = 0;
 		if (charger != null) {
 			Magic magic = charger.target.buff(Magic.class);
 			if  (magic != null ){
 			    magicLevel = magic.level;
 			}
-			return magic == null ? level : Math.max(level + magicLevel, 0);
+			return magic == null ? level + m : Math.max(level + magicLevel, 0) + m;
 		} else {
-			return level;
+			return level + m;
 		}
 	}
 
@@ -272,6 +302,9 @@ public abstract class Wand extends KindOfWeapon {
 			}
 			
 		}
+		info.append(String.format(" " + TXT_MAGIC_INFO));
+		info.append("\n\n");
+		info.append(String.format(mpCostInfo()));
 		if(reinforced){
 			info.append(String.format(TXT_REINFORCED));
 		}

@@ -35,7 +35,7 @@ public class ScrollOfRecharging extends Scroll {
 	{
 		name = "Scroll of Recharging";
 		consumedValue = 10;
-		mp_cost = 50;
+		mp_cost = 4 * Dungeon.hero.magicLevel + 3;
 	}
 
 	@Override
@@ -56,22 +56,26 @@ public class ScrollOfRecharging extends Scroll {
 		}
 		setKnown();
 
-		if(curUser.magicLevel > 30){
-			int chance = Math.max(1000 / curUser.magicLevel, 2);
-			if(Random.Int(chance) == 0){
-				Dungeon.level.drop(Generator.random(WAND), curUser.pos);
-			}
-		}
+//		if(curUser.magicLevel > 30){
+//			int chance = Math.max(1000 / curUser.magicLevel, 2);
+//			if(Random.Int(chance) == 0){
+//				Dungeon.level.drop(Generator.random(WAND), curUser.pos);
+//			}
+//		}
 
 		curUser.spendAndNext(TIME_TO_READ);
 	}
 
 	@Override
 	public String desc() {
+		updateCost();
 		return "The raw magical power bound up in this parchment will, when released, "
-				+ "recharge all of the reader's wands to full power. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "recharge all of the reader's wands to full power. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
-
+	@Override
+	protected void updateCost() {
+		mp_cost = 4 * Dungeon.hero.magicLevel + 3;
+	}
 	public static void charge(Hero hero) {
 		hero.sprite.centerEmitter().burst(EnergyParticle.FACTORY, 15);
 	}

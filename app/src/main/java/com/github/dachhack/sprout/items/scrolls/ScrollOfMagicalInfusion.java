@@ -35,7 +35,7 @@ public class ScrollOfMagicalInfusion extends InventoryScroll {
 		inventoryTitle = "Select an item to infuse";
 		mode = WndBag.Mode.ENCHANTABLE;
 		consumedValue = 15;
-		mp_cost = 10;
+		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
 		bones = true;
 	}
 
@@ -56,9 +56,15 @@ public class ScrollOfMagicalInfusion extends InventoryScroll {
 	}
 
 	@Override
+	protected void updateCost() {
+		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
+	}
+
+	@Override
 	public String desc() {
+		updateCost();
 		return "This scroll will infuse a weapon or armor with powerful magical energy.\n\n"
 				+ "In addition to being upgraded, A weapon will gain a magical enchantment, or armor will be imbued with a magical glyph.\n\n"
-				+ "If the item already has an enchantment or glyph, it will be erased and replaced by the upgrade. \n\nYou can increase the magical power of this scroll by leveling up your magic.";
+				+ "If the item already has an enchantment or glyph, it will be erased and replaced by the upgrade. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
 }
