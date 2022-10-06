@@ -21,6 +21,17 @@ public class EnergyRegen extends Buff{
                 }
             }
 
+            if(hero.energy == 100 &&
+                    (hero.buff(Invisibility.class) != null || hero.buff(CloakOfShadows.cloakStealth.class) != null)){
+                if(hero.buff(Liquidation.class) == null){
+                    Buff.affect(hero, Liquidation.class);
+                }
+            }else{
+                if(hero.buff(Liquidation.class) != null) {
+                    Buff.detach(hero, Liquidation.class);
+                }
+            }
+
             float mLevel = hero.masteryLevel > 1 ? hero.masteryLevel / 2 * 0.01f : 0.01f;
             spend(Math.max(REGENERATION_DELAY - mLevel, 0.50f));
 

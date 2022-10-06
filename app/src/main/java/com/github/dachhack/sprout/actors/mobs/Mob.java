@@ -28,8 +28,7 @@ import com.github.dachhack.sprout.actors.buffs.*;
 import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.actors.hero.HeroSubClass;
-import com.github.dachhack.sprout.effects.Surprise;
-import com.github.dachhack.sprout.effects.Wound;
+import com.github.dachhack.sprout.effects.*;
 import com.github.dachhack.sprout.items.Generator;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.RedDewdrop;
@@ -94,6 +93,7 @@ public abstract class Mob extends Char {
 	public int getExp(){
 		return EXP;
 	}
+
 
 	public boolean isPassive(){
 		return state==PASSIVE;
@@ -163,6 +163,11 @@ public abstract class Mob extends Char {
 		alerted = false;
 
 		sprite.hideAlert();
+
+		sprite.parent.add(new Quests(Effects.Type.EXCLAMATION));
+		Quests quest = new Quests();
+		quest.update();
+		quest.draw();
 
 		if (paralysed) {
 			enemySeen = false;
@@ -252,7 +257,6 @@ public abstract class Mob extends Char {
 	}
 
 	protected boolean moveSprite(int from, int to) {
-
 		if (sprite.isVisible()
 				&& (Dungeon.visible[from] || Dungeon.visible[to])) {
 			sprite.move(from, to);
@@ -381,13 +385,15 @@ public abstract class Mob extends Char {
 	public int defenseProc(Char enemy, int damage) {
 		if (!enemySeen && enemy == Dungeon.hero) {
 			float mulDmg = Dungeon.hero.ambushDamage;
-			if((Dungeon.hero.buff(Invisibility.class) != null || Dungeon.hero.buff(CloakOfShadows.cloakStealth.class) != null) && Dungeon.hero.heroClass == HeroClass.ROGUE && Dungeon.hero.energy == 100){
-				mulDmg += 20.0f; //it doesn't work
+			if(Dungeon.hero.liquid){
+				mulDmg += 3.0f;
+				DoubleSlash.hit(this);
+			}else{
+				mulDmg += Dungeon.hero.energy / 2 * 0.01f + 0.05f;
 			}
-			mulDmg += Dungeon.hero.energy * 0.01f;
 
 			if (((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
-				damage *= 1.34f;
+				mulDmg += 0.34f;
 				damage *= mulDmg;
 				damage += mulDmg;
 				Wound.hit(this);
@@ -396,8 +402,9 @@ public abstract class Mob extends Char {
 				damage += mulDmg;
 				Surprise.hit(this);
 			}
-			GLog.h("Sneak attack!");
+			GLog.h("Sneak attack (" + mulDmg * 100 + "%)!");
 		}
+
 			return damage;
 	}
 

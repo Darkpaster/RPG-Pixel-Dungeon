@@ -77,7 +77,14 @@ public class BuffIndicator extends Component {
 	public static final int MOON_FURY = 41;	
 	public static final int DEWCHARGE = 42;
 	public static final int DISPEL = 43;
-	
+	public static final int LIQUIDATION = 44;
+
+	public static final int ENERGY_REGEN = 45;
+	public static final int MANA_REGEN = 46;
+	public static final int FULL_RAGE = 47;
+	public static final int CRITICAL = 48;
+	public static final int POISONED_WEAPON = 49;
+
 			
 	public static final int SIZE = 7;
 

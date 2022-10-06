@@ -237,7 +237,7 @@ public class Dungeon {
 		StartScene.curClass.initHero(hero);
 		
 		earlygrass = false;
-		playtest = true;
+		playtest = false;
 		gnollspawned = false;
 		skeletonspawned = false;
 		goldthiefspawned = false;

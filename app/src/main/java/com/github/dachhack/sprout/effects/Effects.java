@@ -26,6 +26,11 @@ public class Effects {
 		RIPPLE,
 		LIGHTNING,
 		WOUND,
+		LIQUIDATION,
+		NEW_QUEST,
+		ACTIVE_QUEST,
+		COMPLETED_QUEST,
+		UNAVAILABLE_QUEST,
 		EXCLAMATION,
 		CHAIN,
 		DEATH_RAY,
@@ -45,6 +50,23 @@ public class Effects {
 			case WOUND:
 				icon.frame(icon.texture.uvRect(16, 8, 32, 16));
 				break;
+			case LIQUIDATION:
+				icon.frame(icon.texture.uvRect(0, 26, 16, 38));
+				break;
+
+			case NEW_QUEST:
+				icon.frame(icon.texture.uvRect(0, 39, 29, 14));
+				break;
+			case COMPLETED_QUEST:
+				icon.frame(icon.texture.uvRect(3, 39, 22, 13));
+				break;
+			case ACTIVE_QUEST:
+				icon.frame(icon.texture.uvRect(9, 39, 16, 13));
+				break;
+			case UNAVAILABLE_QUEST:
+				icon.frame(icon.texture.uvRect(0, 44, 29, 4));
+				break;
+
 			case EXCLAMATION:
 				icon.frame(icon.texture.uvRect(0, 16, 6, 25));
 				break;

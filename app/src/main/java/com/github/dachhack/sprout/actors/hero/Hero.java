@@ -142,6 +142,8 @@ public class Hero extends Char {
 	public boolean levelup = false;
 
 	public boolean ready = false;
+
+	public boolean liquid = false;
 	
 	public boolean haspet = false;
 	public boolean petfollow = false;
@@ -281,6 +283,17 @@ public class Hero extends Char {
 
 	private static final String MASTERY_LEVEL = "mastery level";
 	private static final String PHYSIC_LEVEL = "physic level";
+	private static final String MANA = "mana";
+	private static final String MANA_TOTAL = "mana total";
+	private static final String ENERGY_TOTAL = "energy total";
+	private static final String RAGE_TOTAL = "rage total";
+	private static final String BONUS_DMG = "bonus damage";
+	private static final String TXT_DR = "dr";
+
+	private static final String ADD_AS = "addAS";
+	private static final String BASE_MASTERY = "base mastery";
+	private static final String BASE_PHYSIC = "base physical";
+	private static final String BASE_MAGIC = "base magic";
 
 
 	@Override
@@ -317,6 +330,20 @@ public class Hero extends Char {
 		bundle.put(REGENERATION_DELAY, regeneration_delay);
 		bundle.put(REGENERATION_POWER, regeneration_power);
 		bundle.put(LEVELUP, levelup);
+
+		bundle.put(ENERGY, energy);
+		bundle.put(RAGE, rage);
+		bundle.put(MANA, MP);
+		bundle.put(MANA_TOTAL, MT);
+		bundle.put(ENERGY_TOTAL, energyTotal);
+		bundle.put(RAGE_TOTAL, rageTotal);
+
+		bundle.put(BONUS_DMG, bonusDamage);
+		bundle.put(TXT_DR, DR);
+		bundle.put(ADD_AS, additAS);
+		bundle.put(BASE_MAGIC, baseMagic);
+		bundle.put(BASE_MASTERY, baseMastery);
+		bundle.put(BASE_PHYSIC, basePhysic);
 
 		belongings.storeInBundle(bundle);
 	}
@@ -355,6 +382,21 @@ public class Hero extends Char {
 		regeneration_delay = bundle.getFloat(REGENERATION_DELAY);
 		regeneration_power = bundle.getInt(REGENERATION_POWER);
 
+		rage = bundle.getInt(RAGE);
+		energy = bundle.getInt(ENERGY);
+		energyTotal = bundle.getInt(ENERGY_TOTAL);
+		rageTotal = bundle.getInt(RAGE_TOTAL);
+		MP = bundle.getInt(MANA);
+		MT = bundle.getInt(MANA_TOTAL);
+
+		bonusDamage = bundle.getInt(BONUS_DMG);
+		DR = bundle.getInt(TXT_DR);
+
+		additAS = bundle.getInt(ADD_AS);
+		baseMastery = bundle.getInt(BASE_MASTERY);
+		baseMagic = bundle.getInt(BASE_MAGIC);
+		basePhysic = bundle.getInt(BASE_PHYSIC);
+
 		levelup = bundle.getBoolean(LEVELUP);
 
 		belongings.restoreFromBundle(bundle);
@@ -377,9 +419,11 @@ public class Hero extends Char {
 		Buff.affect(this, Regeneration.class);
 		Buff.affect(this, Hunger.class);
 		Buff.affect(this, ManaRegen.class);
-		Buff.affect(this, EnergyRegen.class);
-		Buff.affect(this, RageRegen.class);
-
+		if(this.heroClass == HeroClass.WARRIOR){
+			Buff.affect(this, RageRegen.class);
+		}else if(this.heroClass != HeroClass.MAGE){
+			Buff.affect(this, EnergyRegen.class);
+		}
 	}
 
 	public void adjustStats(){
@@ -417,14 +461,14 @@ public class Hero extends Char {
 		}
 		if(masteryLevel != baseMastery){
 			int diff = masteryLevel - baseMastery;
-			int i = masteryLevel / 5 - baseMastery / 5;
-			int i2 = masteryLevel / 2 - baseMastery / 2;
-			int i3 = masteryLevel / 10 - baseMastery / 10;
+//			int i = masteryLevel / 5 - baseMastery / 5;
+//			int i2 = masteryLevel / 2 - baseMastery / 2;
+//			int i3 = masteryLevel / 10 - baseMastery / 10;
 			if(diff > 0){
 				float ad = attackDelay();
 				float part = 1.0f - critStrikeChance;
 				for (int j = 0; j < diff; j++) {
-					ambushDamage += 0.05f;
+					ambushDamage += 0.03f;
 					speed += 0.02f;
 					critDamage += 0.02f;
 					additAS += ad * 0.03f;
@@ -1346,9 +1390,11 @@ public class Hero extends Char {
 	private void energyAttack(){
 		//int lvl = Math.min(500 / masteryLevel, 14);
 		if(energy == 100 && this.buff(Invisibility.class) != null || this.buff(CloakOfShadows.cloakStealth.class) != null && energy == 100){
-			energy -= Random.NormalIntRange(40, 60);
+			energy -= Random.NormalIntRange(55, 65);
+			liquid = true;
 		}else{
 			energy -= Random.NormalIntRange(8, 12);
+			liquid = false;
 		}
 		if(energy < 0){
 			missingEnergy = energy;
@@ -1744,7 +1790,7 @@ public class Hero extends Char {
 			levelup = true;
 
 			if(lvl % 5 == 0){
-				//GameScene.show(new WndLevelUp(this));
+				GameScene.show(new WndLevelUp(this));
 			}
 
 			adjustStats();
@@ -2011,6 +2057,10 @@ public class Hero extends Char {
 		curAction = null;
 
 		Invisibility.dispel();
+
+		if(this.buff(Liquidation.class) != null) {
+			Buff.detach(this, Liquidation.class);
+		}
 
 		super.onAttackComplete();
 	}

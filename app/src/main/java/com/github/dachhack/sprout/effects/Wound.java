@@ -35,6 +35,10 @@ public class Wound extends Image {
 		super(Effects.get(Effects.Type.WOUND));
 		origin.set(width / 2, height / 2);
 	}
+//	public Wound(Effects.Type type) {
+//		super(Effects.get(type));
+//		origin.set(width / 2, height / 2);
+//	}
 
 	public void reset(int p) {
 		revive();

@@ -20,6 +20,8 @@ package com.github.dachhack.sprout.actors.mobs.npcs;
 import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.actors.Char;
 import com.github.dachhack.sprout.actors.buffs.Buff;
+import com.github.dachhack.sprout.effects.Effects;
+import com.github.dachhack.sprout.effects.Quests;
 import com.github.dachhack.sprout.items.DewVial;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.Mushroom;
@@ -34,6 +36,8 @@ public class Tinkerer1 extends NPC {
 	{
 		name = "tinkerer";
 		spriteClass = TinkererSprite.class;
+		//Quests eff = new Quests(Effects.Type.NEW_QUEST);
+		//this.sprite.add(Quests.class);
 	}
 
 	private static final String TXT_DUNGEON = "Oh wow, have you seen this dungeon! This is an awesome dungeon.  "

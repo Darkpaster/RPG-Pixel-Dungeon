@@ -24,6 +24,7 @@ import com.github.dachhack.sprout.actors.Actor;
 import com.github.dachhack.sprout.actors.buffs.Buff;
 import com.github.dachhack.sprout.actors.buffs.Dewcharge;
 import com.github.dachhack.sprout.actors.buffs.Hunger;
+import com.github.dachhack.sprout.actors.buffs.Invisibility;
 import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.actors.mobs.Mob;
@@ -31,6 +32,7 @@ import com.github.dachhack.sprout.actors.mobs.pets.PET;
 import com.github.dachhack.sprout.effects.Speck;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.OtilukesJournal;
+import com.github.dachhack.sprout.items.artifacts.CloakOfShadows;
 import com.github.dachhack.sprout.items.food.Blackberry;
 import com.github.dachhack.sprout.items.food.Blueberry;
 import com.github.dachhack.sprout.items.food.ChargrilledMeat;
@@ -274,8 +276,8 @@ public class WndHero extends WndTabbed {
 			//startPos = pos;
 
 
-			statSlot(TXT_ACCURACY, hero.getAttackSkill());
-			statSlot(TXT_EVASION, hero.getDefenseSkill());
+			statSlot("Damage", hero.damageRoll());
+			statSlot(TXT_ACCURACY + "/" + TXT_EVASION, hero.getAttackSkill() + "/" + hero.getDefenseSkill());
 			statSlot(TXT_STR, hero.STR());
 			statSlot(TXT_DR, hero.dr());
 			statSlot(TXT_HEALTH, hero.HP + "/" + hero.HT);
@@ -283,7 +285,14 @@ public class WndHero extends WndTabbed {
 			statSlot(TXT_CRITICAL, decimalFormat(hero.critStrikeChance * 100) + "%/" + decimalFormat(hero.critDamage * 100) + "%");
 			statSlot(TXT_ATTACK_SPEED, decimalFormat2(hero.attackDelay()));
 			statSlot(TXT_SPEED, decimalFormat2(hero.speed()));
-			statSlot(TXT_AMBUSH,  decimalFormat(hero.ambushDamage * 100) + "%");
+
+			if(hero.energy == 100 && (hero.buff(Invisibility.class) != null || hero.buff(CloakOfShadows.cloakStealth.class) != null))
+			{
+				statSlot(TXT_AMBUSH, decimalFormat(hero.ambushDamage * 100 + 300) + "%");
+			}else{
+				statSlot(TXT_AMBUSH,  decimalFormat(hero.ambushDamage * 100 + hero.energy / 2) + "%");
+			}
+
 
 			pos += GAP;
 

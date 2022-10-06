@@ -110,6 +110,8 @@ com/github/dachhack/sprout/actors/buffs/SnipersMark.java
  com.github.dachhack.sprout.actors.buffs.SnipersMark
 com/github/dachhack/sprout/items/journalpages/JournalPage.java
  com.github.dachhack.sprout.items.journalpages.JournalPage
+com/github/dachhack/sprout/actors/buffs/Liquidation.java
+ com.github.dachhack.sprout.actors.buffs.Liquidation
 com/github/dachhack/sprout/actors/buffs/Frost.java
  com.github.dachhack.sprout.actors.buffs.Frost
 com/github/dachhack/sprout/levels/features/AlchemyPot.java
@@ -309,6 +311,8 @@ com/github/dachhack/sprout/sprites/SpiderSprite.java
  com.github.dachhack.sprout.sprites.SpiderSprite
 com/watabou/glwrap/Attribute.java
  com.watabou.glwrap.Attribute
+com/github/dachhack/sprout/effects/DoubleSlash.java
+ com.github.dachhack.sprout.effects.DoubleSlash
 com/github/dachhack/sprout/ui/Archs.java
  com.github.dachhack.sprout.ui.Archs
 com/github/dachhack/sprout/ui/DangerIndicator.java
@@ -1165,6 +1169,8 @@ com/github/dachhack/sprout/items/potions/PotionOfMending.java
 com/github/dachhack/sprout/items/wands/WandOfFlock.java
  com.github.dachhack.sprout.items.wands.WandOfFlock
  com.github.dachhack.sprout.items.wands.WandOfFlock$Sheep
+com/github/dachhack/sprout/effects/Quests.java
+ com.github.dachhack.sprout.effects.Quests
 com/github/dachhack/sprout/items/armor/glyphs/Displacement.java
  com.github.dachhack.sprout.items.armor.glyphs.Displacement
 com/github/dachhack/sprout/items/HallsKey.java
@@ -1718,6 +1724,8 @@ com/github/dachhack/sprout/actors/mobs/npcs/Ghost.java
  com.github.dachhack.sprout.actors.mobs.npcs.Ghost$GnollTrickster
  com.github.dachhack.sprout.actors.mobs.npcs.Ghost$GreatCrab
  com.github.dachhack.sprout.actors.mobs.npcs.Ghost$Quest
+com/github/dachhack/sprout/actors/buffs/Concentration.java
+ com.github.dachhack.sprout.actors.buffs.Concentration
 com/github/dachhack/sprout/sprites/BlacksmithSprite.java
  com.github.dachhack.sprout.sprites.BlacksmithSprite
 com/github/dachhack/sprout/plants/Stormvine.java
