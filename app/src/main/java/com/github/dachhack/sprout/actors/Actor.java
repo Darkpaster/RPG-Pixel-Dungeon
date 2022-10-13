@@ -46,6 +46,8 @@ public abstract class Actor implements Bundlable {
 		this.time += time;
 	}
 
+	protected float getTime(){return this.time;}
+
 	protected void postpone(float time) {
 		if (this.time < now + time) {
 			this.time = now + time;

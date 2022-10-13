@@ -51,6 +51,7 @@ import com.github.dachhack.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfRemoveCurse;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.dachhack.sprout.items.spells.SpellBook;
 import com.github.dachhack.sprout.items.wands.Wand;
 import com.github.dachhack.sprout.items.wands.WandOfFlock;
 import com.github.dachhack.sprout.items.wands.WandOfMagicMissile;
@@ -170,6 +171,8 @@ public enum HeroClass {
 		hero.rage = 0;
 		hero.rageTotal = 100;
 		hero.setMP(5);
+		hero.HP += 1000;
+		hero.HT = hero.HP;
 		
 
 		(hero.belongings.weapon = new ShortSword()).identify();
@@ -244,6 +247,7 @@ public enum HeroClass {
 	}
 
 	public void playtest(Hero hero) {
+		Dungeon.hero.spellbook.learnSpell(SpellBook.spellList.MORTAL_STRIKE);
 		if (!Dungeon.playtest){
 		//Playtest
 		//TomeOfMastery tome = new TomeOfMastery(); tome.collect();
@@ -346,21 +350,21 @@ public enum HeroClass {
 		
 		         
 		 			for(int i=0; i<199; i++){
-					Scroll scroll = new ScrollOfMagicalInfusion();
-			        scroll.identify().collect();
-			        Scroll scroll2 = new ScrollOfUpgrade();
-			        scroll2.identify().collect();  
-			       
-			        Scroll scroll3 = new ScrollOfIdentify();
-			        scroll3.identify().collect();  
-			        Scroll scroll4 = new ScrollOfRemoveCurse();
-			        scroll4.identify().collect(); 
-			        Scroll scroll5 = new ScrollOfPsionicBlast();
-			        scroll5.identify().collect(); 
+//					Scroll scroll = new ScrollOfMagicalInfusion();
+//			        scroll.identify().collect();
+//			        Scroll scroll2 = new ScrollOfUpgrade();
+//			        scroll2.identify().collect();
+//
+//			        Scroll scroll3 = new ScrollOfIdentify();
+//			        scroll3.identify().collect();
+//			        Scroll scroll4 = new ScrollOfRemoveCurse();
+//			        scroll4.identify().collect();
+//			        Scroll scroll5 = new ScrollOfPsionicBlast();
+//			        scroll5.identify().collect();
 
-					if(i % 5 == 0) {
-						hero.earnExp(hero.maxExp() - hero.exp);
-					}
+//					if(i % 10 == 0) {
+//						hero.earnExp(hero.maxExp() - hero.exp);
+//					}
 					}
 				
 				/*

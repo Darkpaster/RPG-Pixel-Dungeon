@@ -288,7 +288,7 @@ public class WndHero extends WndTabbed {
 
 			if(hero.energy == 100 && (hero.buff(Invisibility.class) != null || hero.buff(CloakOfShadows.cloakStealth.class) != null))
 			{
-				statSlot(TXT_AMBUSH, decimalFormat(hero.ambushDamage * 100 + 300) + "%");
+				statSlot(TXT_AMBUSH, decimalFormat(hero.ambushDamage * 100 + hero.liqDmg * 100) + "%");
 			}else{
 				statSlot(TXT_AMBUSH,  decimalFormat(hero.ambushDamage * 100 + hero.energy / 2) + "%");
 			}

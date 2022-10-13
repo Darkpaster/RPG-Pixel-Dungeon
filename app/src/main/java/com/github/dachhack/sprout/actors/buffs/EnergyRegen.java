@@ -14,7 +14,7 @@ public class EnergyRegen extends Buff{
         if (target.isAlive()) {
 
             if (hero.energy < hero.energyTotal && !((Hero) target).isStarving()) {
-                if(hero.buff(Invisibility.class) != null || hero.buff(CloakOfShadows.cloakStealth.class) != null){
+                if(hero.buff(PoweredEnergyRegen.class) != null){
                     hero.energy += 2;
                 }else{
                     hero.energy += 1;

@@ -21,41 +21,41 @@ import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.spells.Spell;
 import com.github.dachhack.sprout.sprites.ItemSpriteSheet;
 
-public class SpellBook extends Bag {
-
-	{
-		name = "spell book";
-		//image = ItemSpriteSheet.SPELLBOOK;
-		image = ItemSpriteSheet.BONE;
-
-		size = 29;
-	}
-
-	@Override
-	public boolean grab(Item item) {
-		return item instanceof Spell;
-	}
-
-	@Override
-	public boolean collect(Bag container) {
-		if (super.collect(container)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-
-	@Override
-	public int price() {
-		return 50;
-	}
-
-	@Override
-	public String info() {
-		return "Your trusty spell book holds "
-				+ size
-				+ " spells.\n\n"
-				+ "Seeing as you are a magic user, this is probably something you'll want to hold onto.";
-	}
-}
+//public class SpellBook extends Bag {
+//
+//	{
+//		name = "spell book";
+//		//image = ItemSpriteSheet.SPELLBOOK;
+//		image = ItemSpriteSheet.BONE;
+//
+//		size = 29;
+//	}
+//
+//	@Override
+//	public boolean grab(Item item) {
+//		return item instanceof Spell;
+//	}
+//
+//	@Override
+//	public boolean collect(Bag container) {
+//		if (super.collect(container)) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+//
+//
+//	@Override
+//	public int price() {
+//		return 50;
+//	}
+//
+//	@Override
+//	public String info() {
+//		return "Your trusty spell book holds "
+//				+ size
+//				+ " spells.\n\n"
+//				+ "Seeing as you are a magic user, this is probably something you'll want to hold onto.";
+//	}
+//}

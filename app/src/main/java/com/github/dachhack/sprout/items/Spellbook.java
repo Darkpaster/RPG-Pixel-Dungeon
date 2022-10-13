@@ -218,7 +218,7 @@ public class Spellbook extends Item {
 		public void onSelect(Item item) {
 			if (item != null && item instanceof Spell) {
 				Hero hero = Dungeon.hero;
-				int spellnum = ((Spell) item).spellnum;
+				//int spellnum = ((Spell) item).spellnum;
 			
 				hero.sprite.operate(hero.pos);
 				hero.busy();
@@ -230,7 +230,7 @@ public class Spellbook extends Item {
 				GLog.h("You add the spell to your book!");							
 				
 				
-				spells[spellnum] = true;				
+				//spells[spellnum] = true;
 				
 		}
 	 }

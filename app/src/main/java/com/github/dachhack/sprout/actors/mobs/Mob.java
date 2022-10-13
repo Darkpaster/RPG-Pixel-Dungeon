@@ -164,10 +164,10 @@ public abstract class Mob extends Char {
 
 		sprite.hideAlert();
 
-		sprite.parent.add(new Quests(Effects.Type.EXCLAMATION));
-		Quests quest = new Quests();
-		quest.update();
-		quest.draw();
+//		sprite.parent.add(new Quests(Effects.Type.EXCLAMATION));
+//		Quests quest = new Quests();
+//		quest.update();
+//		quest.draw();
 
 		if (paralysed) {
 			enemySeen = false;
@@ -386,7 +386,7 @@ public abstract class Mob extends Char {
 		if (!enemySeen && enemy == Dungeon.hero) {
 			float mulDmg = Dungeon.hero.ambushDamage;
 			if(Dungeon.hero.liquid){
-				mulDmg += 3.0f;
+				mulDmg += Dungeon.hero.liqDmg;
 				DoubleSlash.hit(this);
 			}else{
 				mulDmg += Dungeon.hero.energy / 2 * 0.01f + 0.05f;

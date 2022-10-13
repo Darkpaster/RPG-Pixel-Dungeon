@@ -25,20 +25,15 @@ import com.github.dachhack.sprout.actors.Actor;
 import com.github.dachhack.sprout.actors.mobs.Mob;
 import com.github.dachhack.sprout.items.Heap;
 import com.github.dachhack.sprout.items.Item;
+import com.github.dachhack.sprout.items.Spellbook;
+import com.github.dachhack.sprout.items.spells.SpellBook;
 import com.github.dachhack.sprout.levels.Level;
 import com.github.dachhack.sprout.plants.Plant;
 import com.github.dachhack.sprout.scenes.CellSelector;
 import com.github.dachhack.sprout.scenes.GameScene;
 import com.github.dachhack.sprout.sprites.ItemSprite;
-import com.github.dachhack.sprout.windows.WndBag;
-import com.github.dachhack.sprout.windows.WndCatalogus;
-import com.github.dachhack.sprout.windows.WndHero;
-import com.github.dachhack.sprout.windows.WndInfoCell;
-import com.github.dachhack.sprout.windows.WndInfoItem;
-import com.github.dachhack.sprout.windows.WndInfoMob;
-import com.github.dachhack.sprout.windows.WndInfoPlant;
-import com.github.dachhack.sprout.windows.WndMessage;
-import com.github.dachhack.sprout.windows.WndTradeItem;
+import com.github.dachhack.sprout.utils.GLog;
+import com.github.dachhack.sprout.windows.*;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Gizmo;
 import com.watabou.noosa.Image;
@@ -52,8 +47,10 @@ public class Toolbar extends Component {
 	private Tool btnInfo;
 	private Tool btnResume;
 	private Tool btnInventory;
+	private Tool btnSpells;
 	private Tool btnQuick;
 	private Tool btnQuick2;
+	//private SpellButton spell;
 
 	public static int QuickSlots;
 
@@ -73,6 +70,9 @@ public class Toolbar extends Component {
 
 	@Override
 	protected void createChildren() {
+
+		//add(spell = new SpellButton("test"));
+		//spell.createChildren();
 
 		add(btnWait = new Tool(0, 7, 20, 24) {
 			@Override
@@ -119,6 +119,14 @@ public class Toolbar extends Component {
 		 * @Override protected void onClick() { Dungeon.hero.resume(); } } );
 		 */
 
+		add(btnSpells = new Tool(40, 7, 21, 24) {
+			@Override
+			protected void onClick() {
+				GameScene.show(new WndSpellBook(Dungeon.hero.spellbook, null, "Spell Book"));
+				//GLog.p("It works!");
+			}
+				});
+
 		add(btnInventory = new Tool(82, 7, 23, 24) {
 			private GoldIndicator gold;
 
@@ -162,6 +170,7 @@ public class Toolbar extends Component {
 		btnWait.setPos(x, y);
 		btnSearch.setPos(btnWait.right(), y);
 		btnInfo.setPos(btnSearch.right(), y);
+		btnSpells.setPos(btnInfo.right(), y);
 		// btnResume.setPos( btnInfo.right(), y );
 		btnQuick.setPos(width - btnQuick.width(), y);
 		btnQuick2.setPos(btnQuick.left() - btnQuick2.width(), y);

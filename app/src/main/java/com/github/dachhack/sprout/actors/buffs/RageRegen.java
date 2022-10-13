@@ -14,6 +14,7 @@ public class RageRegen extends Buff{
         if (target.isAlive()) {
 
             if (hero.rage > 0 && hero.HP > hero.HT / 10) {
+                //System.out.println("2222222222222222");
                 if(hero.rage > hero.rageTotal - hero.rageTotal / 3){
                     hero.rage -= 3;
                 }else if(hero.rage > hero.rageTotal / 2){

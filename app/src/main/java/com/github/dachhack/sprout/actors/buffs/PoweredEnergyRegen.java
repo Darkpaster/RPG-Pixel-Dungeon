@@ -1,16 +1,15 @@
 package com.github.dachhack.sprout.actors.buffs;
 
-import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.ui.BuffIndicator;
 
-public class Liquidation extends Buff{
+public class PoweredEnergyRegen extends Buff{
     @Override
     public String toString() {
-        return "Liquidation";
+        return "Powered energy regen";
     }
 
     @Override
     public int icon() {
-        return BuffIndicator.LIQUIDATION;
+        return BuffIndicator.ENERGY_REGEN;
     }
 }

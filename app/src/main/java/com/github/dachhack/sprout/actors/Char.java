@@ -281,12 +281,19 @@ public abstract class Char extends Actor {
 	public void setSpeed(float speed){this.speed = speed;}
 
 	public float speed() {
+		boolean z = this.buff(Invisibility.class) != null || this.buff(CloakOfShadows.cloakStealth.class) != null;
+		float speed1;
+		if(z && this == Dungeon.hero && Dungeon.hero.invisSpeed){
+			speed1 = speed + 1.0f;
+		}else{
+			speed1 = speed;
+		}
 		if (buff(Cripple.class) != null){
-			return speed * 0.5f;
+			return speed1 * 0.5f;
 		} else if (buff(Haste.class) != null){
-			return speed * 2f;
+			return speed1 * 2f;
 		} else {
-			return speed;
+			return speed1;
 		}
 		
 		

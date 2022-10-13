@@ -34,18 +34,8 @@ import com.github.dachhack.sprout.effects.CellEmitter;
 import com.github.dachhack.sprout.effects.CheckedCell;
 import com.github.dachhack.sprout.effects.Flare;
 import com.github.dachhack.sprout.effects.Speck;
-import com.github.dachhack.sprout.items.Amulet;
-import com.github.dachhack.sprout.items.Ankh;
-import com.github.dachhack.sprout.items.DewVial;
-import com.github.dachhack.sprout.items.Dewdrop;
-import com.github.dachhack.sprout.items.EasterEgg;
-import com.github.dachhack.sprout.items.Egg;
-import com.github.dachhack.sprout.items.Heap;
+import com.github.dachhack.sprout.items.*;
 import com.github.dachhack.sprout.items.Heap.Type;
-import com.github.dachhack.sprout.items.Item;
-import com.github.dachhack.sprout.items.KindOfWeapon;
-import com.github.dachhack.sprout.items.OtilukesJournal;
-import com.github.dachhack.sprout.items.ShadowDragonEgg;
 import com.github.dachhack.sprout.items.armor.glyphs.Viscosity;
 import com.github.dachhack.sprout.items.artifacts.*;
 import com.github.dachhack.sprout.items.keys.GoldenKey;
@@ -70,6 +60,7 @@ import com.github.dachhack.sprout.items.scrolls.ScrollOfMagicMapping;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfRecharging;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.dachhack.sprout.items.spells.SpellBook;
 import com.github.dachhack.sprout.items.wands.Wand;
 import com.github.dachhack.sprout.items.weapon.melee.MeleeWeapon;
 import com.github.dachhack.sprout.items.weapon.missiles.MissileWeapon;
@@ -99,6 +90,7 @@ import com.github.dachhack.sprout.windows.WndTradeItem;
 import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
+import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
@@ -130,7 +122,23 @@ public class Hero extends Char {
 	private static final float TIME_TO_REST = 1f;
 	private static final float TIME_TO_SEARCH = 2f;
 
+	private int curPos = 0;
+
+	public boolean invisRegen = false;
+	public boolean invisSpeed = false;
+	public boolean eatingEnergy = false; //+ energy for eating
+
+	public boolean daggerMaster = false; //+ crit dmg/chance for wearing daggers
+	public boolean invisAttacks = false; //attacks dont detach invis
+	public boolean bombsDamage = false; //powered bombs
+
+	public boolean shadowStep = false;
+	public boolean rapcha = false;
+	public boolean poisons = false;
+
 	public float regeneration_delay;
+
+	public float liqDmg = 3.0f;
 	public int regeneration_power;
 
 	public HeroClass heroClass = HeroClass.ROGUE;
@@ -208,6 +216,8 @@ public class Hero extends Char {
 
 	public int missingEnergy = 0;
 
+	public SpellBook spellbook;
+
 
 
 	private ArrayList<Mob> visibleEnemies;
@@ -238,6 +248,7 @@ public class Hero extends Char {
 		regeneration_power = 1;
 
 		belongings = new Belongings(this);
+		spellbook = new SpellBook();
 
 		visibleEnemies = new ArrayList<Mob>();
 	}
@@ -294,6 +305,11 @@ public class Hero extends Char {
 	private static final String BASE_MASTERY = "base mastery";
 	private static final String BASE_PHYSIC = "base physical";
 	private static final String BASE_MAGIC = "base magic";
+	private static final String LIQ_DMG = "liq dmg";
+	private static final String INVISIBILITY_REGEN = "invis regen";
+	private static final String INVISIBILITY_SPEED = "invis speed";
+	private static final String EATING_ENERGY = "eating energy";
+	private static final String SPELL_BOOK = "spell book";
 
 
 	@Override
@@ -344,8 +360,14 @@ public class Hero extends Char {
 		bundle.put(BASE_MAGIC, baseMagic);
 		bundle.put(BASE_MASTERY, baseMastery);
 		bundle.put(BASE_PHYSIC, basePhysic);
+		bundle.put(LIQ_DMG, liqDmg);
+		bundle.put(INVISIBILITY_REGEN, invisRegen);
+		bundle.put(INVISIBILITY_SPEED, invisSpeed);
+		bundle.put(EATING_ENERGY, eatingEnergy);
 
 		belongings.storeInBundle(bundle);
+		spellbook.storeInBundle(bundle);
+		//bundle.put(SPELL_BOOK, spellbook);
 	}
 
 	@Override
@@ -396,10 +418,18 @@ public class Hero extends Char {
 		baseMastery = bundle.getInt(BASE_MASTERY);
 		baseMagic = bundle.getInt(BASE_MAGIC);
 		basePhysic = bundle.getInt(BASE_PHYSIC);
+		liqDmg = bundle.getInt(LIQ_DMG);
+		invisRegen = bundle.getBoolean(INVISIBILITY_REGEN);
+		invisSpeed = bundle.getBoolean(INVISIBILITY_SPEED);
+		eatingEnergy = bundle.getBoolean(EATING_ENERGY);
 
 		levelup = bundle.getBoolean(LEVELUP);
 
 		belongings.restoreFromBundle(bundle);
+		spellbook.restoreFromBundle(bundle);
+		System.out.println(spellbook.getSpells());
+		//Bundlable b = bundle.get(SPELL_BOOK);
+		//spellbook = (SpellBook) b;
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle) {
@@ -419,11 +449,13 @@ public class Hero extends Char {
 		Buff.affect(this, Regeneration.class);
 		Buff.affect(this, Hunger.class);
 		Buff.affect(this, ManaRegen.class);
-		if(this.heroClass == HeroClass.WARRIOR){
+		//if(Dungeon.hero.heroClass == HeroClass.WARRIOR){
+			//System.out.println("11111111111111");
 			Buff.affect(this, RageRegen.class);
-		}else if(this.heroClass != HeroClass.MAGE){
+		//}else if(Dungeon.hero.heroClass != HeroClass.MAGE){
+			//System.out.println("33333333333333333");
 			Buff.affect(this, EnergyRegen.class);
-		}
+		//}
 	}
 
 	public void adjustStats(){
@@ -689,7 +721,7 @@ public class Hero extends Char {
 		if (!(buff != null && buff.processTime(time)))
 			super.spend(time);
 	};
-
+private float crTime = 0;
 	public void spendAndNext(float time) {
 		busy();
 		spend(time);
@@ -700,6 +732,21 @@ public class Hero extends Char {
 	public boolean act() {
 
 		super.act();
+
+
+if(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Attack){
+
+}else {
+	boolean z = this.buff(PoweredEnergyRegen.class) == null;
+
+	if(crTime == 0){
+		crTime = getTime();
+	}
+	if (z && crTime != 0 && getTime() - crTime >= 1) {
+				Buff.affect(this, PoweredEnergyRegen.class);
+			}
+}
+
 
 /*
 		if(levelup){
@@ -760,6 +807,7 @@ public class Hero extends Char {
 				if (isStarving() || HP >= HT) {
 					restoreHealth = false;
 				} else {
+					//System.out.println("ajajajajajajaajajJAAJAJAJAJAJA");
 					spend(TIME_TO_REST);
 					next();
 					return false;
@@ -770,6 +818,7 @@ public class Hero extends Char {
 			return false;
 
 		} else {
+
 
 			restoreHealth = false;
 
@@ -861,6 +910,18 @@ public class Hero extends Char {
 	private boolean actMove(HeroAction.Move action) {
 
 		if (getCloser(action.dst)) {
+
+			boolean z = this.buff(PoweredEnergyRegen.class) == null;
+			if ((this.buff(Invisibility.class) != null || this.buff(CloakOfShadows.cloakStealth.class) != null) && invisRegen) {
+							if (z) {
+				Buff.affect(this, PoweredEnergyRegen.class);
+			}
+			}else{
+				if(!z){
+					Buff.detach(this, PoweredEnergyRegen.class);
+					crTime = 0;
+				}
+			}
 
 			return true;
 
@@ -1409,6 +1470,11 @@ public class Hero extends Char {
 
 		enemy = action.target;
 
+		boolean z = this.buff(PoweredEnergyRegen.class) == null;
+		if(!z){
+			Buff.detach(this, PoweredEnergyRegen.class);
+			crTime = 0;
+		}
 
 		//rage += 3;
 
@@ -1789,9 +1855,9 @@ public class Hero extends Char {
 
 			levelup = true;
 
-			if(lvl % 5 == 0){
-				GameScene.show(new WndLevelUp(this));
-			}
+			//if(lvl % 5 == 0){
+				GameScene.show(new WndLevelUp(this, lvl));
+			//}
 
 			adjustStats();
 			HP = HT;
