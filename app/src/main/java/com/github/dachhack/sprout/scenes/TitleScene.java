@@ -158,12 +158,18 @@ public class TitleScene extends PixelScene {
 		source.y = h - source.height();
 		add(source);
 
+		BitmapText versionSPD = new BitmapText("SPD v 0.4.1", font1x);
+		versionSPD.measure();
+		versionSPD.hardlight(0x444444);
+		versionSPD.x = w - versionSPD.width();
+		versionSPD.y = h - versionSPD.height() - source.height();
+		add(versionSPD);
+
 		BitmapText version = new BitmapText("v " + Game.version + "", font1x);
 		version.measure();
-		version.hardlight(0xCCCCCC);
+		version.hardlight(0xcccccc);
 		version.x = w - version.width();
-		version.y = h - version.height() - source.height();
-
+		version.y = h - version.height() - versionSPD.height() * 2;
 		add(version);
 
 		PrefsButton btnPrefs = new PrefsButton();

@@ -98,6 +98,13 @@ public class KindOfWeapon extends EquipableItem {
 		return Random.Roll(DIE, SIDES);
 	}
 
+	public int damageMin(Hero owner){
+		return Random.min(DIE, SIDES);
+	}
+	public int damageMax(Hero owner){
+		return Random.max(DIE, SIDES);
+	}
+
 	public float acuracyFactor(Hero hero) {
 		return 1f;
 	}

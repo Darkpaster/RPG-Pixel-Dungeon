@@ -1,2 +1,0 @@
-com.github.dachhack.sprout:string/app_name = 0x7f020000
-com.github.dachhack.sprout:drawable/ic_launcher = 0x7f010000

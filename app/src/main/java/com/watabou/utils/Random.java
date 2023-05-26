@@ -49,6 +49,22 @@ public class Random {
 
 		return result;
 	}
+	public static int min( int cnt, int max) {
+		int result = 0;
+		for (int i=0; i < cnt; i++) {
+
+			result += 1;
+		}
+		return result;
+	}
+	public static int max( int cnt, int max) {
+		int result = 0;
+		for (int i=0; i < cnt; i++) {
+
+			result += max;
+		}
+		return result;
+	}
 
 	public static int Int( int min, int max ) {
 		return min + (int)(Math.random() * (max - min));

@@ -126,33 +126,33 @@ public class Spellbook_old extends Item {
 	private static final String LEARNCOUNT = "learnCount";
 	private static final String LEVEL = "level";
 
-	@Override
-	public void storeInBundle(Bundle bundle) {
-		super.storeInBundle(bundle);
-		bundle.put(DEPTH, returnDepth);
-		bundle.put(SPELLS, spells);
-		bundle.put(CHARGE, charge);
-		bundle.put(LEARN, learn);
-		bundle.put(LEARNCOUNT, learnCount);
-		bundle.put(CHARGES, charges);
-		bundle.put(LEVEL, level);
-		if (returnDepth != -1) {
-			bundle.put(POS, returnPos);
-		}
-	}
+//	@Override
+//	public void storeInBundle(Bundle bundle) {
+//		super.storeInBundle(bundle);
+//		bundle.put(DEPTH, returnDepth);
+//		bundle.put(SPELLS, spells);
+//		bundle.put(CHARGE, charge);
+//		bundle.put(LEARN, learn);
+//		bundle.put(LEARNCOUNT, learnCount);
+//		bundle.put(CHARGES, charges);
+//		bundle.put(LEVEL, level);
+//		if (returnDepth != -1) {
+//			bundle.put(POS, returnPos);
+//		}
+//	}
 
-	@Override
-	public void restoreFromBundle(Bundle bundle) {
-		super.restoreFromBundle(bundle);
-		returnDepth = bundle.getInt(DEPTH);
-		returnPos = bundle.getInt(POS);
-		charge = bundle.getInt(CHARGE);
-		level = bundle.getInt(LEVEL);
-		spells = bundle.getBooleanArray(SPELLS);
-		charges = bundle.getIntArray(CHARGES);
-		learn = bundle.getBooleanArray(LEARN);
-		learnCount = bundle.getIntArray(LEARNCOUNT);
-	}
+//	@Override
+//	public void restoreFromBundle(Bundle bundle) {
+//		super.restoreFromBundle(bundle);
+//		returnDepth = bundle.getInt(DEPTH);
+//		returnPos = bundle.getInt(POS);
+//		charge = bundle.getInt(CHARGE);
+//		level = bundle.getInt(LEVEL);
+//		spells = bundle.getBooleanArray(SPELLS);
+//		charges = bundle.getIntArray(CHARGES);
+//		learn = bundle.getBooleanArray(LEARN);
+//		learnCount = bundle.getIntArray(LEARNCOUNT);
+//	}
 
 	@Override
 	public ArrayList<String> actions(Hero hero) {

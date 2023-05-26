@@ -1,23 +1,23 @@
 {
     "logs": [
         {
-            "outputFile": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+            "outputFile": "D:\\projects\\RPGpd\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
             "map": [
                 {
-                    "source": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "D:\\projects\\RPGpd\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "1",
                         "startOffsets": "54",
-                        "endColumns": "51",
-                        "endOffsets": "104"
+                        "endColumns": "55",
+                        "endOffsets": "108"
                     },
                     "to": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",
-                        "endColumns": "54",
-                        "endOffsets": "105"
+                        "endColumns": "58",
+                        "endOffsets": "109"
                     }
                 }
             ]

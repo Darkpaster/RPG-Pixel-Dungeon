@@ -22,15 +22,13 @@ import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.DungeonTilemap;
 import com.github.dachhack.sprout.actors.Actor;
 import com.github.dachhack.sprout.actors.hero.HeroClass;
+import com.github.dachhack.sprout.actors.mobs.Dummy;
 import com.github.dachhack.sprout.actors.mobs.npcs.Ghost;
 import com.github.dachhack.sprout.actors.mobs.npcs.Ghost.GnollArcher;
 import com.github.dachhack.sprout.actors.mobs.npcs.Tinkerer1;
-import com.github.dachhack.sprout.actors.mobs.npcs.Guard;
 import com.github.dachhack.sprout.items.Bomb;
 import com.github.dachhack.sprout.items.DewVial;
 import com.github.dachhack.sprout.items.Mushroom;
-import com.github.dachhack.sprout.items.misc.Spectacles;
-import com.github.dachhack.sprout.items.Towel;
 import com.github.dachhack.sprout.items.bags.SeedPouch;
 import com.github.dachhack.sprout.items.food.Blackberry;
 import com.github.dachhack.sprout.items.food.Blueberry;
@@ -153,16 +151,15 @@ public class SewerLevel extends RegularLevel {
 		}
 
 		if (Dungeon.depth == 1){
-			Guard npc = new Guard();
-			do {
-				npc.pos = randomRespawnCell();
-			} while (npc.pos == -1 || heaps.get(npc.pos) != null);
-			mobs.add(npc);
-			Actor.occupyCell(npc);
-		}
-		
-		if (Dungeon.depth == 1){
 			addItemToSpawn(new Mushroom());
+			Dummy dummy = new Dummy();
+			do {
+				dummy.pos = randomRespawnCell();
+			} while (dummy.pos == -1 || heaps.get(dummy.pos) != null);
+			{
+				mobs.add(dummy);
+			}
+			Actor.occupyCell(dummy);
 		}
 				
 		Ghost.Quest.spawn(this);

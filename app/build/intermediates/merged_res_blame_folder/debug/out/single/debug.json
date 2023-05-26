@@ -1,22 +1,22 @@
 [
     {
-        "merged": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
-        "source": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
+        "merged": "D:\\projects\\RPGpd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
+        "source": "D:\\projects\\RPGpd\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_launcher.png.flat",
-        "source": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+        "merged": "D:\\projects\\RPGpd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
+        "source": "D:\\projects\\RPGpd\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_launcher.png.flat",
-        "source": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_launcher.png"
+        "merged": "D:\\projects\\RPGpd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_ic_launcher.png.flat",
+        "source": "D:\\projects\\RPGpd\\app\\src\\main\\res\\drawable-xxxhdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
-        "source": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "D:\\projects\\RPGpd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
+        "source": "D:\\projects\\RPGpd\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
     },
     {
-        "merged": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_launcher.png.flat",
-        "source": "E:\\projects\\SproutedPixelDungeon-Gradle-master\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
+        "merged": "D:\\projects\\RPGpd\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_ic_launcher.png.flat",
+        "source": "D:\\projects\\RPGpd\\app\\src\\main\\res\\drawable-xxhdpi\\ic_launcher.png"
     }
 ]

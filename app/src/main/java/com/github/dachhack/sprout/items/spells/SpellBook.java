@@ -11,7 +11,7 @@ import com.watabou.utils.Bundle;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class SpellBook extends Bag {
+public class SpellBook extends Item {
 
     private ArrayList<Spell> spells = new ArrayList<>();
 
@@ -57,16 +57,19 @@ public class SpellBook extends Bag {
         }
     }
 
+    public void clear(){
+        spells.clear();
+    }
+
 
     @Override
     public void storeInBundle(Bundle bundle) {
-        super.storeInBundle(bundle);
         bundle.put(TXT_SPELLS, spells);
     }
 
     @Override
     public void restoreFromBundle(Bundle bundle) {
-        super.restoreFromBundle(bundle);
+        //super.restoreFromBundle(bundle);
         //spells = (Collection<Spell>) bundle.getCollection(TXT_SPELLS);
         if(spells.size() == 0){
             for (Bundlable b : bundle.getCollection(TXT_SPELLS)) {
@@ -75,8 +78,6 @@ public class SpellBook extends Bag {
                 }
             }
         }
-        System.out.println(spells);
-
     }
 
 

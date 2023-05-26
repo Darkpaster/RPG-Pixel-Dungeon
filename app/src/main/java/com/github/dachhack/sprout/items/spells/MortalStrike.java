@@ -23,6 +23,6 @@ public class MortalStrike extends Spell{
     }
 
     public String info() {
-        return "Description. " + lvl + skillInfo();
+        return "Description. lvl " + lvl + skillInfo();
     }
 }

@@ -21,6 +21,7 @@ import android.graphics.RectF;
 import com.github.dachhack.sprout.Assets;
 import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.ShatteredPixelDungeon;
+import com.github.dachhack.sprout.Statistics;
 import com.github.dachhack.sprout.actors.hero.Belongings;
 import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.items.*;
@@ -37,6 +38,7 @@ import com.github.dachhack.sprout.utils.GLog;
 import com.github.dachhack.sprout.utils.Utils;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.ColorBlock;
+import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
@@ -60,6 +62,9 @@ public class WndSpellBook extends WndTabbed {
 	//private WndSpellBook.Mode mode;
 	private String title;
 
+	private ActiveTab activeTab;
+	private PassiveTab passiveTab;
+
 	private int nCols;
 	private int nRows;
 
@@ -76,27 +81,6 @@ public class WndSpellBook extends WndTabbed {
 		this.listener = listener;
 		this.title = title;
 
-		lastSB = SB;
-
-		nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
-		nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
-				+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
-
-		int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
-		int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
-
-		BitmapText txtTitle = PixelScene.createText(title != null ? title
-				: Utils.capitalize(SB.name()), 9);
-		txtTitle.hardlight(TITLE_COLOR);
-		txtTitle.measure();
-		txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
-		txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
-		add(txtTitle);
-
-		placeItems(SB);
-
-		resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
-
 //		Belongings stuff = Dungeon.hero.belongings;
 //		Bag[] bags = { stuff.backpack, stuff.getItem(SeedPouch.class),
 //				stuff.getItem(ScrollHolder.class),
@@ -112,18 +96,30 @@ public class WndSpellBook extends WndTabbed {
 //				tab.select(b == SB);
 //			}
 //		}
-		BitmapText txt = PixelScene.createText("Active", 7);
-		BitmapText txt2 = PixelScene.createText("Passive", 7);
-		txt.measure();
-		txt2.measure();
+		activeTab = new ActiveTab(SB);
+		passiveTab = new PassiveTab(SB);
+		add(activeTab);
+		add(passiveTab);
+		add(new LabeledTab("Active") {
+			@Override
+			protected void select(boolean value) {
+				super.select(value);
+				activeTab.visible = activeTab.active = selected;
+			}
+		});
 
-		BagTab tab = new BagTab(txt);
-		BagTab tab2 = new BagTab(txt2);
-		add(tab);
-		add(tab2);
-		tab.select(true);
+		add(new LabeledTab("Passive") {
+			@Override
+			protected void select(boolean value) {
+				super.select(value);
+				passiveTab.visible = passiveTab.active = selected;
+			}
+		});
+		//resize(100, (int) Math.max(activeTab.height(), passiveTab.height()));
 
 		layoutTabs();
+
+		select(0);
 	}
 
 //	public static WndSpellBook lastBag(Listener listener, Mode mode, String title) {
@@ -229,61 +225,56 @@ public class WndSpellBook extends WndTabbed {
 		return 20;
 	}
 
-	private class BagTab extends Tab {
+	private class ActiveTab extends Group{
 
-		private Image icon;
-		private BitmapText text;
+		public ActiveTab(SpellBook SB){
+			lastSB = SB;
 
-		private Bag bag;
+			nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
+			nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
+					+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
 
-		public BagTab(BitmapText text) {
-			super();
+			int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
+			int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
 
-			//this.bag = bag;
-			this.text = text;
+			BitmapText txtTitle = PixelScene.createText(title != null ? title
+					: Utils.capitalize(SB.name()), 9);
+			txtTitle.hardlight(TITLE_COLOR);
+			txtTitle.measure();
+			txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
+			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
+			add(txtTitle);
 
-			//icon = icon();
-			add(this.text);
+			placeItems(SB);
+
+			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
 		}
+	}
 
-		@Override
-		protected void select(boolean value) {
-			super.select(value);
-			text.am = selected ? 1.0f : 0.6f;
+	protected class PassiveTab extends Group {
+
+		public PassiveTab(SpellBook SB){
+			lastSB = SB;
+
+			nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
+			nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
+					+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
+
+			int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
+			int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
+
+			BitmapText txtTitle = PixelScene.createText(title != null ? title
+					: Utils.capitalize(SB.name()), 9);
+			txtTitle.hardlight(TITLE_COLOR);
+			txtTitle.measure();
+			txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
+			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
+			add(txtTitle);
+
+			placeItems(SB);
+
+			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
 		}
-
-		@Override
-		protected void layout() {
-			super.layout();
-
-			//icon.copy(icon());
-			text.x = x + (width - text.width) / 2;
-			text.y = y + (height - text.height) / 2 - 2 - (selected ? 0 : 1);
-//			if (!selected && text.y < y + CUT) {
-//				RectF frame = icon.frame();
-//				frame.top += (y + CUT - icon.y) / icon.texture.height;
-//				icon.frame(frame);
-//				icon.y = y + CUT;
-//			}
-		}
-
-//		private Image icon() {
-//			if (bag instanceof SeedPouch) {
-//				return Icons.get(Icons.SEED_POUCH);
-//			} else if (bag instanceof ScrollHolder) {
-//				return Icons.get(Icons.SCROLL_HOLDER);
-//			} else if (bag instanceof WandHolster) {
-//				return Icons.get(Icons.WAND_HOLSTER);
-//			} else if (bag instanceof PotionBandolier) {
-//				return Icons.get(Icons.POTION_BANDOLIER);
-//			} else if (bag instanceof AnkhChain) {
-//				return Icons.get(Icons.ANKH_CHAIN);
-//			} else if (bag instanceof KeyRing) {
-//				return Icons.get(Icons.KEYRING);
-//			} else {
-//				return Icons.get(Icons.BACKPACK);
-//			}
-//		}
 	}
 
 	private static class Placeholder extends Item {

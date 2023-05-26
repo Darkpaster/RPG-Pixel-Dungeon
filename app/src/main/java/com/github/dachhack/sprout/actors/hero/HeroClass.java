@@ -184,7 +184,8 @@ public enum HeroClass {
 		KeyRing keyring = new KeyRing(); keyring.collect();
 
 		new PotionOfStrength().setKnown();
-		
+
+		hero.spellbook.learnSpell(SpellBook.spellList.MORTAL_STRIKE);
 		//playtest(hero);
 	}
 

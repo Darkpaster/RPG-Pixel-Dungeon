@@ -38,6 +38,7 @@ import com.github.dachhack.sprout.items.*;
 import com.github.dachhack.sprout.items.Heap.Type;
 import com.github.dachhack.sprout.items.armor.glyphs.Viscosity;
 import com.github.dachhack.sprout.items.artifacts.*;
+import com.github.dachhack.sprout.items.bags.Bag;
 import com.github.dachhack.sprout.items.keys.GoldenKey;
 import com.github.dachhack.sprout.items.keys.GoldenSkeletonKey;
 import com.github.dachhack.sprout.items.keys.IronKey;
@@ -365,9 +366,9 @@ public class Hero extends Char {
 		bundle.put(INVISIBILITY_SPEED, invisSpeed);
 		bundle.put(EATING_ENERGY, eatingEnergy);
 
-		belongings.storeInBundle(bundle);
 		spellbook.storeInBundle(bundle);
-		//bundle.put(SPELL_BOOK, spellbook);
+
+		belongings.storeInBundle(bundle);
 	}
 
 	@Override
@@ -422,12 +423,14 @@ public class Hero extends Char {
 		invisRegen = bundle.getBoolean(INVISIBILITY_REGEN);
 		invisSpeed = bundle.getBoolean(INVISIBILITY_SPEED);
 		eatingEnergy = bundle.getBoolean(EATING_ENERGY);
-
 		levelup = bundle.getBoolean(LEVELUP);
 
-		belongings.restoreFromBundle(bundle);
+		spellbook.clear();
 		spellbook.restoreFromBundle(bundle);
-		System.out.println(spellbook.getSpells());
+
+		belongings.restoreFromBundle(bundle);
+
+		//System.out.println(spellbook.getSpells());
 		//Bundlable b = bundle.get(SPELL_BOOK);
 		//spellbook = (SpellBook) b;
 	}
@@ -623,14 +626,81 @@ public class Hero extends Char {
 		if (buff(Strength.class) != null){ dmg *= 4f; Buff.detach(this, Strength.class);}
 
 		if(this.heroClass == HeroClass.WARRIOR){
-			int i = Math.max(rage / 3, 1);
-			int i2 = Math.max(physicLevel / 4, 1);
-			int i3 = i * i2;
-			return (int) criticalStrike(dmg + bonusDamage + i3);
+			int i = physicLevel / 4;
+			int i2 = Math.max((rage / 5) * i, i);
+			return (int) criticalStrike(dmg + bonusDamage + i2);
 		}else{
 			return (int) criticalStrike(dmg + bonusDamage);
 		}
 		
+	}
+
+	public int damageMin() {
+		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon
+				: belongings.weapon;
+		int dmg;
+		int bonus = 0;
+		for (Buff buff : buffs(RingOfForce.Force.class)) {
+			bonus += ((RingOfForce.Force) buff).level;
+		}
+
+		if (wep != null) {
+			dmg = wep.damageMin(this) + bonus;
+		} else {
+			int str = STR() - 8;
+			dmg = bonus == 0 ? 1
+					: bonus > 0 ? str > 0 ? str / 2 + bonus : 1
+					: 0;
+		}
+		if (dmg < 0)
+			dmg = 0;
+
+		if (buff(Fury.class) != null){ dmg *= 1.5f; }
+
+		if (buff(Strength.class) != null){ dmg *= 4f; Buff.detach(this, Strength.class);}
+
+		if(this.heroClass == HeroClass.WARRIOR){
+			int i = physicLevel / 4;
+			int i2 = Math.max((rage / 5) * Math.max(i, 1), i);
+			return (int) criticalStrike(dmg + bonusDamage + i2);
+		}else{
+			return (int) criticalStrike(dmg + bonusDamage);
+		}
+
+	}
+
+	public int damageMax() {
+		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon
+				: belongings.weapon;
+		int dmg;
+		int bonus = 0;
+		for (Buff buff : buffs(RingOfForce.Force.class)) {
+			bonus += ((RingOfForce.Force) buff).level;
+		}
+
+		if (wep != null) {
+			dmg = wep.damageMax(this) + bonus;
+		} else {
+			int str = STR() - 8;
+			dmg = bonus == 0 ? str
+					: bonus > 0 ? str > 0 ? (int) (str * 0.5f * bonus) + str * 2 : 1
+					: 0;
+		}
+		if (dmg < 0)
+			dmg = 0;
+
+		if (buff(Fury.class) != null){ dmg *= 1.5f; }
+
+		if (buff(Strength.class) != null){ dmg *= 4f; Buff.detach(this, Strength.class);}
+
+		if(this.heroClass == HeroClass.WARRIOR){
+			int i = physicLevel / 4;
+			int i2 = Math.max((rage / 5) * Math.max(i, 1), i);
+			return (int) criticalStrike(dmg + bonusDamage + i2);
+		}else{
+			return (int) criticalStrike(dmg + bonusDamage);
+		}
+
 	}
 
 	public float criticalStrike(float dmg){
@@ -734,17 +804,15 @@ private float crTime = 0;
 		super.act();
 
 
-if(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Attack){
-
-}else {
+if(!(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Attack) && this.heroClass == HeroClass.ROGUE){
 	boolean z = this.buff(PoweredEnergyRegen.class) == null;
 
 	if(crTime == 0){
 		crTime = getTime();
 	}
-	if (z && crTime != 0 && getTime() - crTime >= 1) {
-				Buff.affect(this, PoweredEnergyRegen.class);
-			}
+	if (z && crTime != 0 && getTime() - crTime >= 2) {
+		Buff.affect(this, PoweredEnergyRegen.class);
+	}
 }
 
 

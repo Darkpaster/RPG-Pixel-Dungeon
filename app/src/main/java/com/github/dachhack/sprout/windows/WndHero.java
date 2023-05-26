@@ -87,7 +87,7 @@ public class WndHero extends WndTabbed {
 	private static final String TXT_STR = "Strength";
 	private static final String TXT_ACCURACY = "Accuracy";
 	private static final String TXT_EVASION = "Evasion";
-	private static final String TXT_SPEED = "Speed";
+	private static final String TXT_SPEED = "Move speed";
 	private static final String TXT_MAGIC = "Mana";
 	private static final String TXT_MAGICLVL = "Magic Level";
 	private static final String TXT_KILLS = "Kills";
@@ -276,7 +276,7 @@ public class WndHero extends WndTabbed {
 			//startPos = pos;
 
 
-			statSlot("Damage", hero.damageRoll());
+			statSlot("Damage", hero.damageMin() + " - " + hero.damageMax());
 			statSlot(TXT_ACCURACY + "/" + TXT_EVASION, hero.getAttackSkill() + "/" + hero.getDefenseSkill());
 			statSlot(TXT_STR, hero.STR());
 			statSlot(TXT_DR, hero.dr());
