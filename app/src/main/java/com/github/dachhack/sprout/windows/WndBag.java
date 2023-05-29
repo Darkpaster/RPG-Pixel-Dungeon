@@ -253,7 +253,6 @@ public class WndBag extends WndTabbed {
 			super();
 
 			this.bag = bag;
-
 			icon = icon();
 			add(icon);
 		}

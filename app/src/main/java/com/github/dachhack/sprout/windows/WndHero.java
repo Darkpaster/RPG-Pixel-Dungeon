@@ -321,20 +321,15 @@ public class WndHero extends WndTabbed {
 
 
 			//pos += GAP;
-
-
 			
 			pos += GAP;
-
 
 
 			statSlot(TXT_EXP, hero.exp + "/" + hero.maxExp());
 			if(Dungeon.hero.buff(Hunger.class) != null){
 				statSlot(TXT_HUNGER, Dungeon.hero.buff(Hunger.class).hungerLevel());
 			}			
-			
-			
-			//pos += GAP;
+
 		}
 
 		private String decimalFormat(float f){

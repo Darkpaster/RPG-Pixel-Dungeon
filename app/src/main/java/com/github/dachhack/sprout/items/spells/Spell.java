@@ -26,28 +26,49 @@ import com.watabou.noosa.Image;
 import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Spell extends Item{
 
 	private static final String TXT_VALUE = "Spell Page";
 	private static final String SPELL_LVL = "spell lvl";
 	protected static final String AC_USE = "USE";
-	protected String spellType = "";
+	protected boolean active = false;
+	protected boolean ready;
 
 	protected int mp_cost = 0;
 	protected int rage_cost = 0;
 	protected int energy_cost = 0;
 	protected int cd = 0;
+	protected int current_cd = 0;
 
-	protected int lvl;
+	protected int lvl = 1;
 
 	{
 		name = "spell";
 		image = ItemSpriteSheet.JOURNAL_PAGE;
-		lvl = 1;
-
 		stackable = false;
+		ready = true;
 		unique = true;
+	}
+
+	public boolean isReady(){
+		return ready;
+	}
+	public boolean isActive(){
+		return active;
+	}
+
+	public void tick(){
+		if(current_cd == 0 && !ready){
+			ready = true;
+			GLog.p(name + " is ready!");
+			return;
+		}
+		if(current_cd == 0){
+			return;
+		}
+		current_cd--;
 	}
 
 	@Override
@@ -63,7 +84,7 @@ public class Spell extends Item{
 			}
 		}
 
-		if(spellType.equals("active") && arr2[i2] >= arr[i2]){
+		if(active && arr2[i2] >= arr[i2] && ready){
 			actions.add(AC_USE);
 		}
 
@@ -85,7 +106,7 @@ public class Spell extends Item{
 
 	@Override
 	public String name() {
-		return name + " (" + spellType + ")";
+		return name + " (" + (ready ? "ready" : current_cd) + ")";
 	}
 
 	private String spellCost(){
@@ -105,8 +126,10 @@ public class Spell extends Item{
 	@Override
 	public void execute(Hero hero, String action) {
 
-		if (action == AC_USE) {
+		if (Objects.equals(action, AC_USE)) {
 			onUse();
+			ready = false;
+			current_cd = cd;
 		}
 	}
 

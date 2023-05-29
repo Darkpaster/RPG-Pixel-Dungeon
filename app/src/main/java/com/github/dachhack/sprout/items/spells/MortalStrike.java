@@ -10,7 +10,8 @@ public class MortalStrike extends Spell{
     public MortalStrike(){
         image = ItemSpriteSheet.AXE;
         name = "Mortal Strike";
-        spellType = "active";
+        active = true;
+        lvl = 1;
         rage_cost = 20;
         cd = 10;
     }

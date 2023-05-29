@@ -42,13 +42,9 @@ import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
 
-public class WndSpellBook extends WndTabbed {
+import static com.github.dachhack.sprout.scenes.InterlevelScene.mode;
 
-//	public enum Mode {
-//		ALL, UNIDENTIFED, UPGRADEABLE, QUICKSLOT, FOR_SALE, WEAPON, ARMOR, ENCHANTABLE,
-//		WAND, SEED, FOOD, POTION, SCROLL, EQUIPMENT, ADAMANT, REINFORCED, UPGRADEABLESIMPLE,
-//		NOTREINFORCED, UPGRADEDEW, JOURNALPAGES
-//	}
+public class WndSpellBook extends WndTabbed {
 
 	protected static final int COLS_P = 4;
 	protected static final int COLS_L = 6;
@@ -97,8 +93,8 @@ public class WndSpellBook extends WndTabbed {
 //			}
 //		}
 		activeTab = new ActiveTab(SB);
-		passiveTab = new PassiveTab(SB);
 		add(activeTab);
+		passiveTab = new PassiveTab(SB);
 		add(passiveTab);
 		add(new LabeledTab("Active") {
 			@Override
@@ -146,18 +142,7 @@ public class WndSpellBook extends WndTabbed {
 //				listener, mode, title);
 //	}
 
-	protected void placeItems(SpellBook SB) {
-
-		// Equipped items
-//		Belongings stuff = Dungeon.hero.belongings;
-//		placeItem(stuff.weapon != null ? stuff.weapon : new Placeholder(
-//				ItemSpriteSheet.WEAPON));
-//		placeItem(stuff.armor != null ? stuff.armor : new Placeholder(
-//				ItemSpriteSheet.ARMOR));
-//		placeItem(stuff.misc1 != null ? stuff.misc1 : new Placeholder(
-//				ItemSpriteSheet.RING));
-//		placeItem(stuff.misc2 != null ? stuff.misc2 : new Placeholder(
-//				ItemSpriteSheet.RING));
+	protected void placeItems(SpellBook SB, boolean active) {
 
 		boolean backpack = (SB == Dungeon.hero.spellbook);
 		if (!backpack) {
@@ -168,7 +153,9 @@ public class WndSpellBook extends WndTabbed {
 
 		// Items in the bag
 		for (Spell spell : SB.getSpells()) {
-			placeItem(spell);
+			if(active == spell.isActive()) {
+				placeItem(spell);
+			}
 		}
 
 		// Free Space
@@ -217,7 +204,8 @@ public class WndSpellBook extends WndTabbed {
 	@Override
 	protected void onClick(Tab tab) {
 		hide();
-		//GameScene.show(new WndSpellBook(((BagTab) tab).bag, listener, mode, title));
+		tab.select(true);
+		//GameScene.show(new WndBag(((WndBag.BagTab) tab).bag, listener, mode, title));
 	}
 
 	@Override
@@ -226,6 +214,7 @@ public class WndSpellBook extends WndTabbed {
 	}
 
 	private class ActiveTab extends Group{
+
 
 		public ActiveTab(SpellBook SB){
 			lastSB = SB;
@@ -245,7 +234,7 @@ public class WndSpellBook extends WndTabbed {
 			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
 			add(txtTitle);
 
-			placeItems(SB);
+			placeItems(SB, true);
 
 			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
 		}
@@ -271,29 +260,9 @@ public class WndSpellBook extends WndTabbed {
 			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
 			add(txtTitle);
 
-			placeItems(SB);
+			placeItems(SB, false);
 
 			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
-		}
-	}
-
-	private static class Placeholder extends Item {
-		{
-			name = null;
-		}
-
-		public Placeholder(int image) {
-			this.image = image;
-		}
-
-		@Override
-		public boolean isIdentified() {
-			return true;
-		}
-
-		@Override
-		public boolean isEquipped(Hero hero) {
-			return true;
 		}
 	}
 
@@ -333,71 +302,7 @@ public class WndSpellBook extends WndTabbed {
 			super.layout();
 		}
 
-//		@Override
-//		public void item(Item item) {
-//
-//			super.item(item);
-//			if (item != null) {
-//
-//				bg.texture(TextureCache.createSolid(item
-//						.isEquipped(Dungeon.hero) ? EQUIPPED : NORMAL));
-//				if (item.cursed && item.cursedKnown) {
-//					bg.ra = +0.2f;
-//					bg.ga = -0.1f;
-//				} else if (!item.isIdentified()) {
-//					bg.ra = 0.1f;
-//					bg.ba = 0.1f;
-//				}
-//
-//				if (item.name() == null) {
-//					enable(false);
-//				} else {
-//
-//					 int levelLimit = Math.max(5, 5+Math.round(Statistics.deepestFloor/3));
-//				     if (Dungeon.hero.heroClass == HeroClass.MAGE){levelLimit++;}
-//
-//					enable(mode == Mode.FOR_SALE
-//							&& (item.price() > 0)
-//							&& (!item.isEquipped(Dungeon.hero) || !item.cursed)
-//
-//							|| mode == Mode.UPGRADEABLE
-//							&& ((item.isUpgradable() && item.level<15 && !item.isReinforced())
-//									||  item.isUpgradable() && item.isReinforced())
-//							|| mode == Mode.UPGRADEDEW
-//							&& (item.isUpgradable() && item.level < levelLimit)
-//							|| mode == Mode.UPGRADEABLESIMPLE
-//							&& item.isUpgradable()
-//							|| mode == Mode.ADAMANT
-//							&& (item instanceof AdamantArmor || item instanceof AdamantRing || item instanceof AdamantWand || item instanceof AdamantWeapon)
-//							|| mode == Mode.REINFORCED
-//							&& item.isReinforced()
-//							|| mode == Mode.NOTREINFORCED
-//							&& (!item.isReinforced() && item.isUpgradable())
-//							|| mode == Mode.UNIDENTIFED
-//							&& !item.isIdentified()
-//							|| mode == Mode.QUICKSLOT
-//							&& (item.defaultAction != null)
-//							|| mode == Mode.WEAPON
-//							&& (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof JupitersWraith)
-//							|| mode == Mode.ARMOR
-//							&& (item instanceof Armor)
-//							|| mode == Mode.ENCHANTABLE
-//							&& (item instanceof MeleeWeapon	|| item instanceof Boomerang || item instanceof Armor)
-//							|| mode == Mode.JOURNALPAGES
-//							&& (item instanceof JournalPage)
-//							|| mode == Mode.WAND && (item instanceof Wand)
-//							|| mode == Mode.SEED && (item instanceof Seed)
-//							|| mode == Mode.FOOD && (item instanceof Food)
-//							|| mode == Mode.POTION && (item instanceof Potion)
-//							|| mode == Mode.SCROLL && (item instanceof Scroll)
-//							|| mode == Mode.EQUIPMENT
-//							&& (item instanceof EquipableItem)
-//							|| mode == Mode.ALL);
-//				}
-//			} else {
-//				bg.color(NORMAL);
-//			}
-//		}
+
 
 		@Override
 		protected void onTouchDown() {
@@ -412,6 +317,7 @@ public class WndSpellBook extends WndTabbed {
 
 		@Override
 		protected void onClick() {
+			GLog.n("onClick item");
 			if (listener != null) {
 
 				hide();
