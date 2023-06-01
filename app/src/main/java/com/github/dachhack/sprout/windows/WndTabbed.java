@@ -23,6 +23,7 @@ import com.github.dachhack.sprout.Assets;
 import com.github.dachhack.sprout.Chrome;
 import com.github.dachhack.sprout.scenes.PixelScene;
 import com.github.dachhack.sprout.ui.Window;
+import com.github.dachhack.sprout.utils.GLog;
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.NinePatch;
@@ -167,12 +168,15 @@ public class WndTabbed extends Window {
 
 			active = !(selected = value);
 
+
 			if (bg != null) {
 				remove(bg);
 			}
 
+
 			bg = Chrome.get(selected ? Chrome.Type.TAB_SELECTED
 					: Chrome.Type.TAB_UNSELECTED);
+			assert bg != null;
 			addToBack(bg);
 
 			layout();

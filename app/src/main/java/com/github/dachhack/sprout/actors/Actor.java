@@ -28,7 +28,9 @@ import com.github.dachhack.sprout.actors.blobs.Blob;
 import com.github.dachhack.sprout.actors.buffs.Buff;
 import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.actors.mobs.Mob;
+import com.github.dachhack.sprout.items.spells.Spell;
 import com.github.dachhack.sprout.levels.Level;
+import com.github.dachhack.sprout.utils.GLog;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 

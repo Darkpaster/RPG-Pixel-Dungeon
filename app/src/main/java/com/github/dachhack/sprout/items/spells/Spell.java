@@ -30,25 +30,28 @@ import java.util.Objects;
 
 public class Spell extends Item{
 
-	private static final String TXT_VALUE = "Spell Page";
 	private static final String SPELL_LVL = "spell lvl";
 	protected static final String AC_USE = "USE";
-	protected boolean active = false;
+	protected boolean active;
 	protected boolean ready;
 
 	protected int mp_cost = 0;
 	protected int rage_cost = 0;
 	protected int energy_cost = 0;
-	protected int cd = 0;
-	protected int current_cd = 0;
+	protected int cd;
+	protected float current_cd;
 
-	protected int lvl = 1;
+	protected int lvl;
 
 	{
 		name = "spell";
+		lvl = 1;
+		cd = 0;
+		current_cd = 0;
 		image = ItemSpriteSheet.JOURNAL_PAGE;
 		stackable = false;
 		ready = true;
+		active = false;
 		unique = true;
 	}
 
@@ -59,16 +62,16 @@ public class Spell extends Item{
 		return active;
 	}
 
-	public void tick(){
-		if(current_cd == 0 && !ready){
+	public void tick(float time){
+		if(current_cd <= 0 && !ready){
 			ready = true;
 			GLog.p(name + " is ready!");
 			return;
 		}
-		if(current_cd == 0){
+		if(current_cd <= 0){
 			return;
 		}
-		current_cd--;
+		current_cd -= time;
 	}
 
 	@Override

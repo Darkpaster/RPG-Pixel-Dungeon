@@ -10,10 +10,12 @@ import com.watabou.utils.Bundle;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
-public class SpellBook extends Item {
+public class SpellBook extends Bag {
+    public boolean active = true;
 
-    private ArrayList<Spell> spells = new ArrayList<>();
+    private final ArrayList<Spell> spells = new ArrayList<>();
 
     private static final String TXT_SPELLS = "spells";
 
@@ -49,11 +51,9 @@ public class SpellBook extends Item {
         if(z){
             this.spells.add(getSpell(spell));
             GLog.p("You learned a new spell " + spell.toString().toLowerCase() + "!");
-            System.out.println("new");
         }else{
             spells.get(index).lvl++;
             GLog.p("Power of your " + spell.toString().toLowerCase() + " has been increased!");
-            System.out.println("lvl: " + spells.get(index).lvl);
         }
     }
 
@@ -69,7 +69,6 @@ public class SpellBook extends Item {
 
     @Override
     public void restoreFromBundle(Bundle bundle) {
-        //super.restoreFromBundle(bundle);
         //spells = (Collection<Spell>) bundle.getCollection(TXT_SPELLS);
         if(spells.size() == 0){
             for (Bundlable b : bundle.getCollection(TXT_SPELLS)) {

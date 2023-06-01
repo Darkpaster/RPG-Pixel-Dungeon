@@ -122,8 +122,7 @@ public class Toolbar extends Component {
 		add(btnSpells = new Tool(40, 7, 21, 24) {
 			@Override
 			protected void onClick() {
-				GameScene.show(new WndSpellBook(Dungeon.hero.spellbook, null, "Spell Book"));
-				//GLog.p("It works!");
+				GameScene.show(new WndSpellBook(Dungeon.hero.spellbook, null,Dungeon.hero.spellbook.active));
 			}
 				});
 

@@ -453,8 +453,8 @@ public class Hero extends Char {
 		Buff.affect(this, Regeneration.class);
 		Buff.affect(this, Hunger.class);
 		Buff.affect(this, ManaRegen.class);
-			Buff.affect(this, RageRegen.class);
-		if(Dungeon.hero.heroClass != HeroClass.ROGUE){
+		Buff.affect(this, RageRegen.class);
+		if(Dungeon.hero.heroClass == HeroClass.ROGUE){
 			Buff.affect(this, EnergyRegen.class);
 		}
 
@@ -625,7 +625,7 @@ public class Hero extends Char {
 		if (buff(Strength.class) != null){ dmg *= 4f; Buff.detach(this, Strength.class);}
 
 		if(this.heroClass == HeroClass.WARRIOR){
-			int i = physicLevel / 4;
+			int i = physicLevel / 4 + 1;
 			int i2 = Math.max((rage / 5) * i, i);
 			return (int) criticalStrike(dmg + bonusDamage + i2);
 		}else{
@@ -659,7 +659,7 @@ public class Hero extends Char {
 		if (buff(Strength.class) != null){ dmg *= 4f; Buff.detach(this, Strength.class);}
 
 		if(this.heroClass == HeroClass.WARRIOR){
-			int i = physicLevel / 4;
+			int i = physicLevel / 4 + 1;
 			int i2 = Math.max((rage / 5) * Math.max(i, 1), i);
 			return (int) criticalStrike(dmg + bonusDamage + i2);
 		}else{
@@ -693,7 +693,7 @@ public class Hero extends Char {
 		if (buff(Strength.class) != null){ dmg *= 4f; Buff.detach(this, Strength.class);}
 
 		if(this.heroClass == HeroClass.WARRIOR){
-			int i = physicLevel / 4;
+			int i = physicLevel / 4 + 1;
 			int i2 = Math.max((rage / 5) * Math.max(i, 1), i);
 			return (int) criticalStrike(dmg + bonusDamage + i2);
 		}else{
@@ -789,8 +789,27 @@ public class Hero extends Char {
 		TimekeepersHourglass.timeFreeze buff = buff(TimekeepersHourglass.timeFreeze.class);
 		if (!(buff != null && buff.processTime(time)))
 			super.spend(time);
-	};
-private float crTime = 0;
+
+		for(Spell spell: Dungeon.hero.spellbook.getSpells()){
+			if(spell.isActive()) {
+				spell.tick(time);
+			}
+			//GLog.p(spell.name() + " ticks on " + time);
+		}
+		if(!(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Attack)
+				&& this.heroClass == HeroClass.ROGUE){
+			crTime--;
+			if(crTime == 0){
+				Buff.affect(this, PoweredEnergyRegen.class);
+			}
+		}else{
+			if(crTime != 3) {
+				crTime = 3;
+				Buff.detach(this, PoweredEnergyRegen.class);
+			}
+		}
+	}
+private float crTime = 3;
 	public void spendAndNext(float time) {
 		busy();
 		spend(time);
@@ -801,24 +820,6 @@ private float crTime = 0;
 	public boolean act() {
 
 		super.act();
-
-		for(Spell spell: spellbook.getSpells()){
-			spell.tick();
-			//GLog.p(spell.name() + " ticks!");
-		}
-
-
-if(!(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Attack) && this.heroClass == HeroClass.ROGUE){
-	boolean z = this.buff(PoweredEnergyRegen.class) == null;
-
-	if(crTime == 0){
-		crTime = getTime();
-	}
-	if (z && crTime != 0 && getTime() - crTime >= 2) {
-		Buff.affect(this, PoweredEnergyRegen.class);
-	}
-}
-
 
 /*
 		if(levelup){
@@ -1522,7 +1523,7 @@ if(!(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Att
 
 	private void energyAttack(){
 		//int lvl = Math.min(500 / masteryLevel, 14);
-		if(energy == 100 && this.buff(Invisibility.class) != null || this.buff(CloakOfShadows.cloakStealth.class) != null && energy == 100){
+		if(liquidState()){
 			energy -= Random.NormalIntRange(55, 65);
 			liquid = true;
 		}else{
@@ -1535,6 +1536,10 @@ if(!(curAction instanceof HeroAction.Move || curAction instanceof HeroAction.Att
 		}else{
 			missingEnergy = 0;
 		}
+	}
+
+	public boolean liquidState(){
+		return energy == 100 && (this.buff(Invisibility.class) != null || this.buff(CloakOfShadows.cloakStealth.class) != null);
 	}
 
 	private boolean actAttack(HeroAction.Attack action) {

@@ -101,14 +101,11 @@ public class Item implements Bundlable {
 
 	public boolean doPickUp(Hero hero) {
 		if (collect(hero.belongings.backpack)) {
-
 			GameScene.pickUp(this);
 			Sample.INSTANCE.play(Assets.SND_ITEM);
 			hero.spendAndNext(TIME_TO_PICK_UP);
-			System.out.println("1");
 			return true;
 		} else {
-			System.out.println("2");
 			return false;
 		}
 	}
@@ -194,7 +191,6 @@ public class Item implements Bundlable {
 		} else {
 			Dungeon.level.drop(this, Dungeon.hero.pos);
 			GLog.n(TXT_PACK_FULL, name());
-			System.out.println(this);
 			return false;
 
 		}

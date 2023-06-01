@@ -66,7 +66,7 @@ import com.watabou.noosa.audio.Sample;
 public class WndBag extends WndTabbed {
 
 	public static enum Mode {
-		ALL, UNIDENTIFED, UPGRADEABLE, QUICKSLOT, FOR_SALE, WEAPON, ARMOR, ENCHANTABLE, 
+		ALL, UNIDENTIFED, UPGRADEABLE, QUICKSLOT, FOR_SALE, WEAPON, ARMOR, ENCHANTABLE,
 		WAND, SEED, FOOD, POTION, SCROLL, EQUIPMENT, ADAMANT, REINFORCED, UPGRADEABLESIMPLE,
 		NOTREINFORCED, UPGRADEDEW, JOURNALPAGES
 	}
@@ -127,8 +127,8 @@ public class WndBag extends WndTabbed {
 		Bag[] bags = { stuff.backpack, stuff.getItem(SeedPouch.class),
 				stuff.getItem(ScrollHolder.class),
 				stuff.getItem(PotionBandolier.class),
-				stuff.getItem(WandHolster.class), 
-				stuff.getItem(KeyRing.class), 
+				stuff.getItem(WandHolster.class),
+				stuff.getItem(KeyRing.class),
 				stuff.getItem(AnkhChain.class)};
 
 		for (Bag b : bags) {
@@ -158,7 +158,7 @@ public class WndBag extends WndTabbed {
 	}
 
 	public static WndBag getBag(Class<? extends Bag> bagClass,
-			Listener listener, Mode mode, String title) {
+								Listener listener, Mode mode, String title) {
 		Bag bag = Dungeon.hero.belongings.getItem(bagClass);
 		return bag != null ? new WndBag(bag, listener, mode, title) : lastBag(
 				listener, mode, title);
@@ -372,21 +372,21 @@ public class WndBag extends WndTabbed {
 				if (item.name() == null) {
 					enable(false);
 				} else {
-					
-					 int levelLimit = Math.max(5, 5+Math.round(Statistics.deepestFloor/3));
-				     if (Dungeon.hero.heroClass == HeroClass.MAGE){levelLimit++;}
-					
+
+					int levelLimit = Math.max(5, 5+Math.round(Statistics.deepestFloor/3));
+					if (Dungeon.hero.heroClass == HeroClass.MAGE){levelLimit++;}
+
 					enable(mode == Mode.FOR_SALE
 							&& (item.price() > 0)
 							&& (!item.isEquipped(Dungeon.hero) || !item.cursed)
-							
+
 							|| mode == Mode.UPGRADEABLE
 							&& ((item.isUpgradable() && item.level<15 && !item.isReinforced())
-									||  item.isUpgradable() && item.isReinforced())		
+							||  item.isUpgradable() && item.isReinforced())
 							|| mode == Mode.UPGRADEDEW
-							&& (item.isUpgradable() && item.level < levelLimit)	
+							&& (item.isUpgradable() && item.level < levelLimit)
 							|| mode == Mode.UPGRADEABLESIMPLE
-							&& item.isUpgradable()			
+							&& item.isUpgradable()
 							|| mode == Mode.ADAMANT
 							&& (item instanceof AdamantArmor || item instanceof AdamantRing || item instanceof AdamantWand || item instanceof AdamantWeapon)
 							|| mode == Mode.REINFORCED
@@ -402,7 +402,7 @@ public class WndBag extends WndTabbed {
 							|| mode == Mode.ARMOR
 							&& (item instanceof Armor)
 							|| mode == Mode.ENCHANTABLE
-							&& (item instanceof MeleeWeapon	|| item instanceof Boomerang || item instanceof Armor)
+							&& (item instanceof MeleeWeapon || item instanceof Boomerang || item instanceof Armor)
 							|| mode == Mode.JOURNALPAGES
 							&& (item instanceof JournalPage)
 							|| mode == Mode.WAND && (item instanceof Wand)

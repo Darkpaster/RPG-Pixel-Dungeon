@@ -21,16 +21,13 @@ import android.graphics.RectF;
 import com.github.dachhack.sprout.Assets;
 import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.ShatteredPixelDungeon;
-import com.github.dachhack.sprout.Statistics;
 import com.github.dachhack.sprout.actors.hero.Belongings;
-import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.items.*;
 import com.github.dachhack.sprout.items.bags.*;
 import com.github.dachhack.sprout.items.spells.Spell;
 import com.github.dachhack.sprout.items.spells.SpellBook;
 import com.github.dachhack.sprout.scenes.GameScene;
 import com.github.dachhack.sprout.scenes.PixelScene;
-import com.github.dachhack.sprout.sprites.ItemSpriteSheet;
 import com.github.dachhack.sprout.ui.Icons;
 import com.github.dachhack.sprout.ui.ItemSlot;
 import com.github.dachhack.sprout.ui.QuickSlotButton;
@@ -41,8 +38,6 @@ import com.watabou.noosa.ColorBlock;
 import com.watabou.noosa.Group;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.audio.Sample;
-
-import static com.github.dachhack.sprout.scenes.InterlevelScene.mode;
 
 public class WndSpellBook extends WndTabbed {
 
@@ -56,10 +51,10 @@ public class WndSpellBook extends WndTabbed {
 
 	private Listener listener;
 	//private WndSpellBook.Mode mode;
-	private String title;
+	private final String title = "Spell Book";
 
-	private ActiveTab activeTab;
-	private PassiveTab passiveTab;
+	//private ActiveTab activeTab;
+	//private PassiveTab passiveTab;
 
 	private int nCols;
 	private int nRows;
@@ -71,51 +66,42 @@ public class WndSpellBook extends WndTabbed {
 	//private static Mode lastMode;
 	private static SpellBook lastSB;
 
-	public WndSpellBook(SpellBook SB, Listener listener, String title) {
+	public WndSpellBook(SpellBook SB, Listener listener, boolean active) {
 		super();
 
 		this.listener = listener;
-		this.title = title;
+		String curTitle = active ? title + " (Active)" : title + " (Passive)";
 
-//		Belongings stuff = Dungeon.hero.belongings;
-//		Bag[] bags = { stuff.backpack, stuff.getItem(SeedPouch.class),
-//				stuff.getItem(ScrollHolder.class),
-//				stuff.getItem(PotionBandolier.class),
-//				stuff.getItem(WandHolster.class),
-//				stuff.getItem(KeyRing.class),
-//				stuff.getItem(AnkhChain.class)};
 
-//		for (Bag b : bags) {
-//			if (b != null) {
-//				BagTab tab = new BagTab(b);
-//				add(tab);
-//				tab.select(b == SB);
-//			}
-//		}
-		activeTab = new ActiveTab(SB);
-		add(activeTab);
-		passiveTab = new PassiveTab(SB);
-		add(passiveTab);
-		add(new LabeledTab("Active") {
-			@Override
-			protected void select(boolean value) {
-				super.select(value);
-				activeTab.visible = activeTab.active = selected;
-			}
-		});
+		nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
+		nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
+				+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
 
-		add(new LabeledTab("Passive") {
-			@Override
-			protected void select(boolean value) {
-				super.select(value);
-				passiveTab.visible = passiveTab.active = selected;
-			}
-		});
+		int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
+		int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
+
+		BitmapText txtTitle = PixelScene.createText(curTitle, 9);
+		txtTitle.hardlight(TITLE_COLOR);
+		txtTitle.measure();
+		txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
+		txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
+		add(txtTitle);
+
+		placeItems(SB, active);
+
+		resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
+
 		//resize(100, (int) Math.max(activeTab.height(), passiveTab.height()));
+		BagTab2 tab = new BagTab2(Dungeon.hero.spellbook);
+		add(tab);
+		tab.select(true);
+		BagTab2 tab2 = new BagTab2(Dungeon.hero.spellbook);
+		add(tab2);
+		tab2.select(false);
 
 		layoutTabs();
 
-		select(0);
+		//select(0);
 	}
 
 //	public static WndSpellBook lastBag(Listener listener, Mode mode, String title) {
@@ -203,9 +189,9 @@ public class WndSpellBook extends WndTabbed {
 
 	@Override
 	protected void onClick(Tab tab) {
+		((BagTab2) tab).spellBook.active = !((BagTab2) tab).spellBook.active;
 		hide();
-		tab.select(true);
-		//GameScene.show(new WndBag(((WndBag.BagTab) tab).bag, listener, mode, title));
+		GameScene.show(new WndSpellBook(((BagTab2) tab).spellBook, listener, ((BagTab2) tab).spellBook.active));
 	}
 
 	@Override
@@ -213,58 +199,101 @@ public class WndSpellBook extends WndTabbed {
 		return 20;
 	}
 
-	private class ActiveTab extends Group{
+//	private class ActiveTab extends Group{
+//
+//
+//		public ActiveTab(SpellBook SB){
+//			lastSB = SB;
+//
+//			nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
+//			nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
+//					+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
+//
+//			int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
+//			int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
+//
+//			BitmapText txtTitle = PixelScene.createText(title != null ? title
+//					: Utils.capitalize(SB.name()), 9);
+//			txtTitle.hardlight(TITLE_COLOR);
+//			txtTitle.measure();
+//			txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
+//			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
+//			add(txtTitle);
+//
+//			placeItems(SB, true);
+//
+//			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
+//		}
+//	}
 
+//	protected class PassiveTab extends Group {
+//
+//		public PassiveTab(SpellBook SB){
+//			lastSB = SB;
+//
+//			nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
+//			nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
+//					+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
+//
+//			int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
+//			int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
+//
+//			BitmapText txtTitle = PixelScene.createText(title != null ? title
+//					: Utils.capitalize(SB.name()), 9);
+//			txtTitle.hardlight(TITLE_COLOR);
+//			txtTitle.measure();
+//			txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
+//			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
+//			add(txtTitle);
+//
+//			placeItems(SB, false);
+//
+//			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
+//		}
+//	}
 
-		public ActiveTab(SpellBook SB){
-			lastSB = SB;
+	private class BagTab2 extends Tab {
 
-			nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
-			nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
-					+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
+		private Image icon;
 
-			int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
-			int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
+		private SpellBook spellBook;
 
-			BitmapText txtTitle = PixelScene.createText(title != null ? title
-					: Utils.capitalize(SB.name()), 9);
-			txtTitle.hardlight(TITLE_COLOR);
-			txtTitle.measure();
-			txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
-			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
-			add(txtTitle);
+		public BagTab2(SpellBook spellBook) {
+			super();
 
-			placeItems(SB, true);
+			this.spellBook = spellBook;
+			icon = icon();
+			add(icon);
 
-			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
+		}
+
+		@Override
+		protected void select(boolean value) {
+			super.select(value);
+			icon.am = selected ? 1.0f : 0.6f;
+		}
+
+		@Override
+		protected void layout() {
+			super.layout();
+
+			icon.copy(icon());
+			icon.x = x + (width - icon.width) / 2;
+			icon.y = y + (height - icon.height) / 2 - 2 - (selected ? 0 : 1);
+			if (!selected && icon.y < y + CUT) {
+				RectF frame = icon.frame();
+				frame.top += (y + CUT - icon.y) / icon.texture.height;
+				icon.frame(frame);
+				icon.y = y + CUT;
+			}
+		}
+
+		private Image icon() {
+			return Icons.get(Icons.BACKPACK);
 		}
 	}
 
-	protected class PassiveTab extends Group {
 
-		public PassiveTab(SpellBook SB){
-			lastSB = SB;
-
-			nCols = ShatteredPixelDungeon.landscape() ? COLS_L : COLS_P;
-			nRows = (Belongings.BACKPACK_SIZE + 4 + 1) / nCols
-					+ ((Belongings.BACKPACK_SIZE + 4 + 1) % nCols > 0 ? 1 : 0);
-
-			int slotsWidth = SLOT_SIZE * nCols + SLOT_MARGIN * (nCols - 1);
-			int slotsHeight = SLOT_SIZE * nRows + SLOT_MARGIN * (nRows - 1);
-
-			BitmapText txtTitle = PixelScene.createText(title != null ? title
-					: Utils.capitalize(SB.name()), 9);
-			txtTitle.hardlight(TITLE_COLOR);
-			txtTitle.measure();
-			txtTitle.x = (int) (slotsWidth - txtTitle.width()) / 2;
-			txtTitle.y = (int) (TITLE_HEIGHT - txtTitle.height()) / 2;
-			add(txtTitle);
-
-			placeItems(SB, false);
-
-			resize(slotsWidth, slotsHeight + TITLE_HEIGHT);
-		}
-	}
 
 	private class ItemButton extends ItemSlot {
 
@@ -303,7 +332,6 @@ public class WndSpellBook extends WndTabbed {
 		}
 
 
-
 		@Override
 		protected void onTouchDown() {
 			bg.brightness(1.5f);
@@ -317,16 +345,11 @@ public class WndSpellBook extends WndTabbed {
 
 		@Override
 		protected void onClick() {
-			GLog.n("onClick item");
 			if (listener != null) {
-
 				hide();
 				listener.onSelect(item);
-
 			} else {
-
 				WndSpellBook.this.add(new WndItem(WndSpellBook.this, item));
-
 			}
 		}
 

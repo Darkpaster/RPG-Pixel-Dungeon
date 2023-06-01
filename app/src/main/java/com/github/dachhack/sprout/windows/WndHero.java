@@ -286,13 +286,7 @@ public class WndHero extends WndTabbed {
 			statSlot(TXT_ATTACK_SPEED, decimalFormat2(hero.attackDelay()));
 			statSlot(TXT_SPEED, decimalFormat2(hero.speed()));
 
-			if(hero.energy == 100 && (hero.buff(Invisibility.class) != null || hero.buff(CloakOfShadows.cloakStealth.class) != null))
-			{
-				statSlot(TXT_AMBUSH, decimalFormat(hero.ambushDamage * 100 + hero.liqDmg * 100) + "%");
-			}else{
-				statSlot(TXT_AMBUSH,  decimalFormat(hero.ambushDamage * 100 + hero.energy / 2) + "%");
-			}
-
+			statSlot(TXT_AMBUSH,  Mob.ambushCheck(hero, hero.damageRoll(), true) + "%");
 
 			pos += GAP;
 

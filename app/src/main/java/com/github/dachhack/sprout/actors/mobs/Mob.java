@@ -385,27 +385,46 @@ public abstract class Mob extends Char {
 	public int defenseProc(Char enemy, int damage) {
 		if (!enemySeen && enemy == Dungeon.hero) {
 			float mulDmg = Dungeon.hero.ambushDamage;
-			if(Dungeon.hero.liquid){
-				mulDmg += Dungeon.hero.liqDmg;
-				DoubleSlash.hit(this);
-			}else{
-				mulDmg += Dungeon.hero.energy / 2 * 0.01f + 0.05f;
-			}
 
+			if(((Hero)enemy).liquid){
+				mulDmg += Dungeon.hero.liqDmg;
+			}
 			if (((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
 				mulDmg += 0.34f;
-				damage *= mulDmg;
-				damage += mulDmg;
+			}
+			if (((Hero)enemy).heroClass == HeroClass.ROGUE){
+				mulDmg += Dungeon.hero.energy * 0.5f * 0.01f + 0.05f;
+			}
+			damage *= mulDmg;
+			//damage += mulDmg;
+
+			if (((Hero)enemy).liquid) {
+				DoubleSlash.hit(this);
+			} else if(((Hero)enemy).subClass == HeroSubClass.ASSASSIN) {
 				Wound.hit(this);
-			} else {
-				damage *= mulDmg;
-				damage += mulDmg;
+			}else {
 				Surprise.hit(this);
 			}
-			GLog.h("Sneak attack (" + mulDmg * 100 + "%)!");
+			GLog.h("Sneak attack (" + (int) (mulDmg * 100) + "%)!");
 		}
 
 			return damage;
+	}
+
+	public static int ambushCheck(Hero hero, int damage, boolean mult) {
+			float mulDmg = Dungeon.hero.ambushDamage;
+			if(hero.liquid){
+				mulDmg += hero.liqDmg;
+			}
+			if (hero.subClass == HeroSubClass.ASSASSIN) {
+				mulDmg += 0.34f;
+			}
+			if (hero.heroClass == HeroClass.ROGUE) {
+				mulDmg += hero.energy * 0.5f * 0.01f + 0.05f;
+			}
+			damage *= mulDmg;
+
+		return mult ? (int) (mulDmg * 100) : damage;
 	}
 
 	public void aggro(Char ch) {

@@ -21,13 +21,14 @@ public class EnergyRegen extends Buff{
                 }
             }
 
-            if(hero.energy == 100 &&
-                    (hero.buff(Invisibility.class) != null || hero.buff(CloakOfShadows.cloakStealth.class) != null)){
+            if(hero.liquidState()){
                 if(hero.buff(Liquidation.class) == null){
+                    hero.liquid = true;
                     Buff.affect(hero, Liquidation.class);
                 }
             }else{
                 if(hero.buff(Liquidation.class) != null) {
+                    hero.liquid = false;
                     Buff.detach(hero, Liquidation.class);
                 }
             }

@@ -53,6 +53,7 @@ import com.github.dachhack.sprout.actors.mobs.Yog;
 import com.github.dachhack.sprout.effects.CellEmitter;
 import com.github.dachhack.sprout.effects.particles.PoisonParticle;
 import com.github.dachhack.sprout.items.artifacts.CloakOfShadows;
+import com.github.dachhack.sprout.items.spells.Spell;
 import com.github.dachhack.sprout.levels.Level;
 import com.github.dachhack.sprout.levels.Terrain;
 import com.github.dachhack.sprout.levels.features.Door;
@@ -414,6 +415,8 @@ public abstract class Char extends Actor {
 		if (buff(Haste.class) != null) {
 			timeScale *= 2.0f;
 		}
+
+
 
 		super.spend(time / timeScale);
 	}

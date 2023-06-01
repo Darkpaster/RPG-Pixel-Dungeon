@@ -172,10 +172,6 @@ public class Group extends Gizmo {
 
 	// Real removal
 	public Gizmo remove(Gizmo g) {
-//		if(!members.contains(g)){
-//			members.add(g);
-//		}
-//		try {
 			if (members.remove(g)) {
 				length--;
 				g.parent = null;
@@ -183,12 +179,6 @@ public class Group extends Gizmo {
 			} else {
 				return null;
 			}
-//		}catch (Exception e){
-//			GLog.n("Gizmo g from Group is null");
-//			GLog.n(g.toString());
-//			GLog.n(members.toString());
-//			return null;
-//		}
 		}
 
 		public Gizmo replace( Gizmo oldOne, Gizmo newOne ) {

@@ -1686,12 +1686,9 @@ com/github/dachhack/sprout/levels/traps/AlarmTrap.java
  com.github.dachhack.sprout.levels.traps.AlarmTrap
 com/github/dachhack/sprout/windows/WndSpellBook.java
  com.github.dachhack.sprout.windows.WndSpellBook
- com.github.dachhack.sprout.windows.WndSpellBook$1
- com.github.dachhack.sprout.windows.WndSpellBook$2
- com.github.dachhack.sprout.windows.WndSpellBook$ActiveTab
+ com.github.dachhack.sprout.windows.WndSpellBook$BagTab2
  com.github.dachhack.sprout.windows.WndSpellBook$ItemButton
  com.github.dachhack.sprout.windows.WndSpellBook$Listener
- com.github.dachhack.sprout.windows.WndSpellBook$PassiveTab
 com/github/dachhack/sprout/actors/mobs/npcs/Ghost.java
  com.github.dachhack.sprout.actors.mobs.npcs.Ghost
  com.github.dachhack.sprout.actors.mobs.npcs.Ghost$FetidRat
