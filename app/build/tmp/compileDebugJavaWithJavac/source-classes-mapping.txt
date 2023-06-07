@@ -1734,12 +1734,18 @@ com/github/dachhack/sprout/actors/buffs/Bleeding.java
 com/github/dachhack/sprout/windows/WndLevelUp.java
  com.github.dachhack.sprout.windows.WndLevelUp
  com.github.dachhack.sprout.windows.WndLevelUp$1
+ com.github.dachhack.sprout.windows.WndLevelUp$10
+ com.github.dachhack.sprout.windows.WndLevelUp$11
+ com.github.dachhack.sprout.windows.WndLevelUp$12
+ com.github.dachhack.sprout.windows.WndLevelUp$13
  com.github.dachhack.sprout.windows.WndLevelUp$2
  com.github.dachhack.sprout.windows.WndLevelUp$3
  com.github.dachhack.sprout.windows.WndLevelUp$4
  com.github.dachhack.sprout.windows.WndLevelUp$5
  com.github.dachhack.sprout.windows.WndLevelUp$6
  com.github.dachhack.sprout.windows.WndLevelUp$7
+ com.github.dachhack.sprout.windows.WndLevelUp$8
+ com.github.dachhack.sprout.windows.WndLevelUp$9
 com/github/dachhack/sprout/actors/mobs/npcs/MirrorImage.java
  com.github.dachhack.sprout.actors.mobs.npcs.MirrorImage
 com/github/dachhack/sprout/ui/HealthIndicator.java

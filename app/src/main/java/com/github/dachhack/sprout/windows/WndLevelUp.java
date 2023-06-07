@@ -32,6 +32,7 @@ import com.github.dachhack.sprout.utils.Utils;
 import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.utils.Random;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class WndLevelUp extends Window {
@@ -39,15 +40,30 @@ public class WndLevelUp extends Window {
 	private static final String TXT_MESSAGE_EVAP = "The Life Drop evaporates releasing it's power!";
 	private static final String TXT_MESSAGE = "Which attribute do you want to increase?";
 	private static final String TXT_MESSAGE_TALENTS = "Which talent do you want to learn?";
-	private static final String TXT_SPEED = "Speed + %d";
-	private static final String TXT_STR = "Strength + %d";
-	private static final String TXT_MAGIC = "Magic + %d";
+	private static final String TXT_SPEED = "Speed  + %d";
+	private static final String TXT_AS = "Attack speed  + %d";
+	private static final String TXT_STR = "Strength  + %d";
+	private static final String TXT_MAGIC = "Magic  + %d";
+	private static final String TXT_PHYSIC = "Physic  + %d";
+	private static final String TXT_MASTERY = "Mastery  + %d";
 	private static final String TXT_TITLE = "Level %d %s";
-	private static final String TXT_DR = "DR + %d";
+	private static final String TXT_DR = "DR  + %d";
+	private static final String TXT_HP_REGEN = "HP regen (turns)  + %d";
+	private static final String TXT_HP_REGEN_power = "HP regen (power)  + %d";
+	private static final String TXT_HT = "Health  + %d";
+	private static final String TXT_MP = "MP  + %d";
+	private static final String TXT_DMG = "Damage  + %d";
+	private static final String TXT_ACCURACY = "Accuracy  + %d";
+	private static final String TXT_EVASION = "Evasion  + %d";
+	private static final String TXT_CRIT_RATE = "Crit rate  + %d";
+	private static final String TXT_CRIT_DMG = "Crit dmg  + %d";
+	private static final String TXT_AMBUSH = "Ambush dmg  + %d";
 
 	private static final int WIDTH = 120;
 	private static final int BTN_HEIGHT = 18;
 	private static final float GAP = 2;
+
+	private static final int NUMBER_OF_STAT_BUTTONS = 4;
 
 	private static float y = 0;
 
@@ -63,28 +79,14 @@ public class WndLevelUp extends Window {
 		title.setRect(0, 0, WIDTH, 0);
 		add(title);
 
-		switch (lvl){
-			case 10: talents(title, lvl); break;
-//			case 20: talents(title, lvl); break;
-//			case 30: talents(title, lvl); break;
-//			case 40: talents(title, lvl); break;
-//			case 50: talents(title, lvl); break;
-//			case 60: talents(title, lvl); break;
-//			case 70: talents(title, lvl); break;
-//			case 80: talents(title, lvl); break;
-//			case 90: talents(title, lvl); break;
-//			case 100: talents(title, lvl); break;
-			default: stats(title, lvl);
+		if (lvl % 10 == 0) {
+			talents(title, lvl, hero);
+		} else {
+			stats(title, lvl, hero);
 		}
-		//stats(title, lvl);
-//		if(lvl == 10){
-//			talents(title, lvl);
-//		}else{
-//			stats(title, lvl);
-//		}
 	}
 
-	private void talents(IconTitle title, int lvl){
+	private void talents(IconTitle title, int lvl, Hero hero){
 		BitmapTextMultiline message = PixelScene.createMultiline(TXT_MESSAGE_TALENTS, 6);
 		message.maxWidth = WIDTH;
 		message.measure();
@@ -95,8 +97,8 @@ public class WndLevelUp extends Window {
 
 		switch (lvl){
 			case 10:
-				Dungeon.hero.spellbook.learnSpell(SpellBook.spellList.MORTAL_STRIKE);
-				switch (Dungeon.hero.heroClass){
+				hero.spellbook.learnSpell(SpellBook.spellList.MORTAL_STRIKE);
+				switch (hero.heroClass){
 					case WARRIOR:
 						System.out.println("WARRIOR");
 						break;
@@ -107,8 +109,8 @@ public class WndLevelUp extends Window {
 						RedButton btn = new RedButton("First talent".toUpperCase(Locale.ENGLISH)) {
 							@Override
 							protected void onClick() {
-								Dungeon.hero.levelup = false;
-								Dungeon.hero.invisRegen = true;
+								hero.levelup = false;
+								hero.invisRegen = true;
 								//Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format("+ %d str", getStr(lvl)));
 								//GLog.p("Newfound strength surges through your body.");
 								hide();
@@ -124,9 +126,9 @@ public class WndLevelUp extends Window {
 						RedButton btn2 = new RedButton("Second talent".toUpperCase(Locale.ENGLISH)) {
 							@Override
 							protected void onClick() {
-								Dungeon.hero.levelup = false;
+								hero.levelup = false;
 								//Dungeon.hero.MT += 2;
-								Dungeon.hero.invisSpeed = true;
+								hero.invisSpeed = true;
 								//Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format("+ %d magic", getMag(lvl)));
 								//GLog.p("You feel the surge of arcane magics in your body.");
 								hide();
@@ -192,14 +194,13 @@ public class WndLevelUp extends Window {
 
 
 				break;
-			default: stats(title, lvl);
 		}
 
 		resize(WIDTH, (int) y);
 	}
 
 
-	private void stats(IconTitle title, int lvl){
+	private void stats(IconTitle title, int lvl, Hero hero){
 		BitmapTextMultiline message = PixelScene.createMultiline(TXT_MESSAGE, 6);
 		message.maxWidth = WIDTH;
 		message.measure();
@@ -207,74 +208,129 @@ public class WndLevelUp extends Window {
 		add(message);
 
 
-
-		//if(lvl % 3)
-		RedButton btnstr = new RedButton(Utils.format(TXT_STR, getStr(lvl)).toUpperCase(Locale.ENGLISH)) {
+		ArrayList<RedButton> buttons = new ArrayList<>();
+		RedButton btnStr = new RedButton(Utils.format(TXT_STR, getStr()).toUpperCase(Locale.ENGLISH)) {
 			@Override
 			protected void onClick() {
-				Dungeon.hero.levelup = false;
-				Dungeon.hero.STR += getStr(lvl);
-				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format("+ %d str", getStr(lvl)));
+				hero.levelup = false;
+				hero.STR += getStr();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_STR, getStr()));
 				GLog.p("Newfound strength surges through your body.");
 				hide();
 			}
 		};
-		if(lvl % 1 == 0){
-		y = message.y + message.height() + GAP;
-		btnstr.setRect(0, y, WIDTH,
-				BTN_HEIGHT);
-			add(btnstr);
-			y = btnstr.bottom() + GAP;
-		}
-
-		RedButton btnmagic = new RedButton(Utils.capitalize(Utils.format(TXT_MAGIC, getMag(lvl)).toUpperCase(Locale.ENGLISH))) {
+		buttons.add(btnStr);
+		RedButton btnSpeed = new RedButton(Utils.capitalizeUp(Utils.format(TXT_SPEED, getSpd())) + "%") {
 			@Override
 			protected void onClick() {
-				Dungeon.hero.levelup = false;
-				//Dungeon.hero.MT += 2;
-				Dungeon.hero.magicLevel += getMag(lvl);
-				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format("+ %d magic", getMag(lvl)));
-				GLog.p("You feel the surge of arcane magics in your body.");
-				hide();
-			}
-		};
-		if(lvl % 2 == 0){
-		btnmagic.setRect(0, y, WIDTH, BTN_HEIGHT);
-			add(btnmagic);
-			y = btnmagic.bottom() + GAP;
-		}
-
-		RedButton btnspeed = new RedButton(Utils.capitalize(Utils.format(TXT_SPEED, getSpd(lvl)).toUpperCase(Locale.ENGLISH)) + "%") {
-			@Override
-			protected void onClick() {
-				Dungeon.hero.levelup=false;
-				Dungeon.hero.setSpeed(Dungeon.hero.getSpeed() + getSpd(lvl) * 0.01f);
-				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format("+ %d", getSpd(lvl)) + "% speed");
+				hero.levelup=false;
+				hero.setSpeed(hero.getSpeed() + getSpd() * 0.01f);
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_SPEED, getSpd()) + "%");
 				GLog.p("You feel your body moving faster.");
 				hide();
 			}
 		};
-		if(Dungeon.hero.lvl % 3 == 0){
-		btnspeed.setRect(0, y, WIDTH, BTN_HEIGHT);
-			add(btnspeed);
-			y = btnspeed.bottom() + GAP;
-		}
-
-
-		RedButton btnDR = new RedButton(Utils.capitalize(Utils.format(TXT_DR, getDR(lvl)).toUpperCase(Locale.ENGLISH))) {
+		buttons.add(btnSpeed);
+		RedButton btnAS = new RedButton(Utils.capitalizeUp(Utils.format(TXT_AS, getAS())) + "%") {
 			@Override
 			protected void onClick() {
-				Dungeon.hero.levelup=false;
-				Dungeon.hero.DR += 1;
-				Dungeon.hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format("+ %d dmg reduction", getDR(lvl)));
+				hero.levelup=false;
+				hero.additAS += getAS() * 0.01f;
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_AS, getAS()) + "%");
+				GLog.p("Your attacks faster now.");
+				hide();
+			}
+		};
+		buttons.add(btnAS);
+		RedButton btnDR = new RedButton(Utils.capitalizeUp(Utils.format(TXT_DR, getDR()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup=false;
+				hero.DR += getDR();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_DR, getDR()));
+				GLog.p("You feel your skin durable.");
+				hide();
+			}
+		};
+		buttons.add(btnDR);
+		RedButton btnHT = new RedButton(Utils.capitalizeUp(Utils.format(TXT_HT, getHT()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup=false;
+				hero.HT += getHT();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_HT, getHT()));
+				GLog.p("You feel healthy.");
+				hide();
+			}
+		};
+		buttons.add(btnHT);
+		RedButton btnMP = new RedButton(Utils.capitalizeUp(Utils.format(TXT_MP, getMP()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup=false;
+				hero.MT += getMP();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_MP, getMP()));
+				GLog.p("You feel a new enveloping aura.");
+				hide();
+			}
+		};
+		buttons.add(btnMP);
+		RedButton btnDMG = new RedButton(Utils.capitalizeUp(Utils.format(TXT_DMG, getDmg()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup=false;
+				hero.bonusDamage += getDmg();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_DMG, getDmg()));
+				GLog.p("You feel powerful.");
+				hide();
+			}
+		};
+		buttons.add(btnDMG);
+		RedButton btnMagic = new RedButton(Utils.capitalizeUp(Utils.format(TXT_MAGIC, getMag()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup = false;
+				//Dungeon.hero.MT += 2;
+				hero.magicLevel += getMag();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_MAGIC, getMag()));
+				GLog.p("You feel the surge of arcane magics in your body.");
+				hide();
+			}
+		};
+		buttons.add(btnMagic);
+		RedButton btnPhys = new RedButton(Utils.capitalizeUp(Utils.format(TXT_PHYSIC, getPhys()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup=false;
+				hero.physicLevel += getPhys();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_PHYSIC, getPhys()));
 				GLog.p("You feel your body stronger than before.");
 				hide();
 			}
 		};
-		if(Dungeon.hero.lvl % 5 == 0){
-		btnDR.setRect(0, y, WIDTH, BTN_HEIGHT);
-		add(btnDR);
-		y = btnDR.bottom() + GAP;
+		buttons.add(btnPhys);
+		RedButton btnMastery = new RedButton(Utils.capitalizeUp(Utils.format(TXT_MASTERY, getMas()))) {
+			@Override
+			protected void onClick() {
+				hero.levelup=false;
+				hero.masteryLevel += getMas();
+				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_MASTERY, getMas()));
+				GLog.p("You feel skillfully than before.");
+				hide();
+			}
+		};
+		buttons.add(btnMastery);
+		y = message.y + message.height() + GAP;
+		//не учитываются улучшения на пухах при отображении урона
+
+
+		for(int j = 0; j < NUMBER_OF_STAT_BUTTONS; j++){
+			int i = Random.Int(buttons.size());
+			buttons.get(i).setRect(0, y, WIDTH,
+					BTN_HEIGHT);
+			add(buttons.get(i));
+			y = buttons.get(i).bottom() + GAP;
+			buttons.remove(i);
 		}
 
 		resize(WIDTH, (int) y);
@@ -284,13 +340,11 @@ public class WndLevelUp extends Window {
 	public void onBackPressed() {
 	}
 
-	private int getStr(int lvl){
-
+	private int getStr(){
 		return 1;
-
 	}
 
-	private int getMag(int lvl){
+	private int getMag(){
 
 //		int points=0;
 //
@@ -303,72 +357,64 @@ public class WndLevelUp extends Window {
 
 	}
 
-	private int getPhys(int lvl){
+	private int getPhys(){
+		return 1;
+	}
 
+	private int getMas(){
+		return 1;
+	}
 
+//	private int getLiqDmg(){
+//
+//
+//		return 1;
+//
+//	}
+
+	private int getDR(){
 		return 1;
 
 	}
-
-	private int getMas(int lvl){
-
-
+	private int getRegenRate(){
 		return 1;
 
 	}
+	private int getRegenPower(){
+		return 1;
+	}
+	private int getSpd(){
+		return 5;
 
-	private int getLiqDmg(int lvl){
-
-
+	}
+	private int getAmbush(){
 		return 1;
 
 	}
-
-	private int getDR(int lvl){
-
-
+	private int getDmg(){
 		return 1;
 
 	}
-
-	private int getSpd(int lvl){
-
-
+	private int getCrit(){
 		return 1;
-
 	}
-
-	private int getAmbush(int lvl){
-
-
+	private int getCritRate(){
 		return 1;
-
 	}
-
-	private int getDmg(int lvl){
-
-
+	private int getAS(){
+		return 2;
+	}
+	private int getHT(){
+		return 5;
+	}
+	private int getMP(){
+		return 5;
+	}
+	private int getEvasion(){
 		return 1;
-
 	}
-
-	private int getCrit(int lvl){
-
+	private int getAccuracy(){
 		return 1;
-
 	}
-
-	private int getCritChance(int lvl){
-
-		return 1;
-
-	}
-
-	private int getAS(int lvl){
-
-		return 1;
-
-	}
-
 
 }

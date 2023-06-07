@@ -50,6 +50,8 @@ public abstract class Wand extends KindOfWeapon {
 	private static final int USAGES_TO_KNOW = 40;
 
 	public static final String AC_ZAP = "ZAP";
+	public static final String AC_ON = "ON";
+	public static final String AC_OFF = "OFF";
 
 	private static final String TXT_MAGIC_INFO = "You can increase the magical power of this wand by leveling up your magic.";
 
@@ -61,7 +63,7 @@ public abstract class Wand extends KindOfWeapon {
 	private static final String TXT_SELF_TARGET = "You can't target yourself";
 
 	private static final String TXT_IDENTIFY = "You are now familiar enough with your %s.";
-	
+
 	private static final String TXT_REINFORCED = "\n\nIt is reinforced. ";
 
 	private static final float TIME_TO_ZAP = 1f;
@@ -76,6 +78,8 @@ public abstract class Wand extends KindOfWeapon {
 	private int usagesToKnow = USAGES_TO_KNOW;
 
 	protected boolean hitChars = true;
+
+	protected boolean enhancedZap = true;
 
 	protected int mpCost = 1;
 
@@ -116,15 +120,15 @@ public abstract class Wand extends KindOfWeapon {
 	public boolean poweredZap(){
 		mpCost = Dungeon.hero.magicLevel;
 		boolean z = Dungeon.hero.MP - mpCost > 0;
-		if(z){
+		if(z && enhancedZap){
 			Dungeon.hero.MP -= mpCost;
 		}
-		return z;
+		return z && enhancedZap;
 	}
 
 	protected String mpCostInfo(){
-		return updatedMPCost() ? "Powered magic is ready to zap. Currently it requires " + Integer.toString(mpCost) + " mana."
-				: "Now you have no enough mana for using enhanced magic. Currently it requires " + Integer.toString(mpCost) + " mana.";
+		return updatedMPCost() ? "Powered magic is ready to zap. Currently it requires " + mpCost + " mana points."
+				: "Now you have no enough mana for using enhanced magic. Currently it requires " + mpCost + " mana points.";
 	}
 
 
@@ -166,6 +170,11 @@ public abstract class Wand extends KindOfWeapon {
 			actions.remove(AC_EQUIP);
 			actions.remove(AC_UNEQUIP);
 		}
+		if(enhancedZap){
+			actions.add(AC_OFF);
+		}else{
+			actions.add(AC_ON);
+		}
 		return actions;
 	}
 
@@ -182,17 +191,21 @@ public abstract class Wand extends KindOfWeapon {
 
 	@Override
 	public void execute(Hero hero, String action) {
-
-		if (action.equals(AC_ZAP)) {
-
-			curUser = hero;
-			curItem = this;
-			GameScene.selectCell(zapper);
-
-		} else {
-
-			super.execute(hero, action);
-
+		switch (action) {
+			case AC_ZAP:
+				curUser = hero;
+				curItem = this;
+				GameScene.selectCell(zapper);
+				break;
+			case AC_OFF:
+				enhancedZap = false;
+				GLog.i("You don't infuse magic into your wand no more.");
+				break;
+			case AC_ON:
+				enhancedZap = true;
+				GLog.i("Now you infuse magic into your wand on zap.");
+				break;
+			default:super.execute(hero, action);
 		}
 	}
 
@@ -231,7 +244,7 @@ public abstract class Wand extends KindOfWeapon {
 		if(usagesToKnow != 50 - Dungeon.hero.magicLevel && usagesToKnow != 1){
 			usagesToKnow = Math.max(50 - Dungeon.hero.magicLevel, 1);
 		}
-			int m = poweredZap() ? Math.max(Dungeon.hero.magicLevel / 2, 0) : 0;
+			int m = poweredZap() ? Dungeon.hero.magicLevel / 2 : 0;
 		//System.out.println("m = " + m);
 		//System.out.println("poweredZap = " + poweredZap());
 
@@ -300,7 +313,7 @@ public abstract class Wand extends KindOfWeapon {
 			} else {
 				info.append(String.format(TXT_WEAPON));
 			}
-			
+
 		}
 		info.append(String.format(" " + TXT_MAGIC_INFO));
 		info.append("\n\n");
@@ -381,7 +394,7 @@ public abstract class Wand extends KindOfWeapon {
 
 		curUser.spendAndNext(TIME_TO_ZAP);
 	}
-	
+
 	protected void wandEmpty() {
 		curCharges=0;
 		updateQuickslot();
@@ -422,7 +435,7 @@ public abstract class Wand extends KindOfWeapon {
 		return price;
 	}
 
-		
+
 	private static final String UNFAMILIRIARITY = "unfamiliarity";
 	private static final String MAX_CHARGES = "maxCharges";
 	private static final String CUR_CHARGES = "curCharges";
@@ -454,18 +467,18 @@ public abstract class Wand extends KindOfWeapon {
 		public void onSelect(Integer target) {
 
 			if (target != null) {
-				
+
 				final Wand curWand = (Wand) Item.curItem;
 
 				curWand.setKnown();
 
 				final int cell = Ballistica.cast(curUser.pos, target, true,	curWand.hitChars);
-				
+
 				if (target == curUser.pos || cell == curUser.pos) {
 					GLog.i(TXT_SELF_TARGET);
 					return;
 				}
-				
+
 				curUser.sprite.zap(cell);
 
 				QuickSlotButton.target(Actor.findChar(cell));

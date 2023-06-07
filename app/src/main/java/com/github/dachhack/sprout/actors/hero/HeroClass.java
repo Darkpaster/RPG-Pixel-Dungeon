@@ -350,22 +350,12 @@ public enum HeroClass {
 				
 		
 		         
-		 			for(int i=0; i<199; i++){
+		 			for(int i=0; i<2; i++){
 //					Scroll scroll = new ScrollOfMagicalInfusion();
 //			        scroll.identify().collect();
-//			        Scroll scroll2 = new ScrollOfUpgrade();
-//			        scroll2.identify().collect();
-//
 //			        Scroll scroll3 = new ScrollOfIdentify();
 //			        scroll3.identify().collect();
-//			        Scroll scroll4 = new ScrollOfRemoveCurse();
-//			        scroll4.identify().collect();
-//			        Scroll scroll5 = new ScrollOfPsionicBlast();
-//			        scroll5.identify().collect();
-
-//					if(i % 10 == 0) {
-//						hero.earnExp(hero.maxExp() - hero.exp);
-//					}
+					hero.earnExp(hero.maxExp() - hero.exp);
 					}
 				
 				/*

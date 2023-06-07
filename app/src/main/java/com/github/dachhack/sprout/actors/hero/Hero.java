@@ -430,10 +430,6 @@ public class Hero extends Char {
 		spellbook.restoreFromBundle(bundle);
 
 		belongings.restoreFromBundle(bundle);
-
-		//System.out.println(spellbook.getSpells());
-		//Bundlable b = bundle.get(SPELL_BOOK);
-		//spellbook = (SpellBook) b;
 	}
 
 	public static void preview(GamesInProgress.Info info, Bundle bundle) {
@@ -521,7 +517,7 @@ public class Hero extends Char {
 		if(magicLevel != baseMagic){
 			int diff = magicLevel - baseMagic;
 			if(diff > 0){
-				MT += diff * Random.NormalIntRange(10, 15);
+				MT += diff * 5;
 				MP = MT;
 			}
 			baseMagic = magicLevel;
@@ -1888,10 +1884,14 @@ private float crTime = 3;
 			attackSkill++;
 			defenseSkill++;
 			switch (this.heroClass){
-				case WARRIOR: physicLevel++; break;
-				case ROGUE: masteryLevel++; break;
-				case MAGE: magicLevel++; break;
-				case HUNTRESS: masteryLevel++; break;
+				case WARRIOR: physicLevel++;
+				if(lvl % 5 == 0) {magicLevel++; masteryLevel++;}break;
+				case ROGUE:
+				case HUNTRESS:
+					masteryLevel++;
+					if(lvl % 5 == 0) {magicLevel++; physicLevel++;}break;
+				case MAGE: magicLevel++;
+					if(lvl % 5 == 0) {physicLevel++; masteryLevel++;}break;
 			}
 
 			if (lvl < 10) {
@@ -1937,9 +1937,7 @@ private float crTime = 3;
 			//}
 
 			adjustStats();
-			HP = HT;
 			MP = MT;
-
 		}
 
 		if (subClass == HeroSubClass.WARLOCK) {

@@ -21,6 +21,10 @@ import java.util.Locale;
 
 public class Utils {
 
+	public static String capitalizeUp(String s) {
+		String str = s.toUpperCase(Locale.ENGLISH);
+		return Character.toUpperCase(str.charAt(0)) + str.substring(1);
+	}
 	public static String capitalize(String str) {
 		return Character.toUpperCase(str.charAt(0)) + str.substring(1);
 	}
