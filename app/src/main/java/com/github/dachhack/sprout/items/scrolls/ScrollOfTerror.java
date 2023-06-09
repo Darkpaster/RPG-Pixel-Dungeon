@@ -33,7 +33,7 @@ public class ScrollOfTerror extends Scroll {
 	{
 		name = "Scroll of Terror";
 		consumedValue = 5;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ScrollOfTerror extends Scroll {
 		Mob affected = null;
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.affect(mob, Terror.class, Terror.DURATION + Dungeon.hero.magicLevel / 5).object = curUser
+				Buff.affect(mob, Terror.class, Terror.DURATION + Dungeon.hero.getMagicLevel() / 5).object = curUser
 						.id();
 
 				count++;
@@ -79,7 +79,7 @@ public class ScrollOfTerror extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public int price() {

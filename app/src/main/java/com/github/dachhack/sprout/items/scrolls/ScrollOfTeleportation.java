@@ -47,7 +47,7 @@ public class ScrollOfTeleportation extends Scroll {
 	{
 		name = "Scroll of Teleportation";
 		consumedValue = 10;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class ScrollOfTeleportation extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public int price() {

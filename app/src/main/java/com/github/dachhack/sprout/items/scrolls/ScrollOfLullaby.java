@@ -33,7 +33,7 @@ public class ScrollOfLullaby extends Scroll {
 	{
 		name = "Scroll of Lullaby";
 		consumedValue = 5;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class ScrollOfLullaby extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override

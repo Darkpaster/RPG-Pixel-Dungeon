@@ -33,7 +33,7 @@ public class ScrollOfIdentify extends InventoryScroll {
 		inventoryTitle = "Select an item to identify";
 		mode = WndBag.Mode.UNIDENTIFED;
 		consumedValue = 10;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 		bones = true;
 	}
 
@@ -45,7 +45,7 @@ public class ScrollOfIdentify extends InventoryScroll {
 
 		item.identify();
 		GLog.i("It is " + item);
-		if(item.cursed && Random.Int(100) < Dungeon.hero.magicLevel){
+		if(item.cursed && Random.Int(100) < Dungeon.hero.getMagicLevel()){
 			item.uncurse();
 			Dungeon.hero.sprite.emitter().start(ShadowParticle.UP, 0.05f, 10);
 			GLog.p("Your understanding of magic allowed you to read this scroll with additional effect.");
@@ -62,7 +62,7 @@ public class ScrollOfIdentify extends InventoryScroll {
 
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override

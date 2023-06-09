@@ -191,10 +191,10 @@ public class Hero extends Char {
 	public int lvl = 1;
 	public int exp = 0;
 
-	public int magicLevel;
-	public int physicLevel;
+	private int magicLevel;
+	private int physicLevel;
 	public int bonusDamage = 0;
-	public int masteryLevel;
+	private int masteryLevel;
 
 	private int basePhysic;
 	private int baseMastery;
@@ -518,12 +518,21 @@ public class Hero extends Char {
 			int diff = magicLevel - baseMagic;
 			if(diff > 0){
 				MT += diff * 5;
-				MP = MT;
 			}
 			baseMagic = magicLevel;
 		}
-
+		MP = MT;
+		HP = HT;
 	}
+
+	public int getMasteryLevel(){
+		return masteryLevel;
+	}
+	public int getPhysicLevel(){return physicLevel;}
+	public int getMagicLevel(){return magicLevel;}
+	public void increasePhysicalLvl(int value){physicLevel += value; adjustStats();}
+	public void increaseMagicalLvl(int value){magicLevel += value; adjustStats();}
+	public void increaseMasteryLvl(int value){masteryLevel += value; adjustStats();}
 
 	public int tier() {
 		return belongings.armor == null ? 0 : belongings.armor.tier;
@@ -1937,7 +1946,6 @@ private float crTime = 3;
 			//}
 
 			adjustStats();
-			MP = MT;
 		}
 
 		if (subClass == HeroSubClass.WARLOCK) {

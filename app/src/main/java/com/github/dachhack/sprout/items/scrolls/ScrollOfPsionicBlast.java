@@ -38,7 +38,7 @@ public class ScrollOfPsionicBlast extends Scroll {
 	{
 		name = "Scroll of Psionic Blast";
 		consumedValue = 10;
-        mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+        mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 		bones = true;
 	}
 
@@ -103,7 +103,7 @@ public class ScrollOfPsionicBlast extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public int price() {

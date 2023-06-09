@@ -291,7 +291,7 @@ public class WndLevelUp extends Window {
 			protected void onClick() {
 				hero.levelup = false;
 				//Dungeon.hero.MT += 2;
-				hero.magicLevel += getMag();
+				hero.increaseMagicalLvl(getMag());
 				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_MAGIC, getMag()));
 				GLog.p("You feel the surge of arcane magics in your body.");
 				hide();
@@ -302,7 +302,7 @@ public class WndLevelUp extends Window {
 			@Override
 			protected void onClick() {
 				hero.levelup=false;
-				hero.physicLevel += getPhys();
+				hero.increasePhysicalLvl(getPhys());
 				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_PHYSIC, getPhys()));
 				GLog.p("You feel your body stronger than before.");
 				hide();
@@ -313,7 +313,7 @@ public class WndLevelUp extends Window {
 			@Override
 			protected void onClick() {
 				hero.levelup=false;
-				hero.masteryLevel += getMas();
+				hero.increaseMasteryLvl(getMas());
 				hero.sprite.showStatus(CharSprite.POSITIVE, Utils.format(TXT_MASTERY, getMas()));
 				GLog.p("You feel skillfully than before.");
 				hide();
@@ -321,7 +321,7 @@ public class WndLevelUp extends Window {
 		};
 		buttons.add(btnMastery);
 		y = message.y + message.height() + GAP;
-		//не учитываются улучшения на пухах при отображении урона
+		//пофиксил (dmg min/max)
 
 
 		for(int j = 0; j < NUMBER_OF_STAT_BUTTONS; j++){

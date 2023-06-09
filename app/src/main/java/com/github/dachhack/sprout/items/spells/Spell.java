@@ -41,11 +41,10 @@ public class Spell extends Item{
 	protected int cd;
 	protected float current_cd;
 
-	protected int lvl;
+	protected int lvl = 1;
 
 	{
 		name = "spell";
-		lvl = 1;
 		cd = 0;
 		current_cd = 0;
 		image = ItemSpriteSheet.JOURNAL_PAGE;
@@ -97,19 +96,18 @@ public class Spell extends Item{
 	@Override
 	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-
-		bundle.put(SPELL_LVL, lvl);
+		bundle.put(SPELL_LVL, lvl); //не сохраняется
 	}
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
 		super.storeInBundle(bundle);
-		lvl = bundle.getInt(SPELL_LVL);
+		lvl = bundle.getInt(SPELL_LVL); //не сохраняется
 	}
 
 	@Override
 	public String name() {
-		return name + " (" + (ready ? "ready" : current_cd) + ")";
+		return name + (ready ? "" : " (" + current_cd + ")");
 	}
 
 	private String spellCost(){
@@ -134,6 +132,13 @@ public class Spell extends Item{
 			ready = false;
 			current_cd = cd;
 		}
+	}
+
+	public void lvlUp(int value){
+		lvl += value;
+	}
+	public void lvlUp(){
+		lvl++;
 	}
 
 	protected void onUse() {
@@ -163,6 +168,6 @@ public class Spell extends Item{
 	}
 
 	protected String skillInfo(){
-		return "\n\nCost: " + spellCost() + "\nCD: " + cd + " turns";
+		return "\n\nCost: " + spellCost() + "\nCD: " + cd + " turns\nLevel: " + lvl;
 	}
 }

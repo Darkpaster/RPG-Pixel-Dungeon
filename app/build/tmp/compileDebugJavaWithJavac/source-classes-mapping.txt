@@ -12,6 +12,8 @@ com/github/dachhack/sprout/items/weapon/enchantments/NeptuneShock.java
  com.github.dachhack.sprout.items.weapon.enchantments.NeptuneShock
 com/github/dachhack/sprout/actors/buffs/Shadows.java
  com.github.dachhack.sprout.actors.buffs.Shadows
+com/github/dachhack/sprout/items/spells/BlindFury.java
+ com.github.dachhack.sprout.items.spells.BlindFury
 com/github/dachhack/sprout/sprites/WraithSprite.java
  com.github.dachhack.sprout.sprites.WraithSprite
 com/github/dachhack/sprout/items/wands/WandOfDisintegration.java
@@ -155,6 +157,8 @@ com/github/dachhack/sprout/windows/WndTinkerer3.java
 com/github/dachhack/sprout/sprites/ScorpioSprite.java
  com.github.dachhack.sprout.sprites.ScorpioSprite
  com.github.dachhack.sprout.sprites.ScorpioSprite$1
+com/github/dachhack/sprout/items/spells/Charge.java
+ com.github.dachhack.sprout.items.spells.Charge
 com/github/dachhack/sprout/levels/Level.java
  com.github.dachhack.sprout.levels.Level
  com.github.dachhack.sprout.levels.Level$1
@@ -164,6 +168,8 @@ com/github/dachhack/sprout/levels/Level.java
  com.github.dachhack.sprout.levels.Level$Feeling
 com/github/dachhack/sprout/items/food/BlueMilk.java
  com.github.dachhack.sprout.items.food.BlueMilk
+com/github/dachhack/sprout/items/spells/PowerfulSlam.java
+ com.github.dachhack.sprout.items.spells.PowerfulSlam
 com/github/dachhack/sprout/levels/SokobanVaultLevel.java
  com.github.dachhack.sprout.levels.SokobanVaultLevel
 com/watabou/noosa/Camera.java
@@ -200,6 +206,8 @@ com/github/dachhack/sprout/items/OrbOfZot.java
  com.github.dachhack.sprout.items.OrbOfZot
 com/watabou/glwrap/Uniform.java
  com.watabou.glwrap.Uniform
+com/github/dachhack/sprout/items/spells/ArcaneBoost.java
+ com.github.dachhack.sprout.items.spells.ArcaneBoost
 com/github/dachhack/sprout/actors/buffs/Buff.java
  com.github.dachhack.sprout.actors.buffs.Buff
 com/github/dachhack/sprout/levels/traps/SummoningTrap.java
@@ -239,6 +247,8 @@ com/github/dachhack/sprout/ui/Icons.java
  com.github.dachhack.sprout.ui.Icons$1
 com/github/dachhack/sprout/windows/WndMessage.java
  com.github.dachhack.sprout.windows.WndMessage
+com/github/dachhack/sprout/items/scrolls/scrollsOfSpells/ScrollOfSlash.java
+ com.github.dachhack.sprout.items.scrolls.scrollsOfSpells.ScrollOfSlash
 com/github/dachhack/sprout/actors/mobs/BlueCat.java
  com.github.dachhack.sprout.actors.mobs.BlueCat
  com.github.dachhack.sprout.actors.mobs.BlueCat$1
@@ -333,6 +343,8 @@ com/github/dachhack/sprout/ui/Window.java
 com/github/dachhack/sprout/levels/traps/FleecingTrap.java
  com.github.dachhack.sprout.levels.traps.FleecingTrap
  com.github.dachhack.sprout.levels.traps.FleecingTrap$Fleece
+com/github/dachhack/sprout/items/spells/HighLuck.java
+ com.github.dachhack.sprout.items.spells.HighLuck
 com/github/dachhack/sprout/sprites/GhostSprite.java
  com.github.dachhack.sprout.sprites.GhostSprite
 com/github/dachhack/sprout/items/SewersKey.java
@@ -349,6 +361,8 @@ com/github/dachhack/sprout/actors/mobs/Gnoll.java
  com.github.dachhack.sprout.actors.mobs.Gnoll
 com/github/dachhack/sprout/actors/mobs/Lichen.java
  com.github.dachhack.sprout.actors.mobs.Lichen
+com/github/dachhack/sprout/items/spells/Cryomancer.java
+ com.github.dachhack.sprout.items.spells.Cryomancer
 com/watabou/noosa/BitmapText.java
  com.watabou.noosa.BitmapText
  com.watabou.noosa.BitmapText$Font
@@ -361,6 +375,8 @@ com/github/dachhack/sprout/sprites/RatSprite.java
  com.github.dachhack.sprout.sprites.RatSprite
 com/github/dachhack/sprout/items/armor/ScaleArmor.java
  com.github.dachhack.sprout.items.armor.ScaleArmor
+com/github/dachhack/sprout/items/spells/Liquidation.java
+ com.github.dachhack.sprout.items.spells.Liquidation
 com/github/dachhack/sprout/actors/buffs/Blindness.java
  com.github.dachhack.sprout.actors.buffs.Blindness
 com/github/dachhack/sprout/DungeonTilemap.java
@@ -370,6 +386,8 @@ com/github/dachhack/sprout/ui/RedButton.java
  com.github.dachhack.sprout.ui.RedButton
 com/github/dachhack/sprout/ui/CheckBox.java
  com.github.dachhack.sprout.ui.CheckBox
+com/github/dachhack/sprout/items/spells/FrostNova.java
+ com.github.dachhack.sprout.items.spells.FrostNova
 com/github/dachhack/sprout/items/Honeypot.java
  com.github.dachhack.sprout.items.Honeypot
  com.github.dachhack.sprout.items.Honeypot$ShatteredPot
@@ -448,6 +466,8 @@ com/github/dachhack/sprout/sprites/CharSprite.java
  com.github.dachhack.sprout.sprites.CharSprite$State
 com/github/dachhack/sprout/sprites/SeniorSprite.java
  com.github.dachhack.sprout.sprites.SeniorSprite
+com/github/dachhack/sprout/items/spells/Execute.java
+ com.github.dachhack.sprout.items.spells.Execute
 com/github/dachhack/sprout/items/artifacts/UnstableSpellbook.java
  com.github.dachhack.sprout.items.artifacts.UnstableSpellbook
  com.github.dachhack.sprout.items.artifacts.UnstableSpellbook$1
@@ -523,6 +543,8 @@ com/github/dachhack/sprout/items/KindOfWeapon.java
  com.github.dachhack.sprout.items.KindOfWeapon
 com/github/dachhack/sprout/items/wands/WandOfDisintegration2.java
  com.github.dachhack.sprout.items.wands.WandOfDisintegration2
+com/github/dachhack/sprout/items/spells/Undead.java
+ com.github.dachhack.sprout.items.spells.Undead
 com/github/dachhack/sprout/items/food/FrozenCarpaccio.java
  com.github.dachhack.sprout.items.food.FrozenCarpaccio
 com/github/dachhack/sprout/items/wands/WandOfRegrowth.java
@@ -551,6 +573,8 @@ com/github/dachhack/sprout/items/weapon/Weapon.java
 com/github/dachhack/sprout/plants/BlandfruitBush.java
  com.github.dachhack.sprout.plants.BlandfruitBush
  com.github.dachhack.sprout.plants.BlandfruitBush$Seed
+com/github/dachhack/sprout/items/spells/Werewolf.java
+ com.github.dachhack.sprout.items.spells.Werewolf
 com/github/dachhack/sprout/items/rings/Ring.java
  com.github.dachhack.sprout.items.rings.Ring
  com.github.dachhack.sprout.items.rings.Ring$RingBuff
@@ -671,6 +695,8 @@ com/github/dachhack/sprout/windows/WndBlacksmith2.java
  com.github.dachhack.sprout.windows.WndBlacksmith2$ItemButton$1
 com/github/dachhack/sprout/actors/mobs/npcs/NPC.java
  com.github.dachhack.sprout.actors.mobs.npcs.NPC
+com/github/dachhack/sprout/items/spells/DodgeStyle.java
+ com.github.dachhack.sprout.items.spells.DodgeStyle
 com/github/dachhack/sprout/windows/WndInfoMob.java
  com.github.dachhack.sprout.windows.WndInfoMob
  com.github.dachhack.sprout.windows.WndInfoMob$MobTitle
@@ -696,6 +722,8 @@ com/github/dachhack/sprout/items/ActiveMrDestructo2.java
  com.github.dachhack.sprout.items.ActiveMrDestructo2
 com/github/dachhack/sprout/windows/WndTitledMessage.java
  com.github.dachhack.sprout.windows.WndTitledMessage
+com/github/dachhack/sprout/items/spells/Recklessness.java
+ com.github.dachhack.sprout.items.spells.Recklessness
 com/github/dachhack/sprout/actors/mobs/Golem.java
  com.github.dachhack.sprout.actors.mobs.Golem
 com/github/dachhack/sprout/actors/buffs/Haste.java
@@ -948,6 +976,8 @@ com/github/dachhack/sprout/levels/CrabBossLevel.java
  com.github.dachhack.sprout.levels.CrabBossLevel
 com/watabou/utils/Rect.java
  com.watabou.utils.Rect
+com/github/dachhack/sprout/items/spells/FireBall.java
+ com.github.dachhack.sprout.items.spells.FireBall
 com/github/dachhack/sprout/effects/particles/FlowParticle.java
  com.github.dachhack.sprout.effects.particles.FlowParticle
  com.github.dachhack.sprout.effects.particles.FlowParticle$1
@@ -989,6 +1019,8 @@ com/github/dachhack/sprout/levels/SewerLevel.java
  com.github.dachhack.sprout.levels.SewerLevel$WaterParticle
 com/github/dachhack/sprout/actors/mobs/SkeletonHand2.java
  com.github.dachhack.sprout.actors.mobs.SkeletonHand2
+com/github/dachhack/sprout/items/spells/Respite.java
+ com.github.dachhack.sprout.items.spells.Respite
 com/github/dachhack/sprout/effects/particles/WoolParticle.java
  com.github.dachhack.sprout.effects.particles.WoolParticle
  com.github.dachhack.sprout.effects.particles.WoolParticle$1
@@ -996,6 +1028,8 @@ com/github/dachhack/sprout/sprites/GolemSprite.java
  com.github.dachhack.sprout.sprites.GolemSprite
 com/github/dachhack/sprout/sprites/FossilSkeletonSprite.java
  com.github.dachhack.sprout.sprites.FossilSkeletonSprite
+com/github/dachhack/sprout/items/spells/Genius.java
+ com.github.dachhack.sprout.items.spells.Genius
 com/github/dachhack/sprout/levels/MineLevel.java
  com.github.dachhack.sprout.levels.MineLevel
  com.github.dachhack.sprout.levels.MineLevel$Sparkle
@@ -1010,6 +1044,8 @@ com/github/dachhack/sprout/effects/Fireball.java
  com.github.dachhack.sprout.effects.Fireball$Flame
 com/github/dachhack/sprout/levels/SokobanLayouts.java
  com.github.dachhack.sprout.levels.SokobanLayouts
+com/github/dachhack/sprout/items/spells/SweepingStrikes.java
+ com.github.dachhack.sprout.items.spells.SweepingStrikes
 com/github/dachhack/sprout/effects/particles/BlastParticle.java
  com.github.dachhack.sprout.effects.particles.BlastParticle
  com.github.dachhack.sprout.effects.particles.BlastParticle$1
@@ -1036,6 +1072,8 @@ com/github/dachhack/sprout/Journal.java
  com.github.dachhack.sprout.Journal
  com.github.dachhack.sprout.Journal$Feature
  com.github.dachhack.sprout.Journal$Record
+com/github/dachhack/sprout/items/spells/Electromancer.java
+ com.github.dachhack.sprout.items.spells.Electromancer
 com/github/dachhack/sprout/ui/GoldIndicator.java
  com.github.dachhack.sprout.ui.GoldIndicator
 com/github/dachhack/sprout/utils/GLog.java
@@ -1119,6 +1157,8 @@ com/github/dachhack/sprout/levels/painters/BossExitPainter.java
  com.github.dachhack.sprout.levels.painters.BossExitPainter
 com/github/dachhack/sprout/actors/blobs/WaterOfUpgradeEating.java
  com.github.dachhack.sprout.actors.blobs.WaterOfUpgradeEating
+com/github/dachhack/sprout/items/spells/MagicShield.java
+ com.github.dachhack.sprout.items.spells.MagicShield
 com/github/dachhack/sprout/actors/mobs/pets/Fairy.java
  com.github.dachhack.sprout.actors.mobs.pets.Fairy
 com/github/dachhack/sprout/sprites/SeekingClusterBombSprite.java
@@ -1129,6 +1169,8 @@ com/github/dachhack/sprout/levels/TownLayouts.java
  com.github.dachhack.sprout.levels.TownLayouts
 com/github/dachhack/sprout/sprites/ShopkeeperSprite.java
  com.github.dachhack.sprout.sprites.ShopkeeperSprite
+com/github/dachhack/sprout/items/spells/Hamstring.java
+ com.github.dachhack.sprout.items.spells.Hamstring
 com/github/dachhack/sprout/actors/buffs/EarthImbue.java
  com.github.dachhack.sprout.actors.buffs.EarthImbue
 com/github/dachhack/sprout/actors/mobs/npcs/SheepSokobanStop.java
@@ -1364,6 +1406,8 @@ com/github/dachhack/sprout/items/ClusterBomb.java
  com.github.dachhack.sprout.items.ClusterBomb$Fuse
 com/github/dachhack/sprout/levels/traps/FireTrap.java
  com.github.dachhack.sprout.levels.traps.FireTrap
+com/github/dachhack/sprout/items/spells/DeepFreeze.java
+ com.github.dachhack.sprout.items.spells.DeepFreeze
 com/github/dachhack/sprout/plants/Sungrass.java
  com.github.dachhack.sprout.plants.Sungrass
  com.github.dachhack.sprout.plants.Sungrass$Health
@@ -1435,6 +1479,8 @@ com/github/dachhack/sprout/items/weapon/enchantments/Fire.java
  com.github.dachhack.sprout.items.weapon.enchantments.Fire
 com/github/dachhack/sprout/sprites/MrDestructo2dot0Sprite.java
  com.github.dachhack.sprout.sprites.MrDestructo2dot0Sprite
+com/github/dachhack/sprout/items/spells/FireElemental.java
+ com.github.dachhack.sprout.items.spells.FireElemental
 com/github/dachhack/sprout/levels/TenguDenLevel.java
  com.github.dachhack.sprout.levels.TenguDenLevel
 com/github/dachhack/sprout/items/SteelHoneypot.java
@@ -1566,8 +1612,12 @@ com/github/dachhack/sprout/items/SanChikarahTranscend.java
 com/github/dachhack/sprout/windows/WndOtilukeMessage.java
  com.github.dachhack.sprout.windows.WndOtilukeMessage
  com.github.dachhack.sprout.windows.WndOtilukeMessage$1
+com/github/dachhack/sprout/items/spells/NightVision.java
+ com.github.dachhack.sprout.items.spells.NightVision
 com/watabou/utils/Bundlable.java
  com.watabou.utils.Bundlable
+com/github/dachhack/sprout/items/spells/BattleCry.java
+ com.github.dachhack.sprout.items.spells.BattleCry
 com/github/dachhack/sprout/windows/WndJournal.java
  com.github.dachhack.sprout.windows.WndJournal
  com.github.dachhack.sprout.windows.WndJournal$ListItem
@@ -1579,6 +1629,8 @@ com/github/dachhack/sprout/sprites/BatSprite.java
  com.github.dachhack.sprout.sprites.BatSprite
 com/watabou/noosa/TouchArea.java
  com.watabou.noosa.TouchArea
+com/github/dachhack/sprout/items/spells/BackStab.java
+ com.github.dachhack.sprout.items.spells.BackStab
 com/github/dachhack/sprout/actors/buffs/Barkskin.java
  com.github.dachhack.sprout.actors.buffs.Barkskin
 com/github/dachhack/sprout/items/PuddingCup.java
@@ -1748,6 +1800,8 @@ com/github/dachhack/sprout/windows/WndLevelUp.java
  com.github.dachhack.sprout.windows.WndLevelUp$9
 com/github/dachhack/sprout/actors/mobs/npcs/MirrorImage.java
  com.github.dachhack.sprout.actors.mobs.npcs.MirrorImage
+com/github/dachhack/sprout/items/spells/ArmorPenetration.java
+ com.github.dachhack.sprout.items.spells.ArmorPenetration
 com/github/dachhack/sprout/ui/HealthIndicator.java
  com.github.dachhack.sprout.ui.HealthIndicator
 com/github/dachhack/sprout/ui/QuickSlotButton.java
@@ -1763,6 +1817,10 @@ com/github/dachhack/sprout/items/rings/RingOfMagic.java
 com/watabou/noosa/particles/PixelParticle.java
  com.watabou.noosa.particles.PixelParticle
  com.watabou.noosa.particles.PixelParticle$Shrinking
+com/github/dachhack/sprout/items/spells/BloodyDemon.java
+ com.github.dachhack.sprout.items.spells.BloodyDemon
+com/github/dachhack/sprout/items/spells/Renew.java
+ com.github.dachhack.sprout.items.spells.Renew
 com/github/dachhack/sprout/items/weapon/melee/Sai.java
  com.github.dachhack.sprout.items.weapon.melee.Sai
 com/github/dachhack/sprout/sprites/GuardSprite.java
@@ -1843,6 +1901,8 @@ com/github/dachhack/sprout/items/weapon/enchantments/LokisPoison.java
  com.github.dachhack.sprout.items.weapon.enchantments.LokisPoison
 com/github/dachhack/sprout/sprites/SpinnerSprite.java
  com.github.dachhack.sprout.sprites.SpinnerSprite
+com/github/dachhack/sprout/items/spells/Amphibian.java
+ com.github.dachhack.sprout.items.spells.Amphibian
 com/github/dachhack/sprout/actors/mobs/Elemental.java
  com.github.dachhack.sprout.actors.mobs.Elemental
 com/github/dachhack/sprout/actors/mobs/King.java
@@ -1952,6 +2012,8 @@ com/github/dachhack/sprout/sprites/OniSprite.java
  com.github.dachhack.sprout.sprites.OniSprite
 com/github/dachhack/sprout/actors/mobs/SkeletonHand1.java
  com.github.dachhack.sprout.actors.mobs.SkeletonHand1
+com/github/dachhack/sprout/items/spells/Bash.java
+ com.github.dachhack.sprout.items.spells.Bash
 com/github/dachhack/sprout/items/bags/Quiver.java
  com.github.dachhack.sprout.items.bags.Quiver
 com/github/dachhack/sprout/sprites/FishProtectorSprite.java
@@ -1969,6 +2031,8 @@ com/github/dachhack/sprout/actors/buffs/FlavourBuff.java
 com/github/dachhack/sprout/GamesInProgress.java
  com.github.dachhack.sprout.GamesInProgress
  com.github.dachhack.sprout.GamesInProgress$Info
+com/github/dachhack/sprout/items/spells/Sprint.java
+ com.github.dachhack.sprout.items.spells.Sprint
 com/github/dachhack/sprout/items/Generator.java
  com.github.dachhack.sprout.items.Generator
  com.github.dachhack.sprout.items.Generator$1
@@ -2004,6 +2068,8 @@ com/github/dachhack/sprout/actors/mobs/FlyingProtector.java
  com.github.dachhack.sprout.actors.mobs.FlyingProtector
 com/github/dachhack/sprout/sprites/MossySkeletonSprite.java
  com.github.dachhack.sprout.sprites.MossySkeletonSprite
+com/github/dachhack/sprout/items/scrolls/scrollsOfSpells/ScrollOfMortalStrike.java
+ com.github.dachhack.sprout.items.scrolls.scrollsOfSpells.ScrollOfMortalStrike
 com/github/dachhack/sprout/sprites/DewProtectorSprite.java
  com.github.dachhack.sprout.sprites.DewProtectorSprite
 com/github/dachhack/sprout/sprites/SkeletonHand2Sprite.java
@@ -2037,6 +2103,8 @@ com/github/dachhack/sprout/items/nornstone/NornStone.java
 com/github/dachhack/sprout/items/weapon/melee/MeleeWeapon.java
  com.github.dachhack.sprout.items.weapon.melee.MeleeWeapon
  com.github.dachhack.sprout.items.weapon.melee.MeleeWeapon$1
+com/github/dachhack/sprout/items/spells/Blink.java
+ com.github.dachhack.sprout.items.spells.Blink
 com/github/dachhack/sprout/actors/mobs/Bee.java
  com.github.dachhack.sprout.actors.mobs.Bee
 com/github/dachhack/sprout/scenes/PixelScene.java
@@ -2104,6 +2172,8 @@ com/github/dachhack/sprout/items/AdamantWeapon.java
  com.github.dachhack.sprout.items.AdamantWeapon
 com/github/dachhack/sprout/actors/mobs/pets/Bunny.java
  com.github.dachhack.sprout.actors.mobs.pets.Bunny
+com/github/dachhack/sprout/items/spells/Vampire.java
+ com.github.dachhack.sprout.items.spells.Vampire
 com/github/dachhack/sprout/effects/Wound.java
  com.github.dachhack.sprout.effects.Wound
 com/github/dachhack/sprout/items/armor/glyphs/Viscosity.java
@@ -2167,6 +2237,8 @@ com/github/dachhack/sprout/items/PrisonKey.java
  com.github.dachhack.sprout.items.PrisonKey
 com/github/dachhack/sprout/sprites/SokobanSentinelSprite.java
  com.github.dachhack.sprout.sprites.SokobanSentinelSprite
+com/github/dachhack/sprout/items/spells/ThirstForKnowledge.java
+ com.github.dachhack.sprout.items.spells.ThirstForKnowledge
 com/github/dachhack/sprout/items/weapon/melee/Mace.java
  com.github.dachhack.sprout.items.weapon.melee.Mace
 com/github/dachhack/sprout/sprites/VaultProtectorSprite.java
@@ -2260,6 +2332,10 @@ com/watabou/noosa/PseudoPixel.java
  com.watabou.noosa.PseudoPixel
 com/github/dachhack/sprout/items/Egg.java
  com.github.dachhack.sprout.items.Egg
+com/github/dachhack/sprout/items/spells/DeathAura.java
+ com.github.dachhack.sprout.items.spells.DeathAura
+com/github/dachhack/sprout/items/spells/Slash.java
+ com.github.dachhack.sprout.items.spells.Slash
 com/github/dachhack/sprout/items/SanChikarah.java
  com.github.dachhack.sprout.items.SanChikarah
 com/github/dachhack/sprout/items/weapon/missiles/CurareDart.java
@@ -2395,6 +2471,8 @@ com/watabou/input/Touchscreen.java
  com.watabou.input.Touchscreen$Touch
 com/github/dachhack/sprout/actors/mobs/ForestProtector.java
  com.github.dachhack.sprout.actors.mobs.ForestProtector
+com/github/dachhack/sprout/items/spells/AccurateAttack.java
+ com.github.dachhack.sprout.items.spells.AccurateAttack
 com/github/dachhack/sprout/sprites/BunnySprite.java
  com.github.dachhack.sprout.sprites.BunnySprite
 com/github/dachhack/sprout/sprites/ShadowYogSprite.java
@@ -2406,6 +2484,8 @@ com/github/dachhack/sprout/items/weapon/melee/Spear.java
  com.github.dachhack.sprout.items.weapon.melee.Spear
 com/github/dachhack/sprout/sprites/LitTowerSprite.java
  com.github.dachhack.sprout.sprites.LitTowerSprite
+com/github/dachhack/sprout/items/spells/Mad.java
+ com.github.dachhack.sprout.items.spells.Mad
 com/github/dachhack/sprout/actors/buffs/MindVision.java
  com.github.dachhack.sprout.actors.buffs.MindVision
 com/github/dachhack/sprout/actors/buffs/Terror.java
@@ -2426,6 +2506,8 @@ com/github/dachhack/sprout/levels/SokobanTeleportLevel.java
  com.github.dachhack.sprout.levels.SokobanTeleportLevel
 com/github/dachhack/sprout/actors/mobs/Mimic.java
  com.github.dachhack.sprout.actors.mobs.Mimic
+com/github/dachhack/sprout/items/spells/Pyromancer.java
+ com.github.dachhack.sprout.items.spells.Pyromancer
 com/github/dachhack/sprout/items/armor/glyphs/Stench.java
  com.github.dachhack.sprout.items.armor.glyphs.Stench
 com/github/dachhack/sprout/items/quest/RatSkull.java
@@ -2513,6 +2595,8 @@ com/github/dachhack/sprout/items/Ammo/Arrow.java
 com/watabou/noosa/audio/Sample.java
  com.watabou.noosa.audio.Sample
  com.watabou.noosa.audio.Sample$1
+com/github/dachhack/sprout/items/spells/ShieldWall.java
+ com.github.dachhack.sprout.items.spells.ShieldWall
 com/github/dachhack/sprout/effects/Splash.java
  com.github.dachhack.sprout.effects.Splash
  com.github.dachhack.sprout.effects.Splash$1

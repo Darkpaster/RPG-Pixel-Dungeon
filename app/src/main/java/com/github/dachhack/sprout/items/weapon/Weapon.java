@@ -218,6 +218,88 @@ public class Weapon extends KindOfWeapon {
 		return Math.round(damage* (imbue == Imbue.LIGHT ? 0.7f : (imbue == Imbue.HEAVY ? 1.5f: 1f)));
 	}
 
+	@Override
+	public int damageMax(Hero hero) {
+		int damage = super.damageMax(hero);
+
+		if (this instanceof MeleeWeapon && (hero.heroClass == HeroClass.HUNTRESS || hero.heroClass == HeroClass.WARRIOR)) {
+			int exStr = (TierBonus(level)+1) * Math.max(Math.round((hero.STR() - STR)/3),0);
+			if (exStr > 0) {
+				damage += exStr;
+			}
+		} else if (this instanceof MeleeWeapon && hero.heroClass == HeroClass.ROGUE) {
+			int exStr = (TierBonus(level)+1) * Math.max(Math.round((hero.STR() - STR)/5),0);
+			if (exStr > 0) {
+				damage += exStr;
+			}
+		} else if (this instanceof MeleeWeapon && hero.heroClass == HeroClass.MAGE) {
+			int exStr =  Math.max(Math.round((hero.STR() - STR)/5),0);
+			if (exStr > 0) {
+				damage += exStr;
+			}
+		}
+
+		if (this instanceof MissileWeapon && hero.heroClass == HeroClass.HUNTRESS) {
+			int exStr = Math.max(Math.round((hero.STR() - STR)/5),0);
+			int lvlBonus = Math.round(hero.lvl/10);
+			int totBonus = exStr+lvlBonus+1;
+			if (totBonus > 0) {
+				damage += damage*(totBonus/4);
+			}
+		}
+		if (this instanceof MissileWeapon && hero.heroClass != HeroClass.HUNTRESS) {
+			int exStr = Math.max(Math.round((hero.STR() - STR)/5),0);
+			int lvlBonus = Math.round(hero.lvl/10);
+			int totBonus = exStr+lvlBonus;
+			if (totBonus > 0) {
+				damage = damage*totBonus;
+			}
+		}
+
+		return Math.round(damage* (imbue == Imbue.LIGHT ? 0.7f : (imbue == Imbue.HEAVY ? 1.5f: 1f)));
+	}
+
+	@Override
+	public int damageMin(Hero hero) {
+		int damage = super.damageMin(hero);
+
+		if (this instanceof MeleeWeapon && (hero.heroClass == HeroClass.HUNTRESS || hero.heroClass == HeroClass.WARRIOR)) {
+			int exStr = (TierBonus(level)+1) * Math.max(Math.round((hero.STR() - STR)/3),0);
+			if (exStr > 0) {
+				damage += exStr / 2;
+			}
+		} else if (this instanceof MeleeWeapon && hero.heroClass == HeroClass.ROGUE) {
+			int exStr = (TierBonus(level)+1) * Math.max(Math.round((hero.STR() - STR)/5),0);
+			if (exStr > 0) {
+				damage += exStr / 2;
+			}
+		} else if (this instanceof MeleeWeapon && hero.heroClass == HeroClass.MAGE) {
+			int exStr =  Math.max(Math.round((hero.STR() - STR)/5),0);
+			if (exStr > 0) {
+				damage += exStr / 2;
+			}
+		}
+
+		if (this instanceof MissileWeapon && hero.heroClass == HeroClass.HUNTRESS) {
+			int exStr = Math.max(Math.round((hero.STR() - STR)/5),0);
+			int lvlBonus = Math.round(hero.lvl/10);
+			int totBonus = exStr+lvlBonus+1;
+			if (totBonus > 0) {
+				damage += damage*(exStr/4);
+			}
+		}
+		if (this instanceof MissileWeapon && hero.heroClass != HeroClass.HUNTRESS) {
+			int exStr = Math.max(Math.round((hero.STR() - STR)/5),0);
+			int lvlBonus = Math.round(hero.lvl/10);
+			int totBonus = exStr+lvlBonus;
+			if (totBonus > 0) {
+				damage = damage*lvlBonus;
+			}
+		}
+
+		return Math.round(damage* (imbue == Imbue.LIGHT ? 0.7f : (imbue == Imbue.HEAVY ? 1.5f: 1f)));
+	}
+
 	public Item upgrade(boolean enchant) {
 		
 		if (enchant){

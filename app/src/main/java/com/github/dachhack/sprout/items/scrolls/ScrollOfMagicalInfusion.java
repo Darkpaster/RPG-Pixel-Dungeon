@@ -35,7 +35,7 @@ public class ScrollOfMagicalInfusion extends InventoryScroll {
 		inventoryTitle = "Select an item to infuse";
 		mode = WndBag.Mode.ENCHANTABLE;
 		consumedValue = 15;
-		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 8 * Dungeon.hero.getMagicLevel() + 3;
 		bones = true;
 	}
 
@@ -57,7 +57,7 @@ public class ScrollOfMagicalInfusion extends InventoryScroll {
 
 	@Override
 	protected void updateCost() {
-		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 8 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override

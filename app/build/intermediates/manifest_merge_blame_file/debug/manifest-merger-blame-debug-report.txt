@@ -2,8 +2,8 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.github.dachhack.sprout"
 4    android:installLocation="auto"
-5    android:versionCode="188"
-6    android:versionName="0.2.7" >
+5    android:versionCode="27"
+6    android:versionName="0.2.8" >
 7
 8    <uses-sdk
 8-->D:\projects\RPGpd\app\src\main\AndroidManifest.xml:10:2-12:37

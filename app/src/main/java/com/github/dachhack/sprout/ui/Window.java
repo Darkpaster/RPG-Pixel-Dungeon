@@ -21,6 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.dachhack.sprout.Chrome;
+import com.github.dachhack.sprout.Dungeon;
+import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.effects.ShadowBox;
 import com.github.dachhack.sprout.scenes.PixelScene;
 import com.watabou.input.Keys;
@@ -45,7 +47,19 @@ public class Window extends Group implements Signal.Listener<Key> {
 	public static final int TITLE_COLOR = 0xFFFF44;
 	public static final int SHPX_COLOR = 0xCCFFCC;
 
-	public static final int MAIN_STAT_COLOR = 0x00dd00;
+	public static final int PHYSICAL_LVL_COLOR = 0xdd0000;
+	public static final int MAGICAL_LVL_COLOR = 0x0000dd;
+	public static final int MASTERY_LVL_COLOR = 0x00dd00;
+
+	public static int mainStatColor(){
+		if(HeroClass.WARRIOR == Dungeon.hero.heroClass){
+			return 0xdd0000;
+		}else if(HeroClass.ROGUE == Dungeon.hero.heroClass){
+			return 0x00dd00;
+		}else{
+			return 0x0000dd;
+		}
+	}
 
 	public Window() {
 		this(0, 0, Chrome.get(Chrome.Type.WINDOW));

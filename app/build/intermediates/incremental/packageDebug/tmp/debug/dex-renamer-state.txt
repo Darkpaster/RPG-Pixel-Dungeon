@@ -1,4 +1,4 @@
-#Wed Jun 07 11:25:32 EEST 2023
+#Fri Jun 09 17:02:18 EEST 2023
 base.0=D\:\\projects\\RPGpd\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

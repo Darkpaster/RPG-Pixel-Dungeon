@@ -51,6 +51,8 @@ import com.github.dachhack.sprout.items.scrolls.ScrollOfMagicalInfusion;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfPsionicBlast;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfRemoveCurse;
 import com.github.dachhack.sprout.items.scrolls.ScrollOfUpgrade;
+import com.github.dachhack.sprout.items.scrolls.scrollsOfSpells.ScrollOfMortalStrike;
+import com.github.dachhack.sprout.items.scrolls.scrollsOfSpells.ScrollOfSlash;
 import com.github.dachhack.sprout.items.spells.SpellBook;
 import com.github.dachhack.sprout.items.wands.Wand;
 import com.github.dachhack.sprout.items.wands.WandOfFlock;
@@ -167,7 +169,8 @@ public enum HeroClass {
 	}
 
 	private static void initWarrior(Hero hero) {
-		hero.STR = hero.STR + 1;
+		hero.energy = hero.energyTotal = 40;
+		//hero.STR = hero.STR + 1;
 		hero.rage = 0;
 		hero.rageTotal = 100;
 		hero.setMP(5);
@@ -185,11 +188,11 @@ public enum HeroClass {
 
 		new PotionOfStrength().setKnown();
 
-		hero.spellbook.learnSpell(SpellBook.spellList.MORTAL_STRIKE);
 		//playtest(hero);
 	}
 
 	private static void initMage(Hero hero) {
+		hero.energy = hero.energyTotal = 20;
 		hero.setMP(20);
 
 		(hero.belongings.weapon = new Knuckles()).identify();
@@ -248,7 +251,10 @@ public enum HeroClass {
 	}
 
 	public void playtest(Hero hero) {
-		Dungeon.hero.spellbook.learnSpell(SpellBook.spellList.MORTAL_STRIKE);
+		ScrollOfSlash scrollOfSlash = new ScrollOfSlash();
+		scrollOfSlash.collect();
+		ScrollOfMortalStrike scrollOfMortalStrike = new ScrollOfMortalStrike();
+		scrollOfMortalStrike.collect();
 		if (!Dungeon.playtest){
 		//Playtest
 		//TomeOfMastery tome = new TomeOfMastery(); tome.collect();
@@ -261,8 +267,8 @@ public enum HeroClass {
 		   // armor2.upgrade(14).identify().collect();
 		   WarHammer hammer = new WarHammer();
 		    hammer.reinforce().upgrade(115).identify().collect();
-		     Spectacles specs = new Spectacles(); specs.collect();
-		     Whistle whistle = new Whistle(); whistle.collect();
+//		     Spectacles specs = new Spectacles(); specs.collect();
+//		     Whistle whistle = new Whistle(); whistle.collect();
 		    //Dewcatcher.Seed seed3 = new Dewcatcher.Seed(); seed3.collect();
 		    //Flytrap.Seed seed1 = new Flytrap.Seed(); seed1.collect();
 		    //Phaseshift.Seed seed2 = new Phaseshift.Seed(); seed2.collect();
@@ -287,12 +293,12 @@ public enum HeroClass {
 				//ConchShell conch = new ConchShell(); conch.collect();
 				//AncientCoin coin = new AncientCoin(); coin.collect();
 				//TenguKey key = new TenguKey(); key.collect();
-				OtilukesJournal jn = new OtilukesJournal(); jn.collect();
-				JournalPage sk1 = new Sokoban1(); sk1.collect();
-				JournalPage sk2 = new Sokoban2(); sk2.collect();
-				JournalPage sk3 = new Sokoban3(); sk3.collect();
-				JournalPage sk4 = new Sokoban4(); sk4.collect();
-				JournalPage sk5 = new Vault(); sk5.collect();
+//				OtilukesJournal jn = new OtilukesJournal(); jn.collect();
+//				JournalPage sk1 = new Sokoban1(); sk1.collect();
+//				JournalPage sk2 = new Sokoban2(); sk2.collect();
+//				JournalPage sk3 = new Sokoban3(); sk3.collect();
+//				JournalPage sk4 = new Sokoban4(); sk4.collect();
+//				JournalPage sk5 = new Vault(); sk5.collect();
 				//JournalPage town = new Town(); town.collect();
 				//JournalPage cave = new DragonCave(); cave.collect();
 				//NeptunusTrident trident = new NeptunusTrident(); trident.enchantNeptune(); trident.upgrade(200); trident.collect();
@@ -345,12 +351,12 @@ public enum HeroClass {
 				
 				//PuddingCup cup = new PuddingCup(); cup.collect();
 				
-				Dungeon.playtest=true;
-				GLog.i("Playtest Activated");
+				//Dungeon.playtest=true;
+				//GLog.i("Playtest Activated");
 				
 		
 		         
-		 			for(int i=0; i<2; i++){
+		 			for(int i=0; i<1; i++){
 //					Scroll scroll = new ScrollOfMagicalInfusion();
 //			        scroll.identify().collect();
 //			        Scroll scroll3 = new ScrollOfIdentify();

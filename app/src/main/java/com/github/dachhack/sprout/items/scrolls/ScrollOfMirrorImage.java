@@ -38,7 +38,7 @@ public class ScrollOfMirrorImage extends Scroll {
 	{
 		name = "Scroll of Mirror Image";
 		consumedValue = 5;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	
 	private static final String TXT_PREVENTING = "Something scrambles the illusion magic! ";
@@ -91,7 +91,7 @@ public class ScrollOfMirrorImage extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override

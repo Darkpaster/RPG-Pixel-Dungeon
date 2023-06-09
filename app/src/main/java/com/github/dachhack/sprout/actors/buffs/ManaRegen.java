@@ -22,7 +22,7 @@ import com.github.dachhack.sprout.Dungeon;
 
 public class ManaRegen extends Buff {
 
-	private static final float REGENERATION_DELAY = 100;
+	private static final float REGENERATION_DELAY = 50;
 
 	@Override
 	public boolean act() {

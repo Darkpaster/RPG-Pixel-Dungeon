@@ -18,7 +18,7 @@ INJECTED from D:\projects\RPGpd\app\src\main\AndroidManifest.xml:2:1-41:12
 	xmlns:android
 		ADDED from D:\projects\RPGpd\app\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		ADDED from D:\projects\RPGpd\app\src\main\AndroidManifest.xml:4:2-27
+		ADDED from D:\projects\RPGpd\app\src\main\AndroidManifest.xml:4:2-26
 		INJECTED from D:\projects\RPGpd\app\src\main\AndroidManifest.xml
 		INJECTED from D:\projects\RPGpd\app\src\main\AndroidManifest.xml
 	android:installLocation

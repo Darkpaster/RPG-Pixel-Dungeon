@@ -24,7 +24,6 @@ import com.github.dachhack.sprout.actors.Actor;
 import com.github.dachhack.sprout.actors.buffs.Buff;
 import com.github.dachhack.sprout.actors.buffs.Dewcharge;
 import com.github.dachhack.sprout.actors.buffs.Hunger;
-import com.github.dachhack.sprout.actors.buffs.Invisibility;
 import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.actors.hero.HeroClass;
 import com.github.dachhack.sprout.actors.mobs.Mob;
@@ -32,7 +31,6 @@ import com.github.dachhack.sprout.actors.mobs.pets.PET;
 import com.github.dachhack.sprout.effects.Speck;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.OtilukesJournal;
-import com.github.dachhack.sprout.items.artifacts.CloakOfShadows;
 import com.github.dachhack.sprout.items.food.Blackberry;
 import com.github.dachhack.sprout.items.food.Blueberry;
 import com.github.dachhack.sprout.items.food.ChargrilledMeat;
@@ -68,8 +66,6 @@ import com.watabou.noosa.TextureFilm;
 
 import java.util.Locale;
 
-import static com.github.dachhack.sprout.ui.DangerIndicator.COLOR;
-
 public class WndHero extends WndTabbed {
 
 	public float startPos = 0;
@@ -89,7 +85,7 @@ public class WndHero extends WndTabbed {
 	private static final String TXT_EVASION = "Evasion";
 	private static final String TXT_SPEED = "Move speed";
 	private static final String TXT_MAGIC = "Mana";
-	private static final String TXT_MAGICLVL = "Magical Level";
+	private static final String TXT_MAGIC_LVL = "Magic Level";
 	private static final String TXT_KILLS = "Kills";
 	private static final String TXT_BREATH = "Breath Weapon";
 	private static final String TXT_SPIN = "Spinneretes";
@@ -290,28 +286,29 @@ public class WndHero extends WndTabbed {
 
 			pos += GAP;
 
-			if(hero.heroClass == HeroClass.WARRIOR){
-				statSlot(TXT_MAGICLVL, hero.magicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
-				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
-				statSlot(TXT_PHYSIC, hero.physicLevel, Window.MAIN_STAT_COLOR, Window.MAIN_STAT_COLOR);
-				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
-				statSlot(TXT_MASTERY, hero.masteryLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
-				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
-			}else if(hero.heroClass == HeroClass.MAGE){
-				statSlot(TXT_MAGICLVL, hero.magicLevel, Window.MAIN_STAT_COLOR, Window.MAIN_STAT_COLOR);
-				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
-				statSlot(TXT_PHYSIC, hero.physicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
-				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
-				statSlot(TXT_MASTERY, hero.masteryLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
-				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
-			}else{
-				statSlot(TXT_MAGICLVL, hero.magicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
-				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
-				statSlot(TXT_PHYSIC, hero.physicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
-				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
-				statSlot(TXT_MASTERY, hero.masteryLevel, Window.MAIN_STAT_COLOR, Window.MAIN_STAT_COLOR);
-				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
-			}
+//			if(hero.heroClass == HeroClass.WARRIOR){
+//
+//			}else if(hero.heroClass == HeroClass.MAGE){
+//				statSlot(TXT_MAGIC_LVL, hero.magicLevel, Window.MAIN_STAT_COLOR, Window.MAIN_STAT_COLOR);
+//				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
+//				statSlot(TXT_PHYSIC, hero.physicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
+//				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
+//				statSlot(TXT_MASTERY, hero.masteryLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
+//				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
+//			}else{
+//				statSlot(TXT_MAGIC_LVL, hero.magicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
+//				statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT);
+//				statSlot(TXT_PHYSIC, hero.physicLevel, Window.SHPX_COLOR, Window.SHPX_COLOR);
+//				statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal);
+//				statSlot(TXT_MASTERY, hero.masteryLevel, Window.MAIN_STAT_COLOR, Window.MAIN_STAT_COLOR);
+//				statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal);
+//			}
+			statSlot(TXT_MAGIC_LVL, hero.getMagicLevel(), Window.MAGICAL_LVL_COLOR, Window.MAGICAL_LVL_COLOR);
+			statSlot(TXT_MAGIC, hero.MP + "/" + hero.MT, Window.MAGICAL_LVL_COLOR, Window.MAGICAL_LVL_COLOR);
+			statSlot(TXT_PHYSIC, hero.getPhysicLevel(), Window.PHYSICAL_LVL_COLOR, Window.PHYSICAL_LVL_COLOR);
+			statSlot(TXT_RAGE, hero.rage + "/" + hero.rageTotal, Window.PHYSICAL_LVL_COLOR, Window.PHYSICAL_LVL_COLOR);
+			statSlot(TXT_MASTERY, hero.getMasteryLevel(), Window.MASTERY_LVL_COLOR, Window.MASTERY_LVL_COLOR);
+			statSlot(TXT_ENERGY, hero.energy + "/" + hero.energyTotal, Window.MASTERY_LVL_COLOR, Window.MASTERY_LVL_COLOR);
 
 
 			//pos += GAP;
@@ -376,6 +373,22 @@ public class WndHero extends WndTabbed {
 			add(txt);
 
 			txt = PixelScene.createText(String.valueOf(value), 8);
+			txt.hardlight(clrV);
+			txt.measure();
+			txt.x = PixelScene.align(WIDTH * 0.65f);
+			txt.y = pos;
+			add(txt);
+
+			pos += GAP + txt.baseLine();
+		}
+		private void statSlot(String label, String value, int clr, int clrV) {
+
+			BitmapText txt = PixelScene.createText(label, 8);
+			txt.hardlight(clr);
+			txt.y = pos;
+			add(txt);
+
+			txt = PixelScene.createText(value, 8);
 			txt.hardlight(clrV);
 			txt.measure();
 			txt.x = PixelScene.align(WIDTH * 0.65f);

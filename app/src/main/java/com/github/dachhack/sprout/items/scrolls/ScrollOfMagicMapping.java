@@ -38,7 +38,7 @@ public class ScrollOfMagicMapping extends Scroll {
 	{
 		name = "Scroll of Magic Mapping";
 		consumedValue = 10;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -109,7 +109,7 @@ public class ScrollOfMagicMapping extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override

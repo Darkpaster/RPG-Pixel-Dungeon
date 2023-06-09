@@ -35,7 +35,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		inventoryTitle = "Select an item to upgrade";
 		mode = WndBag.Mode.UPGRADEABLE;
 		consumedValue = 15;
-		mp_cost = 3 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 3 * Dungeon.hero.getMagicLevel() + 3;
 
 		bones = true;
 	}
@@ -46,7 +46,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
 
 		if(useMP(Dungeon.hero)){
-			if(Random.Int(100) < Dungeon.hero.magicLevel){
+			if(Random.Int(100) < Dungeon.hero.getMagicLevel()){
 				item.upgrade();
 				item.upgrade();
 				GLog.p(TXT_LOOKS_BETTER, item.name());
@@ -68,6 +68,9 @@ public class ScrollOfUpgrade extends InventoryScroll {
 		Badges.validateItemLevelAquired(item);
 	}
 
+	public static void upgrade(Hero hero, int value) {
+		hero.sprite.emitter().start(Speck.factory(value), 0.2f, 3);
+	}
 	public static void upgrade(Hero hero) {
 		hero.sprite.emitter().start(Speck.factory(Speck.UP), 0.2f, 3);
 	}
@@ -83,7 +86,7 @@ public class ScrollOfUpgrade extends InventoryScroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 3 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 3 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override

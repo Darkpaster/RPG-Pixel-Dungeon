@@ -32,7 +32,7 @@ public class DrowsySpell extends Buff {
 	@Override
 	public boolean attachTo(Char target) {
 
-		int level= Dungeon.hero.magicLevel/5;
+		int level= Dungeon.hero.getMagicLevel() /5;
 
 		if (!target.immunities().contains(Sleep.class)
 				&& super.attachTo(target)) {

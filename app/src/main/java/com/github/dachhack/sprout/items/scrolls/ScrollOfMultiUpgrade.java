@@ -34,7 +34,7 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 		inventoryTitle = "Select an item to upgrade";
 		mode = WndBag.Mode.UPGRADEABLE;
 		consumedValue = 10;
-		mp_cost = 10 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 10 * Dungeon.hero.getMagicLevel() + 3;
 		bones = true;
 	}
 
@@ -44,7 +44,7 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 		ScrollOfRemoveCurse.uncurse(Dungeon.hero, item);
 		item.upgrade();
 
-		for(int i=1; i<6 + Dungeon.hero.magicLevel / 10; i++){
+		for(int i = 0; i<5 + Dungeon.hero.getMagicLevel() / 10; i++){
 		  upgrade(curUser);
 		}
 		GLog.p(TXT_LOOKS_BETTER, item.name());
@@ -57,7 +57,7 @@ public class ScrollOfMultiUpgrade extends InventoryScroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 10 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 10 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public String desc() {

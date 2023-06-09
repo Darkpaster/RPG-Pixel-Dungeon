@@ -35,7 +35,7 @@ public class ScrollOfRecharging extends Scroll {
 	{
 		name = "Scroll of Recharging";
 		consumedValue = 10;
-		mp_cost = 4 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 4 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class ScrollOfRecharging extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 4 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 4 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	public static void charge(Hero hero) {
 		hero.sprite.centerEmitter().burst(EnergyParticle.FACTORY, 15);

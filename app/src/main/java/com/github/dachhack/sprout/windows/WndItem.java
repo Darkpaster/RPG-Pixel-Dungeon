@@ -19,6 +19,7 @@ package com.github.dachhack.sprout.windows;
 
 import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.items.Item;
+import com.github.dachhack.sprout.items.spells.Spell;
 import com.github.dachhack.sprout.scenes.PixelScene;
 import com.github.dachhack.sprout.sprites.ItemSprite;
 import com.github.dachhack.sprout.ui.ItemSlot;
@@ -36,39 +37,45 @@ public class WndItem extends Window {
 
 	private static final int WIDTH = 120;
 
-	public WndItem(final WndSpellBook owner, final Item item) {
+	public WndItem(final WndSpellBook owner, final Spell spell) {
 
 		super();
 
 		IconTitle titlebar = new IconTitle();
-		titlebar.icon(new ItemSprite(item.image(), item.glowing()));
-		titlebar.label(Utils.capitalize(item.toString()));
+		titlebar.icon(new ItemSprite(spell.image(), spell.glowing()));
+		titlebar.label(Utils.capitalize(spell.toString()));
 		titlebar.setRect(0, 0, WIDTH, 0);
 		add(titlebar);
+//
+//		if (spell.levelKnown && spell.level > 0) {
+//			titlebar.color(ItemSlot.UPGRADED);
+//		} else if (spell.levelKnown && spell.level < 0) {
+//			titlebar.color(ItemSlot.DEGRADED);
+//		}
 
-		if (item.levelKnown && item.level > 0) {
-			titlebar.color(ItemSlot.UPGRADED);
-		} else if (item.levelKnown && item.level < 0) {
-			titlebar.color(ItemSlot.DEGRADED);
-		}
-
-		BitmapTextMultiline info = PixelScene.createMultiline(item.info(), 6);
+		BitmapTextMultiline info = PixelScene.createMultiline(spell.info(), 6);
 		info.maxWidth = WIDTH;
 		info.measure();
 		info.x = titlebar.left();
 		info.y = titlebar.bottom() + GAP;
 		add(info);
+		BitmapTextMultiline lvl = PixelScene.createMultiline(Utils.capitalize("level " + spell.level), 8);
+		lvl.maxWidth = WIDTH;
+		lvl.measure();
+		lvl.x = WIDTH - lvl.width;
+		lvl.y = info.height;
+		add(lvl);
 
 		float y = info.y + info.height() + GAP;
 		float x = 0;
 
 		if (Dungeon.hero.isAlive() && owner != null) {
-			for (final String action : item.actions(Dungeon.hero)) {
+			for (final String action : spell.actions(Dungeon.hero)) {
 
 				RedButton btn = new RedButton(action) {
 					@Override
 					protected void onClick() {
-						item.execute(Dungeon.hero, action);
+						spell.execute(Dungeon.hero, action);
 						hide();
 						owner.hide();
 					};
@@ -82,7 +89,7 @@ public class WndItem extends Window {
 				btn.setPos(x, y);
 				add(btn);
 
-				if (action == item.defaultAction) {
+				if (action == spell.defaultAction) {
 					btn.textColor(TITLE_COLOR);
 				}
 

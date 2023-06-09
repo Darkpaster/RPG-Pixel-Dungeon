@@ -26,6 +26,8 @@ import com.github.dachhack.sprout.actors.hero.Hero;
 import com.github.dachhack.sprout.items.Item;
 import com.github.dachhack.sprout.items.ItemStatusHandler;
 import com.github.dachhack.sprout.items.artifacts.UnstableSpellbook;
+import com.github.dachhack.sprout.items.scrolls.scrollsOfSpells.ScrollOfMortalStrike;
+import com.github.dachhack.sprout.items.scrolls.scrollsOfSpells.ScrollOfSlash;
 import com.github.dachhack.sprout.sprites.ItemSpriteSheet;
 import com.github.dachhack.sprout.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -61,17 +63,19 @@ public abstract class Scroll extends Item {
 			ScrollOfRemoveCurse.class, ScrollOfTeleportation.class,
 			ScrollOfUpgrade.class, ScrollOfRage.class, ScrollOfTerror.class,
 			ScrollOfLullaby.class, ScrollOfMagicalInfusion.class,
-			ScrollOfPsionicBlast.class, ScrollOfMirrorImage.class, ScrollOfRegrowth.class };
+			ScrollOfPsionicBlast.class, ScrollOfMirrorImage.class,
+			ScrollOfRegrowth.class, ScrollOfMortalStrike.class, ScrollOfSlash.class };
 	private static final String[] runes = { "KAUNAN", "SOWILO", "LAGUZ",
 			"YNGVI", "GYFU", "RAIDO", "ISAZ", "MANNAZ", "NAUDIZ", "BERKANAN",
-			"NCOSRANE", "TIWAZ", "NENDIL" };
+			"NCOSRANE", "TIWAZ", "NENDIL", "WTF", "LOL" };
 	private static final Integer[] images = { ItemSpriteSheet.SCROLL_KAUNAN,
 			ItemSpriteSheet.SCROLL_SOWILO, ItemSpriteSheet.SCROLL_LAGUZ,
 			ItemSpriteSheet.SCROLL_YNGVI, ItemSpriteSheet.SCROLL_GYFU,
 			ItemSpriteSheet.SCROLL_RAIDO, ItemSpriteSheet.SCROLL_ISAZ,
 			ItemSpriteSheet.SCROLL_MANNAZ, ItemSpriteSheet.SCROLL_NAUDIZ,
 			ItemSpriteSheet.SCROLL_BERKANAN, ItemSpriteSheet.SCROLL_NCOSRANE,
-			ItemSpriteSheet.SCROLL_TIWAZ, ItemSpriteSheet.SCROLL_NENDIL };
+			ItemSpriteSheet.SCROLL_TIWAZ, ItemSpriteSheet.SCROLL_NENDIL,
+			ItemSpriteSheet.SCROLL_NENDIL, ItemSpriteSheet.SCROLL_NENDIL};
 
 	private static ItemStatusHandler<Scroll> handler;
 

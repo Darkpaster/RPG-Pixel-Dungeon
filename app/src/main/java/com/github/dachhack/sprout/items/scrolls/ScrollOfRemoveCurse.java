@@ -17,6 +17,7 @@
  */
 package com.github.dachhack.sprout.items.scrolls;
 
+import android.annotation.SuppressLint;
 import com.github.dachhack.sprout.Assets;
 import com.github.dachhack.sprout.Dungeon;
 import com.github.dachhack.sprout.actors.buffs.Buff;
@@ -38,7 +39,7 @@ public class ScrollOfRemoveCurse extends Scroll {
 	{
 		name = "Scroll of Remove Curse";
 		consumedValue = 15;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -77,6 +78,7 @@ public class ScrollOfRemoveCurse extends Scroll {
 				+ "The powerful magic in this scroll also upgrades cursed items. \n\n" + TXT_MAGIC_INFO + currentCost();
 	}
 
+	@SuppressLint("SuspiciousIndentation")
 	public static boolean uncurse(Hero hero, Item... items) {
 
 		boolean procced = false;
@@ -106,7 +108,7 @@ public class ScrollOfRemoveCurse extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public int price() {

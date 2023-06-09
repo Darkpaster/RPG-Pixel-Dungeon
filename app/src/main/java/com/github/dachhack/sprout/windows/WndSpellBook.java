@@ -349,7 +349,7 @@ public class WndSpellBook extends WndTabbed {
 				hide();
 				listener.onSelect(item);
 			} else {
-				WndSpellBook.this.add(new WndItem(WndSpellBook.this, item));
+				WndSpellBook.this.add(new WndItem(WndSpellBook.this, (Spell) item));
 			}
 		}
 

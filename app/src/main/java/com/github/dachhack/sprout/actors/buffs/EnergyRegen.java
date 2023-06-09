@@ -33,7 +33,7 @@ public class EnergyRegen extends Buff{
                 }
             }
 
-            float mLevel = hero.masteryLevel > 1 ? hero.masteryLevel / 2 * 0.01f : 0.01f;
+            float mLevel = hero.getMasteryLevel() > 1 ? hero.getMasteryLevel() * 0.5f * 0.01f : 0.01f;
             spend(Math.max(REGENERATION_DELAY - mLevel, 0.50f));
 
         } else {

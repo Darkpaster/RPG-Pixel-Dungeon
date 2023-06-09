@@ -35,7 +35,7 @@ public class ScrollOfRage extends Scroll {
 	{
 		name = "Scroll of Rage";
 		consumedValue = 5;
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ScrollOfRage extends Scroll {
 		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			mob.beckon(curUser.pos);
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.prolong(mob, Amok.class, 5f + Dungeon.hero.magicLevel / 5);
+				Buff.prolong(mob, Amok.class, 5f + Dungeon.hero.getMagicLevel() / 5);
 			}
 		}
 
@@ -70,7 +70,7 @@ public class ScrollOfRage extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 2 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 2 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public String desc() {

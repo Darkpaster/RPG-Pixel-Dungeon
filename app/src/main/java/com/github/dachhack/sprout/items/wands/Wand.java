@@ -114,11 +114,11 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	public boolean updatedMPCost(){
-		mpCost = Dungeon.hero.magicLevel;
+		mpCost = Dungeon.hero.getMagicLevel();
 		return Dungeon.hero.MP - mpCost > 0;
 	}
 	public boolean poweredZap(){
-		mpCost = Dungeon.hero.magicLevel;
+		mpCost = Dungeon.hero.getMagicLevel();
 		boolean z = Dungeon.hero.MP - mpCost > 0;
 		if(z && enhancedZap){
 			Dungeon.hero.MP -= mpCost;
@@ -241,10 +241,10 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	public int level() {
-		if(usagesToKnow != 50 - Dungeon.hero.magicLevel && usagesToKnow != 1){
-			usagesToKnow = Math.max(50 - Dungeon.hero.magicLevel, 1);
+		if(usagesToKnow != 50 - Dungeon.hero.getMagicLevel() && usagesToKnow != 1){
+			usagesToKnow = Math.max(50 - Dungeon.hero.getMagicLevel(), 1);
 		}
-			int m = poweredZap() ? Dungeon.hero.magicLevel / 2 : 0;
+			int m = poweredZap() ? Dungeon.hero.getMagicLevel() / 2 : 0;
 		//System.out.println("m = " + m);
 		//System.out.println("poweredZap = " + poweredZap());
 

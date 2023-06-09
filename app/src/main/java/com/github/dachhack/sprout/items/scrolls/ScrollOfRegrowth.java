@@ -42,7 +42,7 @@ public class ScrollOfRegrowth extends Scroll {
 	{
 		name = "Scroll of Regrowth";
 		consumedValue = 15;
-		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 8 * Dungeon.hero.getMagicLevel() + 3;
 	}
 
 	@Override
@@ -84,8 +84,8 @@ public class ScrollOfRegrowth extends Scroll {
 		if (noticed) {
 			Sample.INSTANCE.play(Assets.SND_SECRET);
 		}
-		if(curUser.magicLevel > 4){
-			for (int i = 0; i < curUser.magicLevel / 5; i++) {
+		if(curUser.getMagicLevel() > 4){
+			for (int i = 0; i < curUser.getMagicLevel() / 5; i++) {
 				Dungeon.level.drop(Generator.random(SEED), curUser.pos);
 				Dungeon.level.drop(Generator.random(SEED2), curUser.pos);
 			}
@@ -108,7 +108,7 @@ public class ScrollOfRegrowth extends Scroll {
 	}
 	@Override
 	protected void updateCost() {
-		mp_cost = 8 * Dungeon.hero.magicLevel + 3;
+		mp_cost = 8 * Dungeon.hero.getMagicLevel() + 3;
 	}
 	@Override
 	public int price() {
